@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "681078437927",
+    "project_id": "yallatrip-ee28c",
+    "storage_bucket": "yallatrip-ee28c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681078437927:android:7aabc46ac7bc44f81eb602",
+        "android_client_info": {
+          "package_name": "iti.intake41.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681078437927-djlfesbek9cqtt07kr2mr2himbdqv4bf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8BJVRMRToUvPFsleN-Vnt0gtx90jb6ic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681078437927-djlfesbek9cqtt07kr2mr2himbdqv4bf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
