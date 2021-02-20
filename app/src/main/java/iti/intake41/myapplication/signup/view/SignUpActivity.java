@@ -25,9 +25,9 @@ import iti.intake41.myapplication.login.view.LoginActivity;
 import iti.intake41.myapplication.signup.viewmodel.SignUpViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
-    String email, password, confirmPassword;
+    String email, password, userName;
     //views refrences
-    TextInputEditText etEmail, etPassword, etConfirmPass;
+    TextInputEditText etEmail, etPassword,etUserName;
     Button btnSignUp;
     TextView tvlogin;
 
@@ -47,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 email = etEmail.getText().toString().trim();
                 password = etPassword.getText().toString().trim();
-                confirmPassword = etConfirmPass.getText().toString().trim();
+                userName=etUserName.getText().toString().trim();
                 checkInputs();
                 if (NetworkClass.isNetworkConnected(SignUpActivity.this)) {
                     signUp();
@@ -71,29 +71,29 @@ public class SignUpActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         etEmail = findViewById(R.id.etemail);
         etPassword = findViewById(R.id.etpassword);
-        etConfirmPass = findViewById(R.id.etconfirmpassword);
+        etUserName=findViewById(R.id.etUserName);
         tvlogin = findViewById(R.id.tvopenLogin);
         btnSignUp = findViewById(R.id.btnSignUp);
 
         //viewModel
-        viewModelRef =new ViewModelProvider(this).get(SignUpViewModel.class);
-        viewModelRef.getResponse().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s.equals("successful"))
-                    Navigator.gotoScreen(SignUpActivity.this,LoginActivity.class);
-                    //openLoginActivity();
-                    display(s);
-            }
-        });
+        viewModelRef = new ViewModelProvider(this).get(SignUpViewModel.class);
+
 
     }
 
     private void signUp() {
-        if (!email.isEmpty() && !password.isEmpty() &&
-                !confirmPassword.isEmpty() && password.equals(confirmPassword) &&
+        if (!email.isEmpty() && !password.isEmpty() &&!userName.isEmpty()&&
                 Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString()).matches()) {
-            viewModelRef.signUp(email, password);
+            //viewModelRef.signUp(userName,email, password);
+            viewModelRef.signUp(userName,email, password).observe(this, new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    if (s.equals("successful"))
+                        Navigator.gotoScreen(SignUpActivity.this, LoginActivity.class);
+                    //openLoginActivity();
+                    display(s);
+                }
+            });
         }
     }
 
@@ -124,10 +124,9 @@ public class SignUpActivity extends AppCompatActivity {
             etPassword.requestFocus();
         }
 
-        if (!password.equals(confirmPassword)) {
-            etConfirmPass.setError("Not the same password");
-            etConfirmPass.requestFocus();
-
+        if (userName.isEmpty()) {
+            etUserName.setError("Please enter your Name");
+            etUserName.requestFocus();
         }
 
     }

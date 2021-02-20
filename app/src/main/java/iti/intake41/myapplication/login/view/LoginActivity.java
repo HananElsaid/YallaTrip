@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -76,8 +75,8 @@ public class LoginActivity extends AppCompatActivity implements DelegetInterface
     }
 
     private void init() {
-        edLoginEmail = findViewById(R.id.etloginemail);
-        edLoginPassword = findViewById(R.id.etloginpassword);
+        edLoginEmail = findViewById(R.id.etemail);
+        edLoginPassword = findViewById(R.id.etpassword);
 
         btnLogin = findViewById(R.id.btnLogin);
         mAuth = FirebaseAuth.getInstance();

@@ -1,6 +1,7 @@
 package iti.intake41.myapplication.signup.model;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -8,24 +9,27 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import iti.intake41.myapplication.signup.viewmodel.SignUpViewModel;
 
-public class SignUpRepository {
+public class SignUpRepository implements SignUpModelInterface {
     FirebaseAuth auth;
     DatabaseReference dbRef;
-    SignUpViewModel signViewModel;
+    //SignUpViewModel signViewModel;
+    MutableLiveData<String> myrespnse;
 
 
-    public SignUpRepository(SignUpViewModel signViewModel) {
-        this.signViewModel = signViewModel;
+    public SignUpRepository(/*SignUpViewModel signViewModel*/) {
+        /*this.signViewModel = signViewModel;*/
+        myrespnse = new MutableLiveData<>();
         auth = FirebaseAuth.getInstance();
 
-        //dbRef = FirebaseDatabase.getInstance().getReference().child("users");
+        dbRef = FirebaseDatabase.getInstance().getReference().child("users");
     }
 
 
-    public void signUp(final String email, final String password) {
+    public MutableLiveData<String> signUp(final String userName, final String email, final String password) {
         new Thread() {
             @Override
             public void run() {
@@ -37,20 +41,27 @@ public class SignUpRepository {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     verifyEmail();
-                                    String userID = auth.getCurrentUser().getUid();
-                                    //DatabaseReference currentUserDB = dbRef.child(userID);
-                                    //currentUserDB.child("Name").setValue();
-                                    signViewModel.getResponse().setValue("successful");
-                                   // signViewModel.display("successful");
+                                    uploadUserData(userName, email);
+
+                                    myrespnse.setValue("successful");
+
+                                    // signViewModel.display("successful");
                                 } else {
                                     //signViewModel.display(task.getException().getMessage().toString());
-                                    signViewModel.getResponse().setValue(task.getException().getMessage());
+                                    myrespnse.setValue(task.getException().getMessage());
                                 }
                             }
                         });
             }
         }.start();
+        return myrespnse;
+    }
 
+    void uploadUserData(String username, String email) {
+        String userID = auth.getCurrentUser().getUid();
+        DatabaseReference currentUserDB = dbRef.child(userID);
+        currentUserDB.child("Name").setValue(username);
+        currentUserDB.child("email").setValue(email);
     }
 
     private void verifyEmail() {
@@ -59,9 +70,9 @@ public class SignUpRepository {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    signViewModel.getResponse().setValue("successful");
+                    myrespnse.setValue("successful");
                 } else
-                    signViewModel.getResponse().setValue(task.getException().toString());
+                    myrespnse.setValue(task.getException().toString());
             }
         });
 
