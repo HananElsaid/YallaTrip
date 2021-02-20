@@ -16,10 +16,12 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
+import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.NetworkClass;
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.login.DelegetInterface;
 import iti.intake41.myapplication.login.viewmodel.LoginViewModel;
+import iti.intake41.myapplication.modules.main.MainActivity;
 import iti.intake41.myapplication.signup.view.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity implements DelegetInterface {
@@ -53,9 +55,7 @@ public class LoginActivity extends AppCompatActivity implements DelegetInterface
                     if (!email.isEmpty() && !password.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(edLoginEmail.getText().toString()).matches()) {
                         viewModel.login(email, password);
                     }
-
                 } else display("Pleas check your internet Connection ");
-
             }
         });
 
@@ -105,6 +105,12 @@ public class LoginActivity extends AppCompatActivity implements DelegetInterface
     @Override
     public void display(String message) {
         Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void openHome() {
+        Navigator.gotoScreen(LoginActivity.this, MainActivity.class);
+        finish();
     }
 
 

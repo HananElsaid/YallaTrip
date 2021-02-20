@@ -53,16 +53,35 @@
     <string name="save">Save</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
     <string name="signup">Sign Up</string>
     <string name="notacount">You don\'t have an account ? Please</string>
     <string name="sociallogin">Google SignUp</string>
     <string name="or">OR</string>
-    <string name="userName">User Name</string>
+
     <string name="haveacount">You already have an account ? Please </string>
     <string name="notes">Notes</string>
-    <string name="done">Done</string>
+
     <string name="addnote">addnote</string>
     <string name="notetext">Enter Your Note</string>
     <string name="newnote">New Note</string>
+
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="start">Start</string>
+    <string name="more">more</string>
+    <string name="content_description_more">more</string>
+    <string name="content_description_search">search</string>
+    <string name="search">search</string>
+    <string name="welcome">Welcome</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="done">Done</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="myAccount">My Account</string>
+    <string name="userName">User name</string>
+    <string name="other">Other</string>
+    <string name="lang">Language</string>
+    <string name="showMap">Show Map</string>
+    <string name="title_more">More</string>
 
 </resources>

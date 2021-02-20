@@ -22,9 +22,9 @@ public class LoginViewModel extends ViewModel {
 
     public void display(String message) {
         myAnInterface.display(message);
+        if (message.equals("login sucessfully"))
+            myAnInterface.openHome();
     }
 
-   /* public void loginSuccessfully() {
-        loginActivity.openPostsActivity();
-    }*/
+
 }
