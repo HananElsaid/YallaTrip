@@ -53,4 +53,16 @@
     <string name="save">Save</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="tripTitle">Trip Title</string>
+    <string name="header">Header</string>
+    <string name="locationIcon">Location</string>
+    <string name="startPoint">Start Pint</string>
+    <string name="endPoint">End Pint</string>
+    <string name="createTrip">Create Trip</string>
+    <string name="hintcreateTrip">Go Shopping</string>
+    <string name="roundTrip">Round Trip</string>
+    <string name="piceddate">12 Jan 2021</string>
+    <string name="picedtime">12:10</string>
+    <string name="addNote">Add Notes</string>
 </resources>
