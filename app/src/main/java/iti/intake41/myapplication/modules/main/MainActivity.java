@@ -1,6 +1,7 @@
 package iti.intake41.myapplication.modules.main;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -8,13 +9,19 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import iti.intake41.myapplication.R;
+import iti.intake41.myapplication.models.FirebaseRepo;
+import iti.intake41.myapplication.models.Trip;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,4 +51,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    public void createTripClicked(View view) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        Map<String, Boolean> notes = new HashMap<>();
+        notes.put("get Items", true);
+        Trip tr = new Trip( "1", "1" ,"1", "1", "1", "1","1","1", 1.1, 1.1, 1.1, 1.1, notes);
+        (new FirebaseRepo(mDatabase)).writeNewTrip(tr);
+    }
 }

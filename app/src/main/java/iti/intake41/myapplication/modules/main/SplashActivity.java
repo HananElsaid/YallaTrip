@@ -1,6 +1,5 @@
 package iti.intake41.myapplication.modules.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -37,9 +36,10 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try {
                     // Thread will sleep for 5 seconds
-                    sleep(3 * 1000);
+//                    sleep(3 * 1000);
                     // After 5 seconds redirect to another intent
-                    Navigator.gotoScreen(SplashActivity.this, LoginActivity.class);
+                    //Navigator.gotoScreen(SplashActivity.this, LoginActivity.class);
+                    Navigator.gotoScreen(SplashActivity.this, MainActivity.class);
                     //Remove activity
                     finish();
                 } catch (Exception e) {

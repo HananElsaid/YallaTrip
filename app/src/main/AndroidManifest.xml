@@ -13,31 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YallaTrip">
+        <activity android:name=".modules.main.ui.CreateTripActivity"></activity>
+        <activity android:name=".creatnote.view.CreatNoteActivity" />
+        <activity android:name=".modules.main.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".creatnote.view.CreatNoteActivity"/>
-
-            <activity android:name=".modules.main.SplashActivity">
-
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-            </activity>
-
-            <activity android:name=".login.view.LoginActivity" />
-            <activity android:name=".signup.view.SignUpActivity">
-
-            </activity>
-
-
-            <activity android:name=".modules.main.MainActivity">
-
-            </activity>
-
-
-
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".login.view.LoginActivity" />
+        <activity android:name=".signup.view.SignUpActivity"></activity>
+        <activity android:name=".modules.main.MainActivity"></activity>
     </application>
 
 </manifest>
