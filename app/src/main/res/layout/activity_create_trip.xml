@@ -1,282 +1,545 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
     android:background="@drawable/background"
     tools:context=".createtrip.view.CreateTrip">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/header"
-        tools:ignore="VectorDrawableCompat" />
-
-    <TextView
-        android:id="@+id/txtNameTrip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/chalkboard"
-        android:text="@string/createTrip"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardHeader"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardHeader"
-        style="@style/MyCardView"
-        android:layout_width="355dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="header"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-            <!-- Buttons -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:weightSum="1">
 
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
+                android:text="@string/createTrip"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_weight="0.3"
+               >
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@id/txtNameTrip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/createTrip"
-                    android:shadowColor="#000000"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/greyDark"
-                    android:textColorLink="@color/greyMid" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="@string/tripTitle"
+                    android:textSize="18sp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtTripName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/tripTitle"
-                app:hintTextColor="@color/greyDark">
-
-            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardTrip"
-        style="@style/MyCardView"
-        android:layout_width="388dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        app:cardBackgroundColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:orientation="vertical"
+        android:layout_margin="16dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="10dp"
+            app:flow_wrapMode="aligned">
+
+            <LinearLayout
+                android:id="@+id/row"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:contentDescription="@string/locationIcon"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/locations" />
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/startPoint"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txtStartPoint"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/tapToChoose"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/startPoint"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txtEndPoint"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/tapToChoose"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="8">
-
-            <ImageView
-                android:id="@+id/imageView"
+            android:weightSum="1">
+            <Button
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/locationIcon"
-                app:srcCompat="@drawable/locations" />
+                android:layout_weight="0.5"
+                android:id="@+id/btnDatePicker"
+                android:onClick="datePicker"
+                android:text="@string/date"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/icon_awesome_calendar_alt"
+                app:iconGravity="start"
+                app:iconTint="@color/greenDark"
+                style="@style/CardButton" />
 
-            <LinearLayout
+            <Button
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="7"
-                android:orientation="vertical"
-                android:weightSum="3"
-                tools:layout_editor_absoluteX="80dp"
-                tools:layout_editor_absoluteY="555dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textFieldStartPoint"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtStartPoint"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="@string/startPoint"
-                        android:textColor="@color/black"
-                        android:textColorLink="@color/greyLight" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textFieldEndPoint"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtEndPoint"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="@string/endPoint"
-                        android:textColor="@color/black"
-                        android:textColorLink="@color/greyLight" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+                android:layout_weight="0.5"
+                android:id="@+id/btnTimePicker"
+                android:onClick="timePicker"
+                android:text="@string/time"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/icon_ionic_ios_time"
+                app:iconGravity="start"
+                app:iconTint="@color/greenDark"
+                style="@style/CardButton" />
 
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 
 
-    <Button
-        android:id="@+id/btnTimePicker"
-        style="@style/AppTheme.RoundedCornerMaterialButton"
-
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/ripple"
-        android:fontFamily="@font/chalkboard"
-        android:gravity="center"
-        android:onClick="timePicker"
-        android:text="@string/time"
-        android:textAllCaps="true"
-        app:backgroundTint="@color/white"
-        app:cornerRadius="15dp"
-
-        app:icon="@drawable/icon_ionic_ios_time"
-        app:iconGravity="textStart"
-        app:iconPadding="20dp"
-        app:iconSize="30dp"
+            <Button
+                android:layout_marginTop="10dp"
+                android:id="@+id/addNotes"
+                android:onClick="addNotes"
+                android:text="@string/addNote"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/icon_material_note_add"
+                app:iconGravity="start"
+                app:iconTint="@color/greenDark"
+                style="@style/CardButton" />
 
 
-        app:iconTint="@color/greenDark"
-        app:layout_constraintBottom_toBottomOf="@+id/btnDatePicker"
-        app:layout_constraintEnd_toEndOf="@+id/cardTrip"
-        app:layout_constraintTop_toBottomOf="@+id/cardTrip"
-        app:layout_constraintVertical_bias="1.0"
-        app:strokeColor="@color/black"
-        tools:text="@string/picedtime"
-        tools:textColor="@color/black"
-        tools:textSize="12sp" />
 
-    <Button
-        android:id="@+id/btnDatePicker"
-        style="@style/AppTheme.RoundedCornerMaterialButton"
-        android:layout_width="170dp"
+            <CheckBox
+                android:id="@+id/roundTrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:buttonTint="@color/greenDark"
+                android:onClick="onCheckboxClicked"
+                android:text="@string/roundTrip"
+                tools:targetApi="lollipop" />
 
-        android:layout_height="50dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCreateTrip"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/done_button"
+            app:cornerRadius="20dp" />
 
-        android:layout_marginTop="36dp"
-        android:background="@drawable/ripple"
-        android:fontFamily="@font/chalkboard"
-        android:gravity="center"
-        android:onClick="datePicker"
-        android:text="@string/date"
+    </LinearLayout>
 
-        android:textAllCaps="true"
-        app:backgroundTint="@color/white"
-        app:cornerRadius="15dp"
-        app:icon="@drawable/icon_awesome_calendar_alt"
 
-        app:iconGravity="textStart"
-        app:iconPadding="20dp"
-        app:iconSize="30dp"
-        app:iconTint="@color/greenDark"
-        app:layout_constraintEnd_toStartOf="@+id/btnTimePicker"
-        app:layout_constraintHorizontal_bias="0.361"
-        app:layout_constraintStart_toStartOf="@+id/cardTrip"
-        app:layout_constraintTop_toBottomOf="@+id/cardTrip"
-        app:strokeColor="@color/black"
-        tools:ignore="NotSibling"
-        tools:text="@string/piceddate"
-        tools:textColor="@color/black"
-        tools:textSize="12sp" />
 
-    <Button
-        android:id="@+id/addNotes"
-        style="@style/AppTheme.RoundedCornerMaterialButton"
-        android:layout_width="347dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/ripple"
-        android:fontFamily="@font/chalkboard"
-        android:gravity="center"
-        android:onClick="addNotes"
-        android:text="@string/addNote"
-        android:textAllCaps="true"
-        app:backgroundTint="@color/white"
-        app:cornerRadius="20dp"
-        app:icon="@drawable/icon_material_note_add"
-        app:iconGravity="textStart"
-        app:iconPadding="20dp"
-        app:iconSize="30dp"
-        app:iconTint="@color/greenDark"
-        app:layout_constraintEnd_toEndOf="@+id/btnTimePicker"
-        app:layout_constraintHorizontal_bias="0.764"
-        app:layout_constraintStart_toStartOf="@+id/btnDatePicker"
-        app:layout_constraintTop_toBottomOf="@+id/btnTimePicker" />
 
-    <CheckBox
-        android:id="@+id/roundTrip"
-        android:layout_width="356dp"
-        android:layout_height="50dp"
-        android:buttonTint="@color/greenDark"
-        android:onClick="onCheckboxClicked"
-        android:text="@string/roundTrip"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/btnCreateTrip"
-        app:layout_constraintEnd_toEndOf="@+id/addNotes"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/addNotes"
-        app:layout_constraintTop_toBottomOf="@+id/addNotes"
-        tools:targetApi="lollipop" />
+</LinearLayout>
 
-    <Button
-        android:id="@+id/btnCreateTrip"
-        android:layout_width="356dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ripple"
-        android:fontFamily="@font/chalkboard"
-        android:text="@string/createTrip"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btnTimePicker"
-        app:layout_constraintHorizontal_bias="0.687"
-        app:layout_constraintStart_toStartOf="@+id/btnDatePicker" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="@drawable/background"-->
+<!--    tools:context=".createtrip.view.CreateTrip">-->
+
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:contentDescription="@string/header"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/header"-->
+<!--        tools:ignore="VectorDrawableCompat" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/txtNameTrip"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:fontFamily="@font/chalkboard"-->
+<!--        android:text="@string/createTrip"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="30sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/cardHeader"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.061"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/imageView4"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/cardHeader"-->
+<!--        style="@style/MyCardView"-->
+<!--        android:layout_width="355dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:layout_marginStart="32dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="32dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/imageView4"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/white"-->
+<!--            android:orientation="vertical">-->
+<!--            &lt;!&ndash; Buttons &ndash;&gt;-->
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@color/white">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@id/txtNameTrip"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="@string/createTrip"-->
+<!--                    android:shadowColor="#000000"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textColorHighlight="@color/white"-->
+<!--                    android:textColorLink="@color/white" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/txtTripName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:hint="@string/tripTitle"-->
+<!--                app:hintTextColor="@color/greyDark">-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        </LinearLayout>-->
+<!--    </com.google.android.material.card.MaterialCardView>-->
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/cardTrip"-->
+<!--        style="@style/MyCardView"-->
+<!--        android:layout_width="388dp"-->
+<!--        android:layout_height="120dp"-->
+<!--        android:layout_marginStart="32dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:layout_marginEnd="32dp"-->
+<!--        app:cardBackgroundColor="@color/white"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imageView4">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:weightSum="8">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:contentDescription="@string/locationIcon"-->
+<!--                android:padding="10dp"-->
+<!--                app:srcCompat="@drawable/locations" />-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="7"-->
+<!--                android:orientation="vertical"-->
+<!--                android:weightSum="3"-->
+<!--                tools:layout_editor_absoluteX="80dp"-->
+<!--                tools:layout_editor_absoluteY="555dp">-->
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/textFieldStartPoint"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="1dp"-->
+<!--                    >-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/txtStartPoint"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:hint="@string/startPoint"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textColorLink="@color/greyLight"-->
+<!--                        android:enabled="false"-->
+<!--                    />-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/textFieldEndPoint"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="1dp"-->
+<!--                    >-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/txtEndPoint"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:hint="@string/endPoint"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textColorLink="@color/greyLight"-->
+<!--                        android:enabled="false"-->
+<!--                        />-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+<!--    </com.google.android.material.card.MaterialCardView>-->
+
+
+<!--    <Button-->
+<!--        android:id="@+id/btnTimePicker"-->
+<!--        style="@style/AppTheme.RoundedCornerMaterialButton"-->
+
+<!--        android:layout_width="170dp"-->
+<!--        android:layout_height="50dp"-->
+
+<!--        android:layout_marginEnd="12dp"-->
+<!--        android:background="@drawable/ripple"-->
+<!--        android:fontFamily="@font/chalkboard"-->
+<!--        android:gravity="center"-->
+<!--        android:onClick="timePicker"-->
+<!--        android:text="@string/time"-->
+<!--        android:textAllCaps="true"-->
+<!--        app:backgroundTint="@color/white"-->
+<!--        app:cornerRadius="15dp"-->
+
+<!--        app:icon="@drawable/icon_ionic_ios_time"-->
+<!--        app:iconGravity="textStart"-->
+<!--        app:iconPadding="20dp"-->
+<!--        app:iconSize="30dp"-->
+
+
+<!--        app:iconTint="@color/greenDark"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/btnDatePicker"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/cardTrip"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/cardTrip"-->
+<!--        app:layout_constraintVertical_bias="1.0"-->
+<!--        app:strokeColor="@color/black"-->
+<!--        tools:text="@string/picedtime"-->
+<!--        tools:textColor="@color/black"-->
+<!--        tools:textSize="12sp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btnDatePicker"-->
+<!--        style="@style/AppTheme.RoundedCornerMaterialButton"-->
+<!--        android:layout_width="170dp"-->
+
+<!--        android:layout_height="50dp"-->
+
+<!--        android:layout_marginTop="36dp"-->
+<!--        android:background="@drawable/ripple"-->
+<!--        android:fontFamily="@font/chalkboard"-->
+<!--        android:gravity="center"-->
+<!--        android:onClick="datePicker"-->
+<!--        android:text="@string/date"-->
+
+<!--        android:textAllCaps="true"-->
+<!--        app:backgroundTint="@color/white"-->
+<!--        app:cornerRadius="15dp"-->
+<!--        app:icon="@drawable/icon_awesome_calendar_alt"-->
+
+<!--        app:iconGravity="textStart"-->
+<!--        app:iconPadding="20dp"-->
+<!--        app:iconSize="30dp"-->
+<!--        app:iconTint="@color/greenDark"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/btnTimePicker"-->
+<!--        app:layout_constraintHorizontal_bias="0.361"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/cardTrip"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/cardTrip"-->
+<!--        app:strokeColor="@color/black"-->
+<!--        tools:ignore="NotSibling"-->
+<!--        tools:text="@string/piceddate"-->
+<!--        tools:textColor="@color/black"-->
+<!--        tools:textSize="12sp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/addNotes"-->
+<!--        style="@style/AppTheme.RoundedCornerMaterialButton"-->
+<!--        android:layout_width="347dp"-->
+<!--        android:layout_height="62dp"-->
+<!--        android:layout_marginTop="36dp"-->
+<!--        android:layout_marginEnd="12dp"-->
+<!--        android:background="@drawable/ripple"-->
+<!--        android:fontFamily="@font/chalkboard"-->
+<!--        android:gravity="center"-->
+<!--        android:onClick="addNotes"-->
+<!--        android:text="@string/addNote"-->
+<!--        android:textAllCaps="true"-->
+<!--        app:backgroundTint="@color/white"-->
+<!--        app:cornerRadius="20dp"-->
+<!--        app:icon="@drawable/icon_material_note_add"-->
+<!--        app:iconGravity="textStart"-->
+<!--        app:iconPadding="20dp"-->
+<!--        app:iconSize="30dp"-->
+<!--        app:iconTint="@color/greenDark"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/btnTimePicker"-->
+<!--        app:layout_constraintHorizontal_bias="0.764"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/btnDatePicker"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnTimePicker" />-->
+
+<!--    <CheckBox-->
+<!--        android:id="@+id/roundTrip"-->
+<!--        android:layout_width="356dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:buttonTint="@color/greenDark"-->
+<!--        android:onClick="onCheckboxClicked"-->
+<!--        android:text="@string/roundTrip"-->
+<!--        android:textColor="@color/black"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/btnCreateTrip"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/addNotes"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/addNotes"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/addNotes"-->
+<!--        tools:targetApi="lollipop" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btnCreateTrip"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:background="@drawable/ripple"-->
+<!--        android:fontFamily="@font/chalkboard"-->
+<!--        android:text="@string/createTrip"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/btnTimePicker"-->
+<!--        app:layout_constraintHorizontal_bias="0.687"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/btnDatePicker" />-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+
+

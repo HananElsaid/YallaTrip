@@ -65,4 +65,5 @@
     <string name="piceddate">12 Jan 2021</string>
     <string name="picedtime">12:10</string>
     <string name="addNote">Add Notes</string>
+    <string name="tapToChoose">Tap to choose location</string>
 </resources>

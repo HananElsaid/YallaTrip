@@ -16,4 +16,13 @@
         <item name="android:background">@drawable/rounded_shape</item>
     </style>
 
+    <style name="CardButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:background">@drawable/ripple</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/greyDark</item>
+    </style>
+
 </resources>

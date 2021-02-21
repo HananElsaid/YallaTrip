@@ -1,11 +1,7 @@
 package iti.intake41.myapplication.createtrip.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.icu.text.SimpleDateFormat;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,16 +9,11 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.ParseException;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
-import iti.intake41.myapplication.MainActivity;
 import iti.intake41.myapplication.R;
 
 public class CreateTrip extends AppCompatActivity {
@@ -40,26 +31,26 @@ public class CreateTrip extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trip);
-        createTrip=findViewById(R.id.btnCreateTrip);
-        addNotes=findViewById(R.id.addNotes);
-        datePicker=findViewById(R.id.btnDatePicker);
-        timePicker=findViewById(R.id.btnTimePicker);
-
-        tripName= findViewById(R.id.txtNameTrip);
-        startPoint= findViewById(R.id.txtStartPoint);
-        endPoint= findViewById(R.id.txtEndPoint);
-        roundTrip=findViewById(R.id.roundTrip);
-
-        timePicker.setOnClickListener(v -> {
-            timePicker(v);
-
-        });
-
-
-        datePicker.setOnClickListener(v -> {
-            datePicker(v);
-
-        });
+        //createTrip=findViewById(R.id.btnCreateTrip);
+//        addNotes=findViewById(R.id.addNotes);
+//        datePicker=findViewById(R.id.btnDatePicker);
+//        timePicker=findViewById(R.id.btnTimePicker);
+//
+//        tripName= findViewById(R.id.txtNameTrip);
+//        startPoint= findViewById(R.id.txtStartPoint);
+//        endPoint= findViewById(R.id.txtEndPoint);
+//        //roundTrip=findViewById(R.id.roundTrip);
+//
+//        timePicker.setOnClickListener(v -> {
+//            timePicker(v);
+//
+//        });
+//
+//
+//        datePicker.setOnClickListener(v -> {
+//            datePicker(v);
+//
+//        });
     }
 
 
