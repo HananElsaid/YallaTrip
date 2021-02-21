@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/chalkboard"
-        android:text="@string/createTrip"
+        android:text="@string/tripTitle"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/cardHeader"
@@ -48,39 +48,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-            <!-- Buttons -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@id/txtNameTrip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/createTrip"
-                    android:shadowColor="#000000"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/greyDark"
-                    android:textColorLink="@color/greyMid" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtTripName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/tripTitle"
-                app:hintTextColor="@color/greyDark">
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -250,33 +217,6 @@
         app:layout_constraintStart_toStartOf="@+id/btnDatePicker"
         app:layout_constraintTop_toBottomOf="@+id/btnTimePicker" />
 
-    <CheckBox
-        android:id="@+id/roundTrip"
-        android:layout_width="356dp"
-        android:layout_height="50dp"
-        android:buttonTint="@color/greenDark"
-        android:onClick="onCheckboxClicked"
-        android:text="@string/roundTrip"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/btnCreateTrip"
-        app:layout_constraintEnd_toEndOf="@+id/addNotes"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/addNotes"
-        app:layout_constraintTop_toBottomOf="@+id/addNotes"
-        tools:targetApi="lollipop" />
 
-    <Button
-        android:id="@+id/btnCreateTrip"
-        android:layout_width="356dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ripple"
-        android:fontFamily="@font/chalkboard"
-        android:text="@string/createTrip"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btnTimePicker"
-        app:layout_constraintHorizontal_bias="0.687"
-        app:layout_constraintStart_toStartOf="@+id/btnDatePicker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

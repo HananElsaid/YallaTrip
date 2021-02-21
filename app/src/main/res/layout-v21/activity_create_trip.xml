@@ -44,50 +44,66 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTintMode="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filledTextField"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-            <!-- Buttons -->
-            <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:hint="@string/tripTitle"
+            android:background="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+                android:layout_height="wrap_content"
+                />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@id/txtNameTrip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/createTrip"
-                    android:shadowColor="#000000"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/greyDark"
-                    android:textColorLink="@color/greyMid" />
-            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtTripName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/tripTitle"
-                app:hintTextColor="@color/greyDark">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/white"-->
+<!--            android:orientation="vertical">-->
+<!--            &lt;!&ndash; Buttons &ndash;&gt;-->
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                >-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:boxBackgroundColor="@android:color/transparent"-->
+<!--                    android:background="@android:color/transparent"-->
+<!--                    android:hint="@string/hintcreateTrip"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    />-->
 
-        </LinearLayout>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/txtTripName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:hint="@string/tripTitle"-->
+<!--                app:hintTextColor="@color/greyDark">-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        </LinearLayout>-->
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardTrip"
         style="@style/MyCardView"
-        android:layout_width="388dp"
-        android:layout_height="120dp"
+        android:layout_width="383dp"
+        android:layout_height="137dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
@@ -116,16 +132,14 @@
                 android:layout_weight="7"
                 android:orientation="vertical"
                 android:weightSum="3"
-                tools:layout_editor_absoluteX="80dp"
+                tools:layout_editor_absoluteX="79dp"
                 tools:layout_editor_absoluteY="555dp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldStartPoint"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp"
-                    >
+                    android:layout_height="65dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtStartPoint"
@@ -133,26 +147,24 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:hint="@string/startPoint"
-                        android:textColor="@color/black"
-                        android:textColorLink="@color/greyLight" />
+                        android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldEndPoint"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp">
+                    android:layout_height="65dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtEndPoint"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="@string/endPoint"
-                        android:textColor="@color/black"
-                        android:textColorLink="@color/greyLight" />
+                        android:layout_weight="1" />
+
                 </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -164,9 +176,10 @@
         style="@style/AppTheme.RoundedCornerMaterialButton"
 
         android:layout_width="170dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
 
-        android:layout_marginEnd="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/ripple"
         android:fontFamily="@font/chalkboard"
         android:gravity="center"
@@ -197,28 +210,30 @@
         style="@style/AppTheme.RoundedCornerMaterialButton"
         android:layout_width="170dp"
 
-        android:layout_height="50dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
 
-        android:layout_marginTop="36dp"
         android:background="@drawable/ripple"
         android:fontFamily="@font/chalkboard"
         android:gravity="center"
         android:onClick="datePicker"
         android:text="@string/date"
-
         android:textAllCaps="true"
         app:backgroundTint="@color/white"
+
         app:cornerRadius="15dp"
         app:icon="@drawable/icon_awesome_calendar_alt"
-
         app:iconGravity="textStart"
         app:iconPadding="20dp"
+
         app:iconSize="30dp"
         app:iconTint="@color/greenDark"
+        app:layout_constraintBottom_toTopOf="@+id/addNotes"
         app:layout_constraintEnd_toStartOf="@+id/btnTimePicker"
-        app:layout_constraintHorizontal_bias="0.361"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/cardTrip"
         app:layout_constraintTop_toBottomOf="@+id/cardTrip"
+        app:layout_constraintVertical_bias="0.414"
         app:strokeColor="@color/black"
         tools:ignore="NotSibling"
         tools:text="@string/piceddate"
@@ -230,12 +245,12 @@
         style="@style/AppTheme.RoundedCornerMaterialButton"
         android:layout_width="347dp"
         android:layout_height="62dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/ripple"
         android:fontFamily="@font/chalkboard"
         android:gravity="center"
-        android:onClick="addNotes"
+        android:onClick="timePicker"
         android:text="@string/addNote"
         android:textAllCaps="true"
         app:backgroundTint="@color/white"
@@ -245,10 +260,12 @@
         app:iconPadding="20dp"
         app:iconSize="30dp"
         app:iconTint="@color/greenDark"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btnTimePicker"
-        app:layout_constraintHorizontal_bias="0.764"
+        app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="@+id/btnDatePicker"
-        app:layout_constraintTop_toBottomOf="@+id/btnTimePicker" />
+        app:layout_constraintTop_toBottomOf="@+id/cardTrip"
+        app:layout_constraintVertical_bias="0.369" />
 
     <CheckBox
         android:id="@+id/roundTrip"
@@ -262,8 +279,7 @@
         app:layout_constraintEnd_toEndOf="@+id/addNotes"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/addNotes"
-        app:layout_constraintTop_toBottomOf="@+id/addNotes"
-        tools:targetApi="lollipop" />
+        app:layout_constraintTop_toBottomOf="@+id/addNotes" />
 
     <Button
         android:id="@+id/btnCreateTrip"
@@ -277,6 +293,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btnTimePicker"
         app:layout_constraintHorizontal_bias="0.687"
-        app:layout_constraintStart_toStartOf="@+id/btnDatePicker" />
+        app:layout_constraintStart_toStartOf="@+id/btnDatePicker"
+        app:layout_constraintTop_toBottomOf="@+id/addNotes"
+        app:layout_constraintVertical_bias="0.798" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

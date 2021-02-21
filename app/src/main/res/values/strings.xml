@@ -34,7 +34,7 @@
     <string name="now">Now</string>
     <string name="custom">Custom</string>
     <string name="date">Date</string>
-    <string name="time2">Time2</string>
+    <string name="time2">Time</string>
     <string name="title_activity_choose_reciver">ChooseReciverActivity</string>
     <string name="tab_text_1">Groups</string>
     <string name="tab_text_2">Contacts</string>
@@ -57,8 +57,8 @@
     <string name="tripTitle">Trip Title</string>
     <string name="header">Header</string>
     <string name="locationIcon">Location</string>
-    <string name="startPoint">Start Pint</string>
-    <string name="endPoint">End Pint</string>
+    <string name="startPoint">Start Point</string>
+    <string name="endPoint">End Point</string>
     <string name="createTrip">Create Trip</string>
     <string name="hintcreateTrip">Go Shopping</string>
     <string name="roundTrip">Round Trip</string>
