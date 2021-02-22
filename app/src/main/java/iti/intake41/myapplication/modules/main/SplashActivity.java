@@ -11,6 +11,7 @@ import com.bumptech.glide.request.target.DrawableImageViewTarget;
 
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
+import iti.intake41.myapplication.helper.NetworkClass;
 import iti.intake41.myapplication.login.view.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -38,8 +39,11 @@ public class SplashActivity extends AppCompatActivity {
                 try {
                     // Thread will sleep for 5 seconds
                     sleep(3 * 1000);
-                    // After 5 seconds redirect to another intent
-                    Navigator.gotoScreen(SplashActivity.this, LoginActivity.class);
+                    // After 5 seconds redirect to another screen
+                    if (NetworkClass.getCurrentUser() != null)
+                        Navigator.gotoScreen(SplashActivity.this, MainActivity.class);
+                    else if (NetworkClass.getCurrentUser() == null)
+                        Navigator.gotoScreen(SplashActivity.this, LoginActivity.class);
                     //Remove activity
                     finish();
                 } catch (Exception e) {

@@ -19,12 +19,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.NetworkClass;
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.login.DelegetInterface;
+import iti.intake41.myapplication.login.LoginModelInterface;
 import iti.intake41.myapplication.login.viewmodel.LoginViewModel;
 import iti.intake41.myapplication.modules.main.MainActivity;
 import iti.intake41.myapplication.signup.view.SignUpActivity;
 
-public class LoginActivity extends AppCompatActivity implements DelegetInterface {
+public class LoginActivity extends AppCompatActivity implements LoginModelInterface {
     //views refrences
     TextInputEditText edLoginEmail, edLoginPassword;
     Button btnLogin;
@@ -116,9 +116,9 @@ public class LoginActivity extends AppCompatActivity implements DelegetInterface
 
     class LoginViewModelFactory implements ViewModelProvider.Factory {
 
-        DelegetInterface loginActivity;
+        LoginModelInterface loginActivity;
 
-        LoginViewModelFactory(DelegetInterface loginActivity) {
+        LoginViewModelFactory(LoginModelInterface loginActivity) {
             this.loginActivity = loginActivity;
 
         }

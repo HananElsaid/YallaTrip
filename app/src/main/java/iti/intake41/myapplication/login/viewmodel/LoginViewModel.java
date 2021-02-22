@@ -2,15 +2,14 @@ package iti.intake41.myapplication.login.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-import iti.intake41.myapplication.login.DelegetInterface;
+import iti.intake41.myapplication.login.LoginModelInterface;
 import iti.intake41.myapplication.login.model.LoginRepository;
-import iti.intake41.myapplication.login.view.LoginActivity;
 
 public class LoginViewModel extends ViewModel {
-    DelegetInterface myAnInterface;
+    LoginModelInterface myAnInterface;
     LoginRepository repository;
 
-    public LoginViewModel(DelegetInterface myAnInterface) {
+    public LoginViewModel(LoginModelInterface myAnInterface) {
         this.myAnInterface = myAnInterface;
         repository = new LoginRepository(this);
 

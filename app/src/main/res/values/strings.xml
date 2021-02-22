@@ -83,5 +83,6 @@
     <string name="lang">Language</string>
     <string name="showMap">Show Map</string>
     <string name="title_more">More</string>
+    <string name="title_activity_map_trips">Map</string>
 
 </resources>

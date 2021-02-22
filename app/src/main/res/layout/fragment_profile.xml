@@ -94,14 +94,15 @@
             app:flow_wrapMode="aligned">
 
             <LinearLayout
-                android:id="@+id/row"
+                android:id="@+id/row1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
                 android:divider="?android:dividerVertical"
                 android:orientation="vertical"
                 android:showDividers="middle"
-                android:weightSum="2">
+                android:weightSum="2"
+                tools:ignore="DuplicateIds">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -213,6 +214,7 @@
                 android:weightSum="2">
 
                 <LinearLayout
+                    android:id="@+id/mapCard"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -323,6 +325,7 @@
                 android:weightSum="1">
 
                 <LinearLayout
+                    android:id="@+id/logout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"

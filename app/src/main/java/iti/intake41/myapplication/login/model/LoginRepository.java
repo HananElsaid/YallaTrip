@@ -8,6 +8,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import iti.intake41.myapplication.helper.NetworkClass;
 import iti.intake41.myapplication.login.viewmodel.LoginViewModel;
 
 public class LoginRepository {
@@ -16,7 +17,6 @@ public class LoginRepository {
     FirebaseAuth mAuth;
     //DatabaseReference mDatabase;
 
-
     public LoginRepository(LoginViewModel loginViewModel) {
         this.loginViewModel = loginViewModel;
         mAuth = FirebaseAuth.getInstance();
@@ -24,7 +24,7 @@ public class LoginRepository {
     }
 
     private void verifyEmail() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = NetworkClass.getCurrentUser();
         if (currentUser!=null&&currentUser.isEmailVerified()) {
             //loginViewModel.loginSuccessfully();
             loginViewModel.display("login sucessfully");
