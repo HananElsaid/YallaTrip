@@ -34,7 +34,7 @@
     <string name="now">Now</string>
     <string name="custom">Custom</string>
     <string name="date">Date</string>
-    <string name="time2">Time2</string>
+    <string name="time2">Time</string>
     <string name="title_activity_choose_reciver">ChooseReciverActivity</string>
     <string name="tab_text_1">Groups</string>
     <string name="tab_text_2">Contacts</string>
@@ -54,6 +54,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+
     <string name="signup">Sign Up</string>
     <string name="notacount">You don\'t have an account ? Please</string>
     <string name="sociallogin">Google SignUp</string>
@@ -69,7 +70,7 @@
 
     <string name="title_activity_main">MainActivity</string>
     <string name="start">Start</string>
-    <string name="more">more</string>
+
     <string name="content_description_more">more</string>
     <string name="content_description_search">search</string>
     <string name="search">search</string>
@@ -84,5 +85,23 @@
     <string name="showMap">Show Map</string>
     <string name="title_more">More</string>
     <string name="title_activity_map_trips">Map</string>
+
+    <string name="tripTitle">Trip Title</string>
+    <string name="header">Header</string>
+    <string name="locationIcon">Location</string>
+    <string name="startPoint">Start Point</string>
+    <string name="endPoint">End Point</string>
+    <string name="createTrip">Create Trip</string>
+    <string name="hintcreateTrip">Go Shopping</string>
+    <string name="roundTrip">Round Trip</string>
+    <string name="piceddate">12 Jan 2021</string>
+    <string name="picedtime">12:10</string>
+    <string name="addNote">Add Notes</string>
+    <string name="tapToChoose">Tap to choose location</string>
+    <string name="trip_Trip">Go Shopping</string>
+    <string name="status">upcoming</string>
+    <string name="more">More</string>
+    <string name="edit">edit</string>
+
 
 </resources>
