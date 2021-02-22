@@ -17,21 +17,21 @@ import java.util.List;
 
 import iti.intake41.myapplication.helper.Constants;
 import iti.intake41.myapplication.helper.NetworkClass;
-import iti.intake41.myapplication.models.Trips;
+import iti.intake41.myapplication.models.Trip;
 
 public class DoneTripsModel implements DoneTripsModelInterface {
-    public MutableLiveData<List<Trips>> doneTrips;
+  /*  public MutableLiveData<List<Trip>> doneTrips;
     public MutableLiveData<String> message;
     DatabaseReference databaseTrips;
-    ArrayList<Trips> historyTrips;
+    ArrayList<Trips> historyTrips;*/
     ArrayList<Integer> colorList;
     MutableLiveData<List<Integer>> colerData;
 
     public DoneTripsModel() {
-        doneTrips = new MutableLiveData<>();
+      /*  doneTrips = new MutableLiveData<>();
         message = new MutableLiveData<>();
         databaseTrips = FirebaseDatabase.getInstance().getReference("trips");
-        historyTrips = new ArrayList<>();
+        historyTrips = new ArrayList<>();*/
         colerData= new MutableLiveData<>();
 
     }
@@ -52,6 +52,7 @@ public class DoneTripsModel implements DoneTripsModelInterface {
         return colerData;
     }
 
+/*
     public MutableLiveData<List<Trips>>  getDoneTrips() {
         new Thread(new Runnable() {
             int i = 0;
@@ -94,6 +95,7 @@ public class DoneTripsModel implements DoneTripsModelInterface {
         }).start();
         return doneTrips;
     }
+*/
 
 
 }

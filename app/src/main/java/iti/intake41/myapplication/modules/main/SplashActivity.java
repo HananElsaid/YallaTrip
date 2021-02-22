@@ -1,6 +1,5 @@
 package iti.intake41.myapplication.modules.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -8,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.google.firebase.auth.FirebaseAuth;
 
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
@@ -38,12 +38,16 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try {
                     // Thread will sleep for 5 seconds
+
                     sleep(3 * 1000);
                     // After 5 seconds redirect to another screen
                     if (NetworkClass.getCurrentUser() != null)
                         Navigator.gotoScreen(SplashActivity.this, MainActivity.class);
-                    else if (NetworkClass.getCurrentUser() == null)
+
+                    else
                         Navigator.gotoScreen(SplashActivity.this, LoginActivity.class);
+
+
                     //Remove activity
                     finish();
                 } catch (Exception e) {

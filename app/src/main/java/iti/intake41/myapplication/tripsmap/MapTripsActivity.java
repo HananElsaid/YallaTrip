@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.models.Trips;
+import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.tripsmap.viewmodel.DoneTripsViewModel;
 
 public class MapTripsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -39,8 +39,12 @@ public class MapTripsActivity extends FragmentActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //view model object
         doneTripsViewModel = new ViewModelProvider(this).get(DoneTripsViewModel.class);
+        //list of colors
         colorList = new ArrayList<>();
+        //observe on message if an error ocures
         if(doneTripsViewModel.message!=null){
         doneTripsViewModel.message.observe(this, new Observer<String>() {
             @Override
@@ -54,26 +58,25 @@ public class MapTripsActivity extends FragmentActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         LatLng src1 = new LatLng(31.041455, 31.4178593);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(src1, 4f));
 
-        doneTripsViewModel.trips.observe(this, new Observer<List<Trips>>() {
+        doneTripsViewModel.tripsList.observe(this, new Observer<List<Trip>>() {
             @Override
-            public void onChanged(List<Trips> trips) {
+            public void onChanged(List<Trip> trips) {
 
                 //if i have a list of object
                 for (int i = 0; i < trips.size(); i++) {
                     Log.i("I", "i= " + i);
-                    Trips trip = trips.get(i);
-                    double srclong = trip.getTripStartPointLongitude();
-                    double scrlat = trip.getTripStartPointLatitude();
+                    Trip trip = trips.get(i);
+                    double srclong = Double.parseDouble(trip.getStartPoint().getLongitude());
+                    double scrlat = Double.parseDouble(trip.getStartPoint().getLatitude());
                     final LatLng src = new LatLng(srclong, scrlat);
-                    mMap.addMarker(new MarkerOptions().position(src).title(trip.getTripName())).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                    double deslong = trip.getTripEndPointLongitude();
-                    double deslat = trip.getTripEndPointLatitude();
+                    mMap.addMarker(new MarkerOptions().position(src).title(trip.getTitle())).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    double deslong = Double.parseDouble(trip.getEndPoint().getLongitude());
+                    double deslat = Double.parseDouble(trip.getEndPoint().getLatitude());
                     final LatLng des = new LatLng(deslong, deslat);
-                    mMap.addMarker(new MarkerOptions().position(des).title(trip.getTripName()));
+                    mMap.addMarker(new MarkerOptions().position(des).title(trip.getTitle()));
 
                     //
                     colorList = doneTripsViewModel.getColorList();

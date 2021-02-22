@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YallaTrip">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -20,11 +21,11 @@
         <activity
             android:name=".tripsmap.MapTripsActivity"
             android:label="@string/title_activity_map_trips" />
+
         <activity android:name=".creatnote.view.CreatNoteActivity" />
         <activity android:name=".modules.main.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -37,6 +38,7 @@
         <activity android:name=".modules.main.MainActivity" />
 
         <activity android:name=".createtrip.view.CreateTrip" />
+
 
     </application>
 

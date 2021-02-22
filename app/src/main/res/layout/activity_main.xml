@@ -59,6 +59,7 @@
         android:foregroundGravity="center"
         app:backgroundTint="@color/orangeDark"
         app:layout_anchor="@id/bottomAppBar"
+        android:onClick="createTripClicked"
         >
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
