@@ -25,4 +25,27 @@
         <item name="android:textColor">@color/greyDark</item>
     </style>
 
+
+
+    <style name="LabelStyle">
+        <item name="android:background">@drawable/bg_label</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+    <style name="DeleteLabelStyle">
+        <item name="android:background">@color/redMid</item>
+
+    </style>
+
+    <style name="EditLabelStyle">
+        <item name="android:background">@color/orangeLight</item>
+    </style>
+
+    <style name="NavigateLabelStyle">
+        <item name="android:background">@color/greenLight</item>
+    </style>
+
+
+
 </resources>

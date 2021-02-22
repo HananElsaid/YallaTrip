@@ -66,4 +66,9 @@
     <string name="picedtime">12:10</string>
     <string name="addNote">Add Notes</string>
     <string name="tapToChoose">Tap to choose location</string>
+    <string name="trip_Trip">Go Shopping</string>
+    <string name="status">upcoming</string>
+    <string name="more">More</string>
+    <string name="edit">edit</string>
+
 </resources>

@@ -12,13 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YallaTrip">
-        <activity android:name=".TripDetailes"></activity>
-        <activity android:name=".createtrip.view.CreateTrip">
+        <activity android:name=".TripDetailes">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".createtrip.view.CreateTrip">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".signup.view.SignUpActivity">

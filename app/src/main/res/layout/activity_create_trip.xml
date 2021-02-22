@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:contentDescription="header"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_header"
+            app:srcCompat="@drawable/ic_header"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,15 +58,15 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_weight="0.3"
                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@id/txtNameTrip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/tripTitle"
-                    android:textSize="18sp"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNameTrip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/tripTitle"
+                        android:textSize="18sp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -102,7 +102,7 @@
                     android:layout_weight="0.2"
                     android:contentDescription="@string/locationIcon"
                     android:padding="10dp"
-                    app:srcCompat="@drawable/locations" />
+                    app:srcCompat="@drawable/ic_locations" />
 
 
                 <LinearLayout

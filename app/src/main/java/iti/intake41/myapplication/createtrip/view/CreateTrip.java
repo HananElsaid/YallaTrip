@@ -31,26 +31,26 @@ public class CreateTrip extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trip);
-        //createTrip=findViewById(R.id.btnCreateTrip);
-//        addNotes=findViewById(R.id.addNotes);
-//        datePicker=findViewById(R.id.btnDatePicker);
-//        timePicker=findViewById(R.id.btnTimePicker);
-//
-//        tripName= findViewById(R.id.txtNameTrip);
-//        startPoint= findViewById(R.id.txtStartPoint);
-//        endPoint= findViewById(R.id.txtEndPoint);
-//        //roundTrip=findViewById(R.id.roundTrip);
-//
-//        timePicker.setOnClickListener(v -> {
-//            timePicker(v);
-//
-//        });
-//
-//
-//        datePicker.setOnClickListener(v -> {
-//            datePicker(v);
-//
-//        });
+        createTrip=findViewById(R.id.btnCreateTrip);
+        addNotes=findViewById(R.id.addNotes);
+        datePicker=findViewById(R.id.btnDatePicker);
+        timePicker=findViewById(R.id.btnTimePicker);
+
+        tripName= findViewById(R.id.txtNameTrip);
+        startPoint= findViewById(R.id.txtStartPoint);
+        endPoint= findViewById(R.id.txtEndPoint);
+        //roundTrip=findViewById(R.id.roundTrip);
+
+        timePicker.setOnClickListener(v -> {
+            timePicker(v);
+
+        });
+
+
+        datePicker.setOnClickListener(v -> {
+            datePicker(v);
+
+        });
     }
 
 
