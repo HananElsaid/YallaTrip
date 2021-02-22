@@ -1,6 +1,7 @@
 package iti.intake41.myapplication.modules.main.ui.home;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import iti.intake41.myapplication.R;
@@ -86,9 +90,20 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 //            //String year         = (String) DateFormat.format("yyyy", date); // 2013
 //            String time         = (String) DateFormat.format("hh:mm a", date); // 2013
 
-//            monthTextView.setText(monthString);
-//            dayTextView.setText(day);
-//            timeTextView.setText(time);
+
+
+
+            try {
+                Date date = new SimpleDateFormat("dd MMM, yyyy").parse(item.getDate());
+                String month  = (String) DateFormat.format("MMM",  date); // Jun
+                String day  = (String) DateFormat.format("dd",   date); // 20
+                monthTextView.setText(month);
+                dayTextView.setText(day);
+                timeTextView.setText(item.getTime());
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             linearLayout.setOnClickListener((v)->{
                 Toast.makeText(context, item.getTitle(), Toast.LENGTH_LONG).show();

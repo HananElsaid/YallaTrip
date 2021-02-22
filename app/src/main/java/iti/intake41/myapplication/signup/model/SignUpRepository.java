@@ -11,8 +11,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import iti.intake41.myapplication.signup.viewmodel.SignUpViewModel;
-
 public class SignUpRepository implements SignUpModelInterface {
     FirebaseAuth auth;
     DatabaseReference dbRef;
@@ -60,7 +58,9 @@ public class SignUpRepository implements SignUpModelInterface {
     void uploadUserData(String username, String email) {
         String userID = auth.getCurrentUser().getUid();
         DatabaseReference currentUserDB = dbRef.child(userID);
-        currentUserDB.child("Name").setValue(username);
+
+        currentUserDB.child("id").setValue(userID);
+        currentUserDB.child("name").setValue(username);
         currentUserDB.child("email").setValue(email);
     }
 

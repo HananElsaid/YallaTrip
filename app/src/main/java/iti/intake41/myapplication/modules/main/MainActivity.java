@@ -2,6 +2,7 @@ package iti.intake41.myapplication.modules.main;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -13,15 +14,10 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.models.FirebaseRepo;
-import iti.intake41.myapplication.models.Trip;
+import iti.intake41.myapplication.models.FirebaseRepoDelegate;
+import iti.intake41.myapplication.models.note.NoteRepo;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,12 +48,78 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createTripClicked(View view) {
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+//
+//        Trip trip = new Trip("Travel to Dahab", "12 Dec, 2020", "5:00 am", "done",
+//                new Location("Ismailia, Egypt", "30.571721", "32.369218"),
+//                new Location("Cairo, Egypt", "30.031055", "31.236319"));
+//
+//
+//        trip.setId("-MU6Jm3Z6Wru4rYdplbI");
+//        (new TripRepo()).updateTrip(trip, new FirebaseRepoDelegate() {
+//            @Override
+//            public void success(String message) {
+//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void failed(String message) {
+//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//        (new NoteRepo()).addNote("-MU63nmzEnvuitB9PHTT", "Tesing Notes", new FirebaseRepoDelegate() {
+//            public void success(String message) {
+//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+//            }
+//        });
 
-        Map<String, Boolean> notes = new HashMap<>();
-        notes.put("get Items", true);
-        Trip tr = new Trip( "1", "1" ,"1", "1", "1", "1","1","1", 1.1, 1.1, 1.1, 1.1, notes);
-        (new FirebaseRepo(mDatabase)).writeNewTrip(tr);
+//        new TripRepo().updateTrip("-MU6Jm3Z6Wru4rYdplbI", new FirebaseRepoDelegate() {
+//            @Override
+//            public void success(String message) {
+//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void failed(String message) {
+//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+
+//                new TripRepo().deleteTrip("-MU6Jm3Z6Wru4rYdplbI", new FirebaseRepoDelegate() {
+//                    @Override
+//                    public void success(String message) {
+//                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    @Override
+//                    public void failed(String message) {
+//                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+//                    }
+//                });
+
+        new NoteRepo().updateNote("-MU64ZZ9iPY4fsoLz9yR", "-MU63nmzEnvuitB9PHTT", true, new FirebaseRepoDelegate(){
+            @Override
+            public void success(String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void failed(String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        new NoteRepo().deleteNote("-MU6KT4bzjUyKgTqM8-o", "-MU63nmzEnvuitB9PHTT", new FirebaseRepoDelegate(){
+            @Override
+            public void success(String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void failed(String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

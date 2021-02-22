@@ -10,54 +10,51 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.models.FirebaseRepo;
+import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
+import iti.intake41.myapplication.models.trip.TripRepo;
 
 public class HomeFragment extends Fragment {
 
     //MArk: - UIComponents
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
+    private TextView userNameTextView;
 
     //Mark :- Properties
     private HomeAdapter adapter;
     private List<Trip> items;
-    private FirebaseRepo repo;
-    private HomeViewModel homeViewModel;
-
+    private TripRepo repo;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.username);
-        textView.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
         return root;
+    }
+
+    public void initViews(View view){
+        userNameTextView = view.findViewById(R.id.userNameTV);
+        recyclerView = view.findViewById(R.id.profile);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Setup Recycler
+        repo = new TripRepo();
+        initViews(view);
         setupRecycler(view);
-        configureViews();
-        repo = new FirebaseRepo(FirebaseDatabase.getInstance().getReference());
         getItems();
     }
 
     private void setupRecycler(View view) {
-        recyclerView = view.findViewById(R.id.profile);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -143,15 +140,43 @@ public class HomeFragment extends Fragment {
 //        recyclerView.setAdapter(adapter);
 
     public void updateItems(List<Trip> tripList){
+        if(adapter == null){
+            configureViews();
+        }
         this.items = tripList;
         adapter.setItems(items);
         adapter.notifyDataSetChanged();
     }
 
     void getItems(){
-        //repo.getTrips(tripList -> updateItems(tripList));
-        repo.getDataFirebase(tripList -> updateItems(tripList));
+
+        repo.getTrips(new FirebaseRepoDelegate() {
+            @Override
+            public <T> void getListSuccess(List<T> list) {
+                updateItems((List<Trip>) list);
+            }
+
+            @Override
+            public void failed(String message) {
+                showToast(message);
+            }
+        });
     }
+//
+//    void getUser(){
+//        repo.getUser(new FirebaseRepoDelegate() {
+//
+//            @Override
+//            public void getUserSuccess(User user) {
+//                //userNameTextView.setText(user.name);
+//            }
+//
+//            @Override
+//            public void failed(String message) {
+//                showToast(message);
+//            }
+//        });
+//    }
 
     public void itemClicked(String id) {
 //        Intent i = new Intent(this, DetailsActivity.class);

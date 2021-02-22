@@ -1,42 +1,36 @@
 package iti.intake41.myapplication.models;
 
-
 //
-//	RootClass.java
+//	-MU5ULrYl55jEqCBhnkl.java
 //
 //	Create by Mukesh Yadav on 21/2/2021
 
-import com.google.firebase.database.Exclude;
-import com.google.firebase.database.IgnoreExtraProperties;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
-@IgnoreExtraProperties
-public class Trip {
-    private String tripID, userID, title, endPoint, startPoint, status, date, time;
-    private double endLat, endLong, startLat, startLong;
-    private Map<String, Boolean> notes = new HashMap<>();
+import iti.intake41.myapplication.models.trip.Location;
 
-    public Trip(){
-    }
 
-    public Trip(String title, String tripID, String userID , String date,
-                String startPoint, String endPoint, String status, String time,
-                double endLat, double endLong, double startLat, double startLong,
-                Map<String, Boolean> notes) {
+public class Trip{
+    private String date;
+    private Location endPoint;
+    private String id;
+    private Location startPoint;
+    private String status;
+    private String time;
+    private String title;
+
+    public Trip(){}
+
+    public Trip(String title, String date, String time, String status, Location endPoint, Location startPoint ) {
         this.date = date;
-        this.endLat = endLat;
-        this.endLong = endLong;
         this.endPoint = endPoint;
-        this.startLat = startLat;
-        this.startLong = startLong;
         this.startPoint = startPoint;
         this.status = status;
         this.time = time;
         this.title = title;
-        this.tripID = tripID;
-        this.userID = userID;
-        this.notes = notes;
     }
 
     public void setDate(String date){
@@ -45,40 +39,22 @@ public class Trip {
     public String getDate(){
         return this.date;
     }
-    public void setEndLat(float endLat){
-        this.endLat = endLat;
-    }
-    public double getEndLat(){
-        return this.endLat;
-    }
-    public void setEndLong(float endLong){
-        this.endLong = endLong;
-    }
-    public double getEndLong(){
-        return this.endLong;
-    }
-    public void setEndPoint(String endPoint){
+    public void setEndPoint(Location endPoint){
         this.endPoint = endPoint;
     }
-    public String getEndPoint(){
+    public Location getEndPoint(){
         return this.endPoint;
     }
-    public void setStartLat(float startLat){
-        this.startLat = startLat;
+    public void setId(String id){
+        this.id = id;
     }
-    public double getStartLat(){
-        return this.startLat;
+    public String getId(){
+        return this.id;
     }
-    public void setStartLong(float startLong){
-        this.startLong = startLong;
-    }
-    public double getStartLong(){
-        return this.startLong;
-    }
-    public void setStartPoint(String startPoint){
+    public void setStartPoint(Location startPoint){
         this.startPoint = startPoint;
     }
-    public String getStartPoint(){
+    public Location getStartPoint(){
         return this.startPoint;
     }
     public void setStatus(String status){
@@ -99,97 +75,38 @@ public class Trip {
     public String getTitle(){
         return this.title;
     }
-    public void setTripID(String tripID){
-        this.tripID = tripID;
-    }
-    public String getTripID(){
-        return this.tripID;
-    }
-    public void setUserID(String userID){
-        this.userID = userID;
-    }
-    public String getUserID(){
-        return this.userID;
+
+    /**
+     * Instantiate the instance using the passed jsonObject to set the properties values
+     */
+    public Trip(JSONObject jsonObject){
+        if(jsonObject == null){
+            return;
+        }
+        date = jsonObject.opt("date").toString();
+        endPoint = new Location(jsonObject.optJSONObject("endPoint"));
+        id = jsonObject.opt("id").toString();
+        startPoint = new Location(jsonObject.optJSONObject("startPoint"));
+        status = jsonObject.opt("status").toString();
+        time = jsonObject.opt("time").toString();
+        title = jsonObject.opt("title").toString();
     }
 
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("date", date);
-        result.put("endLat", endLat);
-        result.put("endLong", endLong);
-        result.put("endPoint", endPoint);
-        result.put("startLat", startLat);
-        result.put("startLong", startLong);
-        result.put("startPoint", startPoint);
-        result.put("status", status);
-        result.put("time", time);
-        result.put("title", title);
-        result.put("tripID", tripID);
-        result.put("userID", userID);
-        result.put("notes", notes);
-        return result;
+    /**
+     * Returns all the available property values in the form of JSONObject instance where the key is the approperiate json key and the value is the value of the corresponding field
+     */
+    public Map<String, Object> toMap()
+    {
+        Map<String, Object> mapObj = new HashMap<>();
+            mapObj.put("date", date);
+            mapObj.put("endPoint", endPoint.toMap());
+            mapObj.put("id", id);
+           // mapObj.put("notes", notes.toJsonObject());
+            mapObj.put("startPoint", startPoint.toMap());
+            mapObj.put("status", status);
+            mapObj.put("time", time);
+            mapObj.put("title", title);
+        return mapObj;
     }
 
 }
-
-
-
-/*
-
-// [START Trip_class]
-@IgnoreExtraProperties
-public class Trip {
-    String tripID, tripStartPoint, tripEndPoint, tripName, tripDate, tripTime, tripStatus, userID;
-    double tripStartPointLongitude, tripStartPointLatitude, tripEndPointLongitude, tripEndPointLatitude;
-
-    public Map<String, Boolean> notes = new HashMap<>();
-
-    public Trip() {
-        // Default constructor required for calls to DataSnapshot.getValue(Trip.class)
-    }
-
-    public Trip(String uid, String author, String title, String body) {
-        this.uid = uid;
-        this.author = author;
-        this.title = title;
-        this.body = body;
-    }
-
-    // [START trip_to_map]
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", uid);
-        result.put("author", author);
-        result.put("title", title);
-        result.put("body", body);
-        result.put("starCount", starCount);
-        result.put("stars", stars);
-
-        return result;
-    }
-    // [END trip_to_map]
-}
-// [END trip_class]
- */
-
-
-/**
- * {
- *  "tripID": "1",
- * 	"tripStartPoint": "1",
- * 	"tripEndPoint": "1",
- * 	"tripName": "1",
- * 	"tripDate": "1",
- * 	"tripTime": "1",
- * 	"tripStatus": "1",
- * 	"userID": "1",
- * 	"tripStartPointLongitude":1.2,
- * 	"tripStartPointLatitude": 1.3,
- * 	 "tripEndPointLongitude": 1.4,
- * 	"tripEndPointLatitude": 1.6
- *
- * }
- *
- * */
