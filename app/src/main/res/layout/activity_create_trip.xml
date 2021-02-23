@@ -38,7 +38,7 @@
 
 
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/userNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.7"
@@ -60,7 +60,7 @@
                >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtNameTrip"
+                        android:id="@+id/titleTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/tripTitle"
@@ -184,7 +184,7 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
-                android:id="@+id/btnDatePicker"
+                android:id="@+id/timeTextView"
                 android:onClick="datePicker"
                 android:text="@string/date"
                 app:backgroundTint="@color/white"
@@ -197,7 +197,7 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
-                android:id="@+id/btnTimePicker"
+                android:id="@+id/timeTextView"
                 android:onClick="timePicker"
                 android:text="@string/time"
                 app:backgroundTint="@color/white"

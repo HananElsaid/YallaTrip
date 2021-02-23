@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.main.ui.profile;
+package iti.intake41.myapplication.modules.main.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

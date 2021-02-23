@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:weightSum="1"
     android:background="@drawable/background"
-    tools:context=".createtrip.view.CreateTrip">
+    tools:context=".modules.main.tripdetails.TripDetailes">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
 
 
             <TextView
-                android:id="@+id/txtNameTrip"
+                android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginLeft="10dp"
@@ -49,24 +49,29 @@
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="97dp"
-                android:layout_height="30dp"
-                app:cardCornerRadius="12dp"
-                android:layout_marginLeft="15dp">
-
                 <TextView
+                    android:id="@+id/statusTextView"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/status"
                     android:textAlignment="center"
+                    android:background="@drawable/ripple"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/greenDark"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:textSize="12dp"
+                    android:layout_margin="16dp"
+                    android:padding="6dp"
                     app:boxBackgroundColor="@color/white"
-                    app:boxCornerRadiusBottomEnd="10dp"
-                    app:boxCornerRadiusBottomStart="10dp"
-                    app:boxCornerRadiusTopEnd="10dp"
-                    app:boxCornerRadiusTopStart="10dp" />
-            </androidx.cardview.widget.CardView>
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    />
+
+
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -94,7 +99,6 @@
                 android:weightSum="1">
 
                 <ImageView
-                    android:id="@+id/imageView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -182,8 +186,7 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
-                android:id="@+id/btnDatePicker"
-                android:onClick="datePicker"
+                android:id="@+id/dateTextView"
                 android:text="@string/date"
                 app:backgroundTint="@color/white"
                 app:cornerRadius="20dp"
@@ -195,8 +198,7 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
-                android:id="@+id/btnTimePicker"
-                android:onClick="timePicker"
+                android:id="@+id/timeTextView"
                 android:text="@string/time"
                 app:backgroundTint="@color/white"
                 app:cornerRadius="20dp"
@@ -209,29 +211,28 @@
 
 
         <Button
+            style="@style/CardButton"
             android:layout_marginTop="10dp"
-            android:id="@+id/addNotes"
             android:onClick="addNotes"
             android:text="@string/addNote"
             app:backgroundTint="@color/white"
             app:cornerRadius="20dp"
             app:icon="@drawable/icon_material_note_add"
             app:iconGravity="start"
-            app:iconTint="@color/greenDark"
-            style="@style/CardButton" />
+            app:iconTint="@color/greenDark"/>
 
 
 
-        <CheckBox
-            android:id="@+id/roundTrip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:buttonTint="@color/greenDark"
-            android:onClick="onCheckboxClicked"
-            android:text="@string/roundTrip"
-            tools:targetApi="lollipop" />
+<!--        <CheckBox-->
+<!--            android:id="@+id/roundTrip"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:buttonTint="@color/greenDark"-->
+<!--            android:onClick="onCheckboxClicked"-->
+<!--            android:text="@string/roundTrip"-->
+<!--            tools:targetApi="lollipop" />-->
 
 <!--        <com.google.android.material.button.MaterialButton-->
 <!--            android:id="@+id/btnCreateTrip"-->
@@ -254,34 +255,36 @@
         android:layout_weight="0.2">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/edit_floating_button"
+            android:id="@+id/editButton"
             style="@style/LabelStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             android:contentDescription="@string/edit"
-            android:tint="@android:color/white"
+            android:onClick="editClicked"
 
+            android:tint="@android:color/white"
             android:visibility="invisible"
             app:backgroundTint="@color/orangeLight"
-            app:layout_constraintBottom_toBottomOf="@+id/more_floating_action_button"
-            app:layout_constraintEnd_toStartOf="@+id/more_floating_action_button"
+            app:layout_constraintBottom_toBottomOf="@+id/moreButton"
+            app:layout_constraintEnd_toStartOf="@+id/moreButton"
             app:layout_constraintHorizontal_bias="0.35"
-            app:layout_constraintStart_toEndOf="@+id/navigation_floating_button"
-            app:layout_constraintTop_toTopOf="@+id/more_floating_action_button"
-            app:srcCompat="@drawable/icon_feather_edit_2">
+            app:layout_constraintStart_toEndOf="@+id/startButton"
+            app:layout_constraintTop_toTopOf="@+id/moreButton"
+            android:src="@drawable/icon_feather_edit_2">
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/more_floating_action_button"
+            android:id="@+id/moreButton"
             style="@style/LabelStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:contentDescription="@string/more"
+            android:onClick="moreClicked"
             android:tint="@android:color/white"
             app:backgroundTint="@color/greenDark"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -293,42 +296,44 @@
             app:srcCompat="@drawable/icon_feather_menu"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/delet_floating_button"
+            android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
 
             android:contentDescription="@string/edit"
+            android:onClick="deleteClicked"
             android:tint="@android:color/white"
             android:visibility="invisible"
             app:backgroundTint="@color/redMid"
-            app:layout_constraintBottom_toBottomOf="@+id/more_floating_action_button"
-            app:layout_constraintEnd_toStartOf="@+id/more_floating_action_button"
+            app:layout_constraintBottom_toBottomOf="@+id/moreButton"
+            app:layout_constraintEnd_toStartOf="@+id/moreButton"
             app:layout_constraintHorizontal_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/more_floating_action_button"
+            app:layout_constraintTop_toTopOf="@+id/moreButton"
             app:srcCompat="@drawable/icon_material_delete">
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/navigation_floating_button"
+            android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
 
+            android:layout_margin="16dp"
             android:layout_marginStart="80dp"
-            android:contentDescription="@string/edit"
+            android:contentDescription="@string/start"
+            android:onClick="startClicked"
             android:tint="@android:color/white"
             android:visibility="invisible"
             app:backgroundTint="@color/greenLight"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_floating_button"
-            app:layout_constraintEnd_toStartOf="@+id/more_floating_action_button"
+            app:layout_constraintBottom_toBottomOf="@+id/editButton"
+            app:layout_constraintEnd_toStartOf="@+id/moreButton"
             app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toEndOf="@+id/delet_floating_button"
-            app:layout_constraintTop_toTopOf="@+id/more_floating_action_button"
+            app:layout_constraintStart_toEndOf="@+id/deleteButton"
+            app:layout_constraintTop_toTopOf="@+id/moreButton"
             app:layout_constraintVertical_bias="0.51"
             app:srcCompat="@drawable/icon_ionic_md_navigate">
 

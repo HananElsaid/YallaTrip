@@ -8,4 +8,5 @@ public interface TripRepoInterface {
     void addTrip(Trip trip, FirebaseRepoDelegate delegate);
     void updateTrip(Trip trip, FirebaseRepoDelegate delegate);
     void deleteTrip(String id, FirebaseRepoDelegate delegate);
+    void getTripDetails(String id, FirebaseRepoDelegate delegate);
 }

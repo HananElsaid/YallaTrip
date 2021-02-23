@@ -21,19 +21,19 @@ import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
 
 public class TripRepo extends FirebaseRepo implements TripRepoInterface{
-    DatabaseReference userRef;
+    DatabaseReference tripRef;
 
     public TripRepo(){
-            userRef  = mDatabase.child("trips").child(getUid());
+            tripRef = mDatabase.child("trips").child(getUid());
     }
 
     public String getTripID(){
-        return userRef.push().getKey();
+        return tripRef.push().getKey();
     }
 
     @Override
     public void getTrips(FirebaseRepoDelegate delegate){
-        userRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        tripRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -59,8 +59,8 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
     @Override //#done
     public void addTrip(Trip trip, FirebaseRepoDelegate delegate) {
         String tripId = getTripID();
+        trip.setId(tripId);
         Map<String, Object> childUpdates = new HashMap<>();
-
         childUpdates.put("/trips/" + getUid() + "/" + tripId, trip.toMap());
 
         mDatabase.updateChildren(childUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -102,6 +102,21 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     delegate.success("Trip updated Successfully");
+                } else {
+                    Log.e("firebase", "Error getting data", task.getException());
+                    delegate.failed(task.getException().getLocalizedMessage());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getTripDetails(String id, FirebaseRepoDelegate delegate) {
+        tripRef.child(id).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    delegate.getObjSuccess( task.getResult().getValue(Trip.class));
                 } else {
                     Log.e("firebase", "Error getting data", task.getException());
                     delegate.failed(task.getException().getLocalizedMessage());

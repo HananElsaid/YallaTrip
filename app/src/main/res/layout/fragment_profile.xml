@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context=".modules.main.ui.profile.ProfileFragment">
+    tools:context=".modules.main.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:textColor="@color/white" />
 
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/userNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Yasmine Ghazy"

@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.main.ui.home;
+package iti.intake41.myapplication.modules.main.home;
 
 public interface HomeAdapterDelegate {
     public void itemClicked(String id);

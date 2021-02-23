@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.main.ui.home;
+package iti.intake41.myapplication.modules.main.home;
 
 import android.content.Context;
 import android.text.format.DateFormat;
@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +19,9 @@ import java.util.Date;
 import java.util.List;
 
 import iti.intake41.myapplication.R;
+import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.models.Trip;
+import iti.intake41.myapplication.models.trip.TripStatus;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private final Context context;
@@ -62,12 +64,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView titleTextView;
-        public TextView timeTextView;
-        public TextView dayTextView;
-        public TextView monthTextView;
-        public LinearLayout linearLayout;
-        public View layout;
+        private final Button startButton;
+        private final TextView titleTextView, timeTextView, dayTextView, monthTextView;
+        private final LinearLayout linearLayout;
+        private final View layout;
 
         public ViewHolder(View v){
             super(v);
@@ -76,12 +76,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             timeTextView = v.findViewById(R.id.timeTextView);
             dayTextView = v.findViewById(R.id.dayTextView);
             monthTextView = v.findViewById(R.id.monthTextView);
+            startButton = v.findViewById(R.id.startButton);
             linearLayout = v.findViewById(R.id.row);
         }
 
         public void configure(Trip item){
             titleTextView.setText(item.getTitle());
-
 //            Date date = item.getDate();
 //            //String dayOfTheWeek = (String) DateFormat.format("EEEE", date); // Thursday
 //            String day          = (String) DateFormat.format("dd",   date); // 20
@@ -89,10 +89,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 //            //String monthNumber  = (String) DateFormat.format("MM",   date); // 06
 //            //String year         = (String) DateFormat.format("yyyy", date); // 2013
 //            String time         = (String) DateFormat.format("hh:mm a", date); // 2013
-
-
-
-
             try {
                 Date date = new SimpleDateFormat("dd MMM, yyyy").parse(item.getDate());
                 String month  = (String) DateFormat.format("MMM",  date); // Jun
@@ -101,15 +97,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 dayTextView.setText(day);
                 timeTextView.setText(item.getTime());
 
+                if(item.getStatus().equals(TripStatus.upcoming.toString()))
+                    startButton.setVisibility(View.VISIBLE);
+                else
+                    startButton.setVisibility(View.INVISIBLE);
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
             linearLayout.setOnClickListener((v)->{
-                Toast.makeText(context, item.getTitle(), Toast.LENGTH_LONG).show();
-                //Intent i = new Intent(context, DetailsActivity.class);
-                //i.putExtra("item", item);
-                //context.startActivity(i);
+                System.out.println("linearLayout.setOnClickListener(");
+                Navigator.navigateToTripDetails(context, item.getId());
+                //delegate.itemClicked(item.getId());
             });
             Log.i(TAG, "***** onBindViewHolder *****");
         }

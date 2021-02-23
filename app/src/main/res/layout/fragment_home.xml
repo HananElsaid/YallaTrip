@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context=".modules.main.ui.home.HomeFragment">
+    tools:context=".modules.main.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                 android:textColor="@color/white" />
 
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/userNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Yasmine Ghazy"
@@ -73,35 +73,38 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp">
 
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:background="@color/greenDark"
-        android:backgroundTint="@color/greenDark"
-        app:tabTextColor="@color/greyLight"
-        app:tabSelectedTextColor="@color/greenDark"
-        app:tabIndicator="@color/white"
-        app:tabIndicatorColor="@color/white"
-        app:tabIndicatorHeight="50dp"
-
-        >
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/upcoming" />
+            android:layout_margin="0dp"
+            android:background="@color/greenDark"
+            android:backgroundTint="@color/greenDark"
+            app:tabIndicator="@color/white"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorHeight="50dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/greenDark"
+            app:tabTextColor="@color/greyLight">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/done" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/upcoming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/upcoming" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancelled" />
-    </com.google.android.material.tabs.TabLayout>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/done" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/cancelled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancelled" />
+        </com.google.android.material.tabs.TabLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -110,7 +113,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/profile"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout_editor_absoluteY="560dp">

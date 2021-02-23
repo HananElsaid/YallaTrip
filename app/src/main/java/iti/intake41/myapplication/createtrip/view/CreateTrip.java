@@ -33,10 +33,10 @@ public class CreateTrip extends AppCompatActivity {
         setContentView(R.layout.activity_create_trip);
         createTrip=findViewById(R.id.btnCreateTrip);
         addNotes=findViewById(R.id.addNotes);
-        datePicker=findViewById(R.id.btnDatePicker);
-        timePicker=findViewById(R.id.btnTimePicker);
+        datePicker=findViewById(R.id.timeTextView);
+        timePicker=findViewById(R.id.timeTextView);
 
-        tripName= findViewById(R.id.txtNameTrip);
+        tripName= findViewById(R.id.titleTextView);
         startPoint= findViewById(R.id.txtStartPoint);
         endPoint= findViewById(R.id.txtEndPoint);
         //roundTrip=findViewById(R.id.roundTrip);

@@ -5,6 +5,9 @@ package iti.intake41.myapplication.models;
 //
 //	Create by Mukesh Yadav on 21/2/2021
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -13,7 +16,7 @@ import java.util.Map;
 import iti.intake41.myapplication.models.trip.Location;
 
 
-public class Trip{
+public class Trip implements Parcelable {
     private String date;
     private Location endPoint;
     private String id;
@@ -32,6 +35,28 @@ public class Trip{
         this.time = time;
         this.title = title;
     }
+
+    protected Trip(Parcel in) {
+        date = in.readString();
+        endPoint = in.readParcelable(Location.class.getClassLoader());
+        id = in.readString();
+        startPoint = in.readParcelable(Location.class.getClassLoader());
+        status = in.readString();
+        time = in.readString();
+        title = in.readString();
+    }
+
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
 
     public void setDate(String date){
         this.date = date;
@@ -109,4 +134,19 @@ public class Trip{
         return mapObj;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(date);
+        dest.writeParcelable(endPoint, flags);
+        dest.writeString(id);
+        dest.writeParcelable(startPoint, flags);
+        dest.writeString(status);
+        dest.writeString(time);
+        dest.writeString(title);
+    }
 }

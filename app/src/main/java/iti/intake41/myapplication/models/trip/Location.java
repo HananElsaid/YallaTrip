@@ -4,16 +4,37 @@ package iti.intake41.myapplication.models.trip;
 //	EndPoint.java
 //
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class Location{
+public class Location implements Parcelable {
 
 	private String address, latitude, longitude;
 
+
+	protected Location(Parcel in) {
+		address = in.readString();
+		latitude = in.readString();
+		longitude = in.readString();
+	}
+
+	public static final Creator<Location> CREATOR = new Creator<Location>() {
+		@Override
+		public Location createFromParcel(Parcel in) {
+			return new Location(in);
+		}
+
+		@Override
+		public Location[] newArray(int size) {
+			return new Location[size];
+		}
+	};
 
 	public void setAddress(String address){
 		this.address = address;
@@ -66,4 +87,15 @@ public class Location{
 		return mapObj;
 	}
 
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(address);
+		dest.writeString(latitude);
+		dest.writeString(longitude);
+	}
 }

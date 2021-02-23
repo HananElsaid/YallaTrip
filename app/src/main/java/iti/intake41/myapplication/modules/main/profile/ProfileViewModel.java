@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.main.ui.profile;
+package iti.intake41.myapplication.modules.main.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
