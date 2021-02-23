@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -37,8 +38,15 @@
         <activity android:name=".signup.view.SignUpActivity" />
         <activity android:name=".modules.main.MainActivity" />
 
-        <activity android:name=".createtrip.view.CreateTrip" />
+        <activity android:name=".createtrip.view.CreateTrip" >
 
+<!--            <intent-filter>-->
+<!--        <action android:name="android.intent.action.MAIN" />-->
+
+<!--        <category android:name="android.intent.category.LAUNCHER" />-->
+<!--    </intent-filter>-->
+        </activity>
+        <receiver android:name=".createtrip.view.AlertReceiver"/>
 
     </application>
 

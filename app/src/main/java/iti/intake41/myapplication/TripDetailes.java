@@ -59,8 +59,7 @@ public class TripDetailes extends AppCompatActivity {
                 v -> {
 
 //                    String a= txtStartPoint.getText().toString();
-//                    String b= txtEndPoint.getText().toString();
-
+//                    String to= txtEndPoint.getText().toString();
                     String to = "cairo";
                     // Creates an Intent that will load a map of San Francisco
                     Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?daddr="+to);

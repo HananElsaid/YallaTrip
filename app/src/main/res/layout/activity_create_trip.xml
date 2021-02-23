@@ -132,6 +132,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:inputType="text"
                             android:text="@string/tapToChoose"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -243,7 +244,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:text="@string/done_button"
-            app:cornerRadius="20dp" />
+            app:cornerRadius="20dp"
+            android:onClick="createTripDone"/>
 
     </LinearLayout>
 
