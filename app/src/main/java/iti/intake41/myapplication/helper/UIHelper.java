@@ -11,10 +11,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import iti.intake41.myapplication.R;
+import iti.intake41.myapplication.models.FirebaseRepoDelegate;
+import iti.intake41.myapplication.models.note.NoteRepo;
 
 public class UIHelper {
+   static NoteRepo noteRepo;
 
-    public static Dialog creatDialog(Context context){
+    public static Dialog creatDialog(Context context,String tripId){
+        noteRepo=new NoteRepo();
         // custom dialog
         final Dialog dialog = new Dialog(context);
 
@@ -29,7 +33,18 @@ public class UIHelper {
             @Override
             public void onClick(View v) {
                String noteText= etNoteText.getText().toString().trim();
-                Toast.makeText(context,noteText,Toast.LENGTH_SHORT).show();
+               noteRepo.addNote(tripId, noteText, new FirebaseRepoDelegate() {
+                   @Override
+                   public void success(String message) {
+                       Toast.makeText(context,"upload note success",Toast.LENGTH_SHORT).show();
+                   }
+
+                   @Override
+                   public void failed(String message) {
+                       Toast.makeText(context,"upload note failed",Toast.LENGTH_SHORT).show();
+                   }
+               });
+
             }
         });
         // if button is clicked, close the custom dialog

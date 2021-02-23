@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="iti.intake41.myapplication">
-    
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +13,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.YallaTrip">
+        android:theme="@style/Theme.YallaTrip"
+        tools:ignore="ExtraText">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -24,6 +26,10 @@
 
         <activity android:name=".creatnote.view.CreatNoteActivity" />
         <activity android:name=".modules.main.SplashActivity">
+
+        </activity>
+
+        <activity android:name=".TripDetailes" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,15 +37,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".TripDetailes" />
-
         <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".signup.view.SignUpActivity" />
         <activity android:name=".modules.main.MainActivity" />
 
         <activity android:name=".createtrip.view.CreateTrip" />
 
-
+        //floating widget service
+        <service
+            android:name=".floatingwidget.FloatWidgetService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

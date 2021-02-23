@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.creatnote.model.Note;
+import iti.intake41.myapplication.models.note.Note;
+
 
 public class NoteAdapter  extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     private Context context;
@@ -39,7 +40,7 @@ public class NoteAdapter  extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     @Override
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
         Note note = noteList.get(position);
-        holder.tvNoteText.setText(note.getNoteText());
+        holder.tvNoteText.setText(note.getTitle());
         holder.image_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,8 +58,8 @@ public class NoteAdapter  extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         return noteList != null ? noteList.size() : 0;
     }
 
-    public void setData(List<Note> movieList) {
-        this.noteList = movieList;
+    public void setData(List<Note> noteList) {
+        this.noteList = noteList;
         notifyDataSetChanged();
 
     }

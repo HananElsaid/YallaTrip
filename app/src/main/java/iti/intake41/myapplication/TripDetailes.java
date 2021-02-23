@@ -4,17 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import iti.intake41.myapplication.floatingwidget.FloatWidgetService;
 
 public class TripDetailes extends AppCompatActivity {
 
     TextView txtStartPoint,txtEndPoint;
     private FloatingActionButton more, edit,delete,navigate;
     private boolean isopen;
+    private static final int APP_PERMISSION_REQUEST = 102;
 
 
 
@@ -67,8 +73,37 @@ public class TripDetailes extends AppCompatActivity {
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
                     startActivity(mapIntent);
+                    checkPermission();
+
                 }
         );
 
     }
+
+
+    public void checkPermission() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, APP_PERMISSION_REQUEST);
+        } else {
+            viewWidgetButton();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == APP_PERMISSION_REQUEST && resultCode == RESULT_OK) {
+           viewWidgetButton();
+        } else {
+            Toast.makeText(this, "Draw over other app permission not enable.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void viewWidgetButton(){
+        startService(new Intent(TripDetailes.this, FloatWidgetService.class));
+        finish();
+    }
+
 }
