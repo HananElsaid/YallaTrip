@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="iti.intake41.myapplication.modules.main.home.HomeFragment"
+        android:name="iti.intake41.myapplication.modules.view.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_more"
-        android:name="iti.intake41.myapplication.modules.main.profile.ProfileFragment"
+        android:name="iti.intake41.myapplication.modules.view.profile.ProfileFragment"
         android:label="@string/title_more"
         tools:layout="@layout/fragment_profile" />
 </navigation>

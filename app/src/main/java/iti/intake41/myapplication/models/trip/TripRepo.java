@@ -125,5 +125,4 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
         });
     }
 
-
 }

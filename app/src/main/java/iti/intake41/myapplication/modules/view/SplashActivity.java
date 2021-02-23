@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.main;
+package iti.intake41.myapplication.modules.view;
 
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
-import com.google.firebase.auth.FirebaseAuth;
 
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;

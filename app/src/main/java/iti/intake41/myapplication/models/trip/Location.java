@@ -82,8 +82,8 @@ public class Location implements Parcelable {
 	{
 		Map<String,String> mapObj = new HashMap<>();
 			mapObj.put("address", address);
-			mapObj.put("lat", latitude);
-			mapObj.put("long", longitude);
+			mapObj.put("latitude", latitude);
+			mapObj.put("longitude", longitude);
 		return mapObj;
 	}
 

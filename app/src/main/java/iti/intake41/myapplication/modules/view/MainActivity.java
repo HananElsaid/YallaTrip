@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.main;
+package iti.intake41.myapplication.modules.view;
 
 import android.os.Bundle;
 import android.view.View;

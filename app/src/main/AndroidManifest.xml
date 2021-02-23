@@ -23,7 +23,7 @@
             android:label="@string/title_activity_map_trips" />
 
         <activity android:name=".creatnote.view.CreatNoteActivity" />
-        <activity android:name=".modules.main.SplashActivity">
+        <activity android:name=".modules.view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,11 +31,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".modules.main.tripdetails.TripDetailes" />
+        <activity android:name=".modules.view.tripdetails.TripDetailes" />
 
         <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".signup.view.SignUpActivity" />
-        <activity android:name=".modules.main.MainActivity" />
+        <activity android:name=".modules.view.MainActivity" />
 
         <activity android:name=".createtrip.view.CreateTrip" />
 

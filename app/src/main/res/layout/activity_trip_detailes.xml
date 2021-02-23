@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".modules.view.tripdetails.TripDetailes">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background="@drawable/background"
-    tools:context=".modules.main.tripdetails.TripDetailes">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -221,131 +227,78 @@
             app:iconGravity="start"
             app:iconTint="@color/greenDark"/>
 
-
-
-<!--        <CheckBox-->
-<!--            android:id="@+id/roundTrip"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:buttonTint="@color/greenDark"-->
-<!--            android:onClick="onCheckboxClicked"-->
-<!--            android:text="@string/roundTrip"-->
-<!--            tools:targetApi="lollipop" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btnCreateTrip"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:text="@string/done_button"-->
-<!--            app:cornerRadius="20dp" />-->
-
-
-
     </LinearLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="0.2">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/editButton"
-            style="@style/LabelStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/edit"
-            android:onClick="editClicked"
-
-            android:tint="@android:color/white"
-            android:visibility="invisible"
-            app:backgroundTint="@color/orangeLight"
-            app:layout_constraintBottom_toBottomOf="@+id/moreButton"
-            app:layout_constraintEnd_toStartOf="@+id/moreButton"
-            app:layout_constraintHorizontal_bias="0.35"
-            app:layout_constraintStart_toEndOf="@+id/startButton"
-            app:layout_constraintTop_toTopOf="@+id/moreButton"
-            android:src="@drawable/icon_feather_edit_2">
-
-        </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/moreButton"
-            style="@style/LabelStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/more"
-            android:onClick="moreClicked"
-            android:tint="@android:color/white"
-            app:backgroundTint="@color/greenDark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.991"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.731"
-            app:srcCompat="@drawable/icon_feather_menu"></com.google.android.material.floatingactionbutton.FloatingActionButton>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-
-            android:contentDescription="@string/edit"
-            android:onClick="deleteClicked"
-            android:tint="@android:color/white"
-            android:visibility="invisible"
-            app:backgroundTint="@color/redMid"
-            app:layout_constraintBottom_toBottomOf="@+id/moreButton"
-            app:layout_constraintEnd_toStartOf="@+id/moreButton"
-            app:layout_constraintHorizontal_bias="0.16"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/moreButton"
-            app:srcCompat="@drawable/icon_material_delete">
-
-        </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/startButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-
-            android:layout_margin="16dp"
-            android:layout_marginStart="80dp"
-            android:contentDescription="@string/start"
-            android:onClick="startClicked"
-            android:tint="@android:color/white"
-            android:visibility="invisible"
-            app:backgroundTint="@color/greenLight"
-            app:layout_constraintBottom_toBottomOf="@+id/editButton"
-            app:layout_constraintEnd_toStartOf="@+id/moreButton"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toEndOf="@+id/deleteButton"
-            app:layout_constraintTop_toTopOf="@+id/moreButton"
-            app:layout_constraintVertical_bias="0.51"
-            app:srcCompat="@drawable/icon_ionic_md_navigate">
-
-        </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </LinearLayout>
 
+    <!-- This is NOT a root view, but should be a child of whatever root view you choose (CoordinatorLayout, ConstraintLayout, etc) -->
+        <com.nambimobile.widgets.efab.ExpandableFabLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
 
 
+            <!-- The next 3 Views will only display in portrait orientation -->
+            <com.nambimobile.widgets.efab.Overlay
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
+                app:overlay_orientation="portrait" />
 
+            <com.nambimobile.widgets.efab.ExpandableFab
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                app:efab_color="@color/orangeLight"
+                app:efab_orientation="portrait"
+                app:efab_icon="@drawable/icon_feather_menu"
+                app:maxImageSize="30dp"
+                app:label_text="@string/more"
+                android:layout_gravity="end|bottom"/>
+
+            <com.nambimobile.widgets.efab.FabOption
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="deleteClicked"
+                app:fab_color="@color/redMid"
+                app:label_backgroundColor="@color/redMid"
+                app:fab_icon="@drawable/icon_material_delete"
+                app:maxImageSize="20dp"
+                app:fab_orientation="portrait"
+                app:label_text="@string/delete"/>
+
+            <com.nambimobile.widgets.efab.FabOption
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="editClicked"
+                app:fab_color="@color/orangeDark"
+                app:label_backgroundColor="@color/orangeDark"
+                app:fab_orientation="portrait"
+                app:label_text="@string/edit"
+                app:fab_icon="@drawable/icon_feather_edit_2"
+                app:maxImageSize="20dp"/>
+
+            <com.nambimobile.widgets.efab.FabOption
+                android:id="@+id/startButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="startClicked"
+                app:fab_color="@color/greenMid"
+                app:label_backgroundColor="@color/greenMid"
+                app:fab_orientation="portrait"
+                app:fab_icon="@drawable/icon_ionic_md_navigate"
+                app:maxImageSize="20dp"
+                app:label_text="@string/start" />
+
+        </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

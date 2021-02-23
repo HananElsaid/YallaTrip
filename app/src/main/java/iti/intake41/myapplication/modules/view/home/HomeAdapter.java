@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.main.home;
+package iti.intake41.myapplication.modules.view.home;
 
 import android.content.Context;
 import android.text.format.DateFormat;
@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
 
@@ -30,9 +29,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     private static final String TAG = "RecyclerView";
 
-    public HomeAdapter(Context _context, HomeAdapterDelegate _delegate){
-        delegate = _delegate;
-        context = _context;
+    public HomeAdapter(Context context, HomeAdapterDelegate delegate){
+        this.delegate = delegate;
+        this.context = context;
     }
 
     public void setItems(List<Trip> items){
@@ -45,7 +44,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup recyclerview, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(recyclerview.getContext());
-        View v = inflater.inflate(R.layout.row_layout, recyclerview, false);
+        View v = inflater.inflate(R.layout.trip_row_layout, recyclerview, false);
         ViewHolder vh = new ViewHolder(v);
         Log.i(TAG, "==== onCreateViewHolder ====");
         return vh;
@@ -82,13 +81,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         public void configure(Trip item){
             titleTextView.setText(item.getTitle());
-//            Date date = item.getDate();
-//            //String dayOfTheWeek = (String) DateFormat.format("EEEE", date); // Thursday
-//            String day          = (String) DateFormat.format("dd",   date); // 20
-//            String monthString  = (String) DateFormat.format("MMM",  date); // Jun
-//            //String monthNumber  = (String) DateFormat.format("MM",   date); // 06
-//            //String year         = (String) DateFormat.format("yyyy", date); // 2013
-//            String time         = (String) DateFormat.format("hh:mm a", date); // 2013
             try {
                 Date date = new SimpleDateFormat("dd MMM, yyyy").parse(item.getDate());
                 String month  = (String) DateFormat.format("MMM",  date); // Jun
@@ -107,14 +99,23 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             }
 
             linearLayout.setOnClickListener((v)->{
-                System.out.println("linearLayout.setOnClickListener(");
-                Navigator.navigateToTripDetails(context, item.getId());
-                //delegate.itemClicked(item.getId());
+                delegate.itemClicked(item);
             });
+
+            startButton.setOnClickListener((v)->{
+                delegate.startClicked(item);
+            });
+
             Log.i(TAG, "***** onBindViewHolder *****");
         }
-
     }
 
 }
 
+//            Date date = item.getDate();
+//            //String dayOfTheWeek = (String) DateFormat.format("EEEE", date); // Thursday
+//            String day          = (String) DateFormat.format("dd",   date); // 20
+//            String monthString  = (String) DateFormat.format("MMM",  date); // Jun
+//            //String monthNumber  = (String) DateFormat.format("MM",   date); // 06
+//            //String year         = (String) DateFormat.format("yyyy", date); // 2013
+//            String time         = (String) DateFormat.format("hh:mm a", date); // 2013

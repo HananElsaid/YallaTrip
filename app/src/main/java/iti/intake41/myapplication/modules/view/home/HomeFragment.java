@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.main.home;
+package iti.intake41.myapplication.modules.view.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,16 +20,16 @@ import java.util.List;
 
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
+import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
-import iti.intake41.myapplication.models.trip.TripRepo;
-import iti.intake41.myapplication.models.trip.TripRepoInterface;
 import iti.intake41.myapplication.models.trip.TripStatus;
 import iti.intake41.myapplication.models.user.User;
 import iti.intake41.myapplication.models.user.UserRepo;
 import iti.intake41.myapplication.models.user.UserRepoInterface;
+import iti.intake41.myapplication.modules.viewmodel.TripViewModel;
 
-public class HomeFragment extends Fragment implements HomeAdapterDelegate{
+public class HomeFragment extends Fragment{
 
     //MArk: - UIComponents
     private RecyclerView recyclerView;
@@ -40,9 +40,9 @@ public class HomeFragment extends Fragment implements HomeAdapterDelegate{
     //Mark :- Properties
     private HomeAdapter adapter;
     private List<Trip> items;
-    private TripRepoInterface tripRepo;
     private UserRepoInterface userRepo;
     private TripStatus status = TripStatus.upcoming;
+    private TripViewModel viewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,13 +61,13 @@ public class HomeFragment extends Fragment implements HomeAdapterDelegate{
         super.onViewCreated(view, savedInstanceState);
         //Setup Recycler
         userRepo = new UserRepo();
-        tripRepo = new TripRepo();
+        setupViewModel();
         initViews(view);
         setupRecycler(view);
         setupTabs();
         getUser();
-        getItems();
     }
+
 
     private void setupRecycler(View view) {
         recyclerView.setHasFixedSize(true);
@@ -88,83 +88,30 @@ public class HomeFragment extends Fragment implements HomeAdapterDelegate{
         });
     }
 
+    private void setupViewModel(){
+        viewModel = TripViewModel.getInstance(getContext());
+        viewModel.itemsList.observe(getViewLifecycleOwner(), items -> {
+            updateItems(items);
+        });
+    }
+
     private void configureViews() {
         adapter = new HomeAdapter(getContext(), new HomeAdapterDelegate() {
             @Override
-            public void itemClicked(String id) {
-
+            public void itemClicked(Trip trip) {
+                System.out.println("Item Clicked");
+                Navigator.navigateToTripDetails(getContext(), trip);
             }
 
             @Override
-            public void deleteClicked(String id) {
-
+            public void startClicked(Trip trip) {
+                trip.setStatus(TripStatus.done.toString());
+                viewModel.updateTrip(trip);
+                UIHelper.startTrip(getContext(), trip);
             }
         });
         recyclerView.setAdapter(adapter);
     }
-
-//        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
-//
-//            @Override
-//            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-//                Toast.makeText(getContext(), "on Move", Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//                Toast.makeText(getContext(), "on Swiped ", Toast.LENGTH_SHORT).show();
-//                //Remove swiped item from list and notify the RecyclerView
-//                int position = viewHolder.getAdapterPosition();
-//                items.remove(position);
-//                adapter.notifyItemRemoved(position);
-//
-//            }
-//        };
-
-
-//        SwipeHelper swipeHelper = new SwipeHelper(this.getContext(), recyclerView) {
-//            @Override
-//            public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
-//                underlayButtons.add(new SwipeHelper.UnderlayButton(
-//                        "Delete",
-//                        0,
-//                        Color.parseColor("#FF3C30"),
-//                        new SwipeHelper.UnderlayButtonClickListener() {
-//                            @Override
-//                            public void onClick(int pos) {
-//                                // TODO: onDelete
-//                            }
-//                        }
-//                ));
-//
-//                underlayButtons.add(new SwipeHelper.UnderlayButton(
-//                        "Transfer",
-//                        0,
-//                        Color.parseColor("#FF9502"),
-//                        new SwipeHelper.UnderlayButtonClickListener() {
-//                            @Override
-//                            public void onClick(int pos) {
-//                                // TODO: OnTransfer
-//                            }
-//                        }
-//                ));
-//                underlayButtons.add(new SwipeHelper.UnderlayButton(
-//                        "Unshare",
-//                        0,
-//                        Color.parseColor("#C7C7CB"),
-//                        new SwipeHelper.UnderlayButtonClickListener() {
-//                            @Override
-//                            public void onClick(int pos) {
-//                                // TODO: OnUnshare
-//                            }
-//                        }
-//                ));
-//            }
-//        };
-//
-//        swipeHelper.attachSwipe();
-//        recyclerView.setAdapter(adapter);
 
     public void updateItems(List<Trip> tripList) {
         if (adapter == null) {
@@ -178,22 +125,6 @@ public class HomeFragment extends Fragment implements HomeAdapterDelegate{
     public void updateItems() {
         adapter.setItems(getStatusItems());
         adapter.notifyDataSetChanged();
-    }
-
-
-
-    void getItems() {
-        tripRepo.getTrips(new FirebaseRepoDelegate() {
-            @Override
-            public <T> void getListSuccess(List<T> list) {
-                updateItems((List<Trip>) list);
-            }
-
-            @Override
-            public void failed(String message) {
-                showToast(message);
-            }
-        });
     }
 
     List<Trip> getStatusItems(){
@@ -233,26 +164,6 @@ public class HomeFragment extends Fragment implements HomeAdapterDelegate{
             @Override
             public void failed(String message) {
                 showToast(message);
-            }
-        });
-    }
-
-    @Override
-    public void itemClicked(String id) {
-        System.out.println("Item Clicked");
-        Navigator.navigateToTripDetails(this.getContext(), id);
-    }
-
-    @Override
-    public void deleteClicked(String id) {
-        tripRepo.deleteTrip(id, new FirebaseRepoDelegate() {
-            @Override
-            public void success(String message) {
-                getItems();
-            }
-            @Override
-            public void failed(String message) {
-               Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
         });
     }

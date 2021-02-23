@@ -21,7 +21,7 @@ import iti.intake41.myapplication.helper.NetworkClass;
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.login.LoginModelInterface;
 import iti.intake41.myapplication.login.viewmodel.LoginViewModel;
-import iti.intake41.myapplication.modules.main.MainActivity;
+import iti.intake41.myapplication.modules.view.MainActivity;
 import iti.intake41.myapplication.signup.view.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginModelInterface {

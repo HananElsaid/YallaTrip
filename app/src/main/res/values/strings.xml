@@ -102,6 +102,7 @@
     <string name="status">upcoming</string>
     <string name="more">More</string>
     <string name="edit">edit</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

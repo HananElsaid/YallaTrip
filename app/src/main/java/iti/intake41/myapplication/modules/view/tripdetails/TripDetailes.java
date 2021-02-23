@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.main.tripdetails;
+package iti.intake41.myapplication.modules.view.tripdetails;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,11 +9,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.Arrays;
-import java.util.List;
 
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
@@ -29,7 +24,6 @@ public class TripDetailes extends AppCompatActivity {
     TextView txtStartPoint,txtEndPoint;
 
     //MARK: - Properties
-    private boolean isopen = false;
     private Trip trip;
     private TextView titleTextView;
     private TextView statusTextView;
@@ -46,7 +40,11 @@ public class TripDetailes extends AppCompatActivity {
         initViews();
         repo = new TripRepo();
         Intent i = getIntent();
-        if(i.hasExtra("trip_id")){
+        if(i.hasExtra("trip")){
+            trip = i.getParcelableExtra("trip");
+            configureTrip();
+
+        }else if(i.hasExtra("trip_id")){
             String id = i.getStringExtra("trip_id");
             getTripDetails(id);
         }
@@ -88,30 +86,14 @@ public class TripDetailes extends AppCompatActivity {
         Navigator.navigateToNotes(this, trip.getId());
     }
 
-    public void moreClicked(View view) {
-        List<FloatingActionButton> btnsList = Arrays.asList(findViewById( R.id.startButton) ,
-                findViewById(R.id.editButton),
-                findViewById(R.id.deleteButton));
-
-        if(isopen==true){
-           for(FloatingActionButton button: btnsList){
-               button.setVisibility(View.VISIBLE);
-           };
-        }else {
-            for(FloatingActionButton button: btnsList){
-                button.setVisibility(View.INVISIBLE);
-            };
-        }
-        isopen = !isopen;
-    }
-
     public void deleteClicked(View view) {
         if(trip != null)
         repo.deleteTrip(trip.getId(), new FirebaseRepoDelegate() {
+
             @Override
-            public <T> void getObjSuccess(T obj) {
-                trip = (Trip) obj;
-                configureTrip();
+            public void success(String message) {
+                Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
