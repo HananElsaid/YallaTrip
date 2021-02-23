@@ -82,7 +82,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         public void configure(Trip item){
             titleTextView.setText(item.getTitle());
             try {
-                Date date = new SimpleDateFormat("dd MMM, yyyy").parse(item.getDate());
+                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(item.getDate());
                 String month  = (String) DateFormat.format("MMM",  date); // Jun
                 String day  = (String) DateFormat.format("dd",   date); // 20
                 monthTextView.setText(month);

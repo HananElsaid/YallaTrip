@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import iti.intake41.myapplication.helper.Loader;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripsRepo;
 import iti.intake41.myapplication.models.trip.TripsRepoDelegate;
@@ -49,7 +48,7 @@ public class TripViewModel extends ViewModel implements TripsRepoDelegate {
     }
 
     public void deleteTrip(String id) {
-        Loader.start(context);
+        repo.deleteTrip(id);
     }
 
     public void updateTrip(Trip trip) {

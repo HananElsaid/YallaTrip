@@ -17,12 +17,15 @@ import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.NetworkClass;
 import iti.intake41.myapplication.login.view.LoginActivity;
+import iti.intake41.myapplication.models.user.User;
 import iti.intake41.myapplication.tripsmap.MapTripsActivity;
 
 public class ProfileFragment extends Fragment {
+    User user= new User();
 
     private ProfileViewModel profileViewModel;
     LinearLayout mapCard ,logout;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -33,12 +36,23 @@ public class ProfileFragment extends Fragment {
         mapCard=root.findViewById(R.id.mapCard);
         //logout card
         logout= root.findViewById(R.id.logout);
-        final TextView textView = root.findViewById(R.id.userNameTV);
+        final TextView username = root.findViewById(R.id.userNameTV);
+        final TextView email = root.findViewById(R.id.emailTV);
 
-        profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//        username.setText(user.getName());
+//        email.setText(user.getEmail());
+
+        profileViewModel.getNameText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                username.setText(s);
+            }
+        });
+
+        profileViewModel.getEmailText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                email.setText(s);
             }
         });
         return root;

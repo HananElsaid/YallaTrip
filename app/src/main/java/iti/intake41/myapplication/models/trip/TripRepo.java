@@ -48,7 +48,7 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
                     delegate.getListSuccess(trips);
                 } else {
                     Log.e("firebase", "Error getting data", task.getException());
-                    delegate.failed(task.getException().getLocalizedMessage());
+                    //delegate.failed(task.getException().getLocalizedMessage());
                 }
             }
         });

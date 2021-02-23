@@ -2,7 +2,6 @@ package iti.intake41.myapplication.modules.view;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -16,10 +15,8 @@ import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.models.FirebaseRepoDelegate;
-import iti.intake41.myapplication.models.Trip;
-import iti.intake41.myapplication.models.trip.Location;
-import iti.intake41.myapplication.models.trip.TripRepo;
+import iti.intake41.myapplication.createtrip.view.CreateTrip;
+import iti.intake41.myapplication.helper.Navigator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,54 +47,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createTripClicked(View view) {
-
-
-        Trip trip2 = new Trip("Travel to Ismailia", "12 Dec, 2020", "5:00 am", "done",
-                new Location("Ismailia, Egypt", "30.571721", "32.369218"),
-                new Location("Cairo, Egypt", "30.031055", "31.236319"));
-
-        (new TripRepo()).addTrip(trip2, new FirebaseRepoDelegate() {
-            @Override
-            public void success(String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void failed(String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-        });
-
-        Trip trip = new Trip("Travel to Dahab", "12 Dec, 2020", "5:00 am", "cancelled",
-                new Location("Ismailia, Egypt", "30.571721", "32.369218"),
-                new Location("Cairo, Egypt", "30.031055", "31.236319"));
-
-        (new TripRepo()).addTrip(trip, new FirebaseRepoDelegate() {
-            @Override
-            public void success(String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void failed(String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-        });
-
-        Trip trip1 = new Trip("Travel to Assuit", "12 Dec, 2020", "5:00 am", "upcoming",
-                new Location("Ismailia, Egypt", "30.571721", "32.369218"),
-                new Location("Cairo, Egypt", "30.031055", "31.236319"));
-
-        (new TripRepo()).addTrip(trip1, new FirebaseRepoDelegate() {
-            @Override
-            public void success(String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void failed(String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-        });
+        Navigator.gotoScreen(this, CreateTrip.class);
     }
 }

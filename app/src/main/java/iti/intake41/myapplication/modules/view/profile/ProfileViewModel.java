@@ -4,16 +4,25 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ProfileViewModel extends ViewModel {
+import iti.intake41.myapplication.models.user.User;
 
-    private MutableLiveData<String> mText;
+public class ProfileViewModel extends ViewModel {
+User user=new User();
+    private MutableLiveData<String> nameText;
+    private MutableLiveData<String> mailText;
 
     public ProfileViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("Yasmine Ghazy");
+        nameText = new MutableLiveData<>();
+        nameText.setValue(user.getName());
+
+        mailText = new MutableLiveData<>();
+        mailText.setValue(user.getEmail());
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String> getNameText() {
+        return nameText;
+    }
+    public LiveData<String> getEmailText() {
+        return mailText;
     }
 }
