@@ -23,12 +23,12 @@ import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 public class NoteRepo extends FirebaseRepo implements NoteRepoInterface {
 
     @Override
-    public void addListener(String tripId, FirebaseRepoDelegate delegate){
+    public void addListener(String tripId, FirebaseRepoDelegate delegate) {
         mDatabase.child("notes").child(tripId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Note> notes = new ArrayList();
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Note note = postSnapshot.getValue(Note.class);
                     notes.add(note);
                 }
@@ -45,25 +45,30 @@ public class NoteRepo extends FirebaseRepo implements NoteRepoInterface {
 
     @Override
     public void getNotes(String tripId, FirebaseRepoDelegate delegate) {
-        mDatabase.child("notes").child(tripId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+        new Thread(new Runnable() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    List<Note> notes = new ArrayList();
-                    task.getResult().getChildren().forEach(i->{
-                        notes.add(i.getValue(Note.class));
-                    });
+            public void run() {
+                mDatabase.child("notes").child(tripId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                            List<Note> notes = new ArrayList();
+                            task.getResult().getChildren().forEach(i -> {
+                                notes.add(i.getValue(Note.class));
+                            });
 
-                    System.out.println("trips: " + task.getResult().getChildren());
-                    delegate.getObjSuccess(notes);
-                } else {
-                    Log.e("firebase", "Error getting data", task.getException());
-                    delegate.failed(task.getException().getLocalizedMessage());
-                }
+                            System.out.println("trips: " + task.getResult().getChildren());
+                            delegate.getObjSuccess(notes);
+                        } else {
+                            Log.e("firebase", "Error getting data", task.getException());
+                            delegate.failed(task.getException().getLocalizedMessage());
+                        }
+                    }
+                });
             }
-        });
+        }).start();
     }
 
     @Override //#Done
@@ -71,11 +76,11 @@ public class NoteRepo extends FirebaseRepo implements NoteRepoInterface {
 
         String noteId = getNoteID(tripId);
 
-        Note note = new Note(noteId , message, false);
+        Note note = new Note(noteId, message, false);
         Map<String, Object> childUpdates = new HashMap<>();
 
         //childUpdates.put("/users/"+getUid()+"/trips/" + tripId + "/notes/" + noteId, note.toMap());
-        childUpdates.put( "/notes/" + tripId + "/" + noteId, note.toMap());
+        childUpdates.put("/notes/" + tripId + "/" + noteId, note.toMap());
 
         mDatabase.updateChildren(childUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -124,7 +129,7 @@ public class NoteRepo extends FirebaseRepo implements NoteRepoInterface {
         });
     }
 
-    public String getNoteID(String tripId){
+    public String getNoteID(String tripId) {
         return mDatabase.child("notes").child(tripId).push().getKey();
     }
 

@@ -44,6 +44,7 @@ public class MapTripsActivity extends FragmentActivity implements OnMapReadyCall
         doneTripsViewModel = new ViewModelProvider(this).get(DoneTripsViewModel.class);
         //list of colors
         colorList = new ArrayList<>();
+        colorList=doneTripsViewModel.getColorList();
         //observe on message if an error ocures
         if(doneTripsViewModel.message!=null){
         doneTripsViewModel.message.observe(this, new Observer<String>() {
@@ -52,32 +53,34 @@ public class MapTripsActivity extends FragmentActivity implements OnMapReadyCall
                 Toast.makeText(MapTripsActivity.this, s, Toast.LENGTH_SHORT).show();
             }
         });}
+        doneTripsViewModel.getTrips();
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.i("Hello", "i= " + 1);
         mMap = googleMap;
         LatLng src1 = new LatLng(31.041455, 31.4178593);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(src1, 4f));
 
         doneTripsViewModel.tripsList.observe(this, new Observer<List<Trip>>() {
+
             @Override
             public void onChanged(List<Trip> trips) {
 
                 //if i have a list of object
                 for (int i = 0; i < trips.size(); i++) {
-                    Log.i("I", "i= " + i);
+                    Log.i("IAM", "i= " + i);
                     Trip trip = trips.get(i);
                     double srclong = Double.parseDouble(trip.getStartPoint().getLongitude());
                     double scrlat = Double.parseDouble(trip.getStartPoint().getLatitude());
-                    final LatLng src = new LatLng(srclong, scrlat);
+                    final LatLng src = new LatLng(scrlat, srclong);
                     mMap.addMarker(new MarkerOptions().position(src).title(trip.getTitle())).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                     double deslong = Double.parseDouble(trip.getEndPoint().getLongitude());
                     double deslat = Double.parseDouble(trip.getEndPoint().getLatitude());
                     final LatLng des = new LatLng(deslong, deslat);
-                    mMap.addMarker(new MarkerOptions().position(des).title(trip.getTitle()));
-
+                   // mMap.addMarker(new MarkerOptions().position(des).title(trip.getTitle()));
                     //
                     colorList = doneTripsViewModel.getColorList();
                     if (colorList.size() > i)
