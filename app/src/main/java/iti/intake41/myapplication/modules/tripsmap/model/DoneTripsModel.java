@@ -25,7 +25,7 @@ public class DoneTripsModel implements DoneTripsModelInterface {
     }
 
 
-    public MutableLiveData<List<Integer>> getColorList() {
+    public List<Integer> getColorList() {
         colorList = new ArrayList<>();
         colorList.add(Color.RED);
         colorList.add(Color.GREEN);
@@ -36,8 +36,8 @@ public class DoneTripsModel implements DoneTripsModelInterface {
         colorList.add(Color.BLACK);
         colorList.add(Color.DKGRAY);
         colorList.add(Color.LTGRAY);
-        colerData.postValue(colorList);
-        return colerData;
+        //colerData.postValue(colorList);
+        return colorList;
     }
 
 /*

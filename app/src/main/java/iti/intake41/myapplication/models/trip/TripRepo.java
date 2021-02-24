@@ -20,49 +20,54 @@ import iti.intake41.myapplication.models.FirebaseRepo;
 import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
 
-public class TripRepo extends FirebaseRepo implements TripRepoInterface{
+public class TripRepo extends FirebaseRepo implements TripRepoInterface {
     DatabaseReference tripRef;
 
-    public TripRepo(){
-            tripRef = mDatabase.child("trips").child(getUid());
+    public TripRepo() {
+        tripRef = mDatabase.child("trips").child(getUid());
     }
 
-    public String getTripID(){
+    public String getTripID() {
         return tripRef.push().getKey();
     }
 
     @Override
-    public void getTrips(FirebaseRepoDelegate delegate){
-        tripRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getTrips(FirebaseRepoDelegate delegate) {
+        new Thread(new Runnable() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    List<Trip> trips = new ArrayList();
-                    task.getResult().getChildren().forEach(i->{
-                        trips.add(i.getValue(Trip.class));
-                    });
+            public void run() {
+                tripRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                            List<Trip> trips = new ArrayList();
+                            task.getResult().getChildren().forEach(i -> {
+                                trips.add(i.getValue(Trip.class));
+                            });
 
-                    System.out.println("trips: " + task.getResult().getChildren());
-                    delegate.getListSuccess(trips);
-                } else {
-                    Log.e("firebase", "Error getting data", task.getException());
-                    //delegate.failed(task.getException().getLocalizedMessage());
-                }
+                            System.out.println("trips: " + task.getResult().getChildren());
+                            delegate.getListSuccess(trips);
+                        } else {
+                            Log.e("firebase", "Error getting data", task.getException());
+                            //delegate.failed(task.getException().getLocalizedMessage());
+                        }
+                    }
+                });
+                //
             }
-        });
+        }).start();
     }
-
 
 
     @Override //#done
     public void addTrip(Trip trip, FirebaseRepoDelegate delegate) {
         String tripId;
-        if(trip.getId() == null){ //Create
+        if (trip.getId() == null) { //Create
             tripId = getTripID();
             trip.setId(tripId);
-        }else { //Update
+        } else { //Update
             tripId = trip.getId();
         }
         Map<String, Object> childUpdates = new HashMap<>();
@@ -121,7 +126,7 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
-                    delegate.getObjSuccess( task.getResult().getValue(Trip.class));
+                    delegate.getObjSuccess(task.getResult().getValue(Trip.class));
                 } else {
                     Log.e("firebase", "Error getting data", task.getException());
                     delegate.failed(task.getException().getLocalizedMessage());

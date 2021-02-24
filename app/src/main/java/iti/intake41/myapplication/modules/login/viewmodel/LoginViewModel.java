@@ -2,7 +2,7 @@ package iti.intake41.myapplication.modules.login.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-import iti.intake41.myapplication.modules.login.LoginModelInterface;
+import iti.intake41.myapplication.modules.login.model.LoginModelInterface;
 import iti.intake41.myapplication.modules.login.model.LoginRepository;
 
 public class LoginViewModel extends ViewModel {

@@ -37,7 +37,7 @@ import iti.intake41.myapplication.modules.createtrip.view.CreateTrip;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.NetworkClass;
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.modules.login.LoginModelInterface;
+import iti.intake41.myapplication.modules.login.model.LoginModelInterface;
 import iti.intake41.myapplication.modules.login.viewmodel.LoginViewModel;
 import iti.intake41.myapplication.modules.signup.view.SignUpActivity;
 import iti.intake41.myapplication.modules.main.MainActivity;
@@ -105,8 +105,6 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
                 register();
             }
         });
-
-
 
 
     }

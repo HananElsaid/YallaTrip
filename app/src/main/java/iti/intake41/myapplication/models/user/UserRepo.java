@@ -16,21 +16,27 @@ import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 public class UserRepo extends FirebaseRepo implements UserRepoInterface {
 
     @Override
-    public void getUser(FirebaseRepoDelegate delegate){
+    public void getUser(FirebaseRepoDelegate delegate) {
 
-        mDatabase.child("users").child(getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+        new Thread(new Runnable() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    User user = task.getResult().getValue(User.class);
-                    delegate.getObjSuccess(user);
-                } else {
-                    Log.e("firebase", "Error getting data", task.getException());
-                    delegate.failed(task.getException().getLocalizedMessage());
-                }
-            }
-        });
+            public void run() {
+                mDatabase.child("users").child(getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                            User user = task.getResult().getValue(User.class);
+                            delegate.getObjSuccess(user);
+                        } else {
+                            Log.e("firebase", "Error getting data", task.getException());
+                            delegate.failed(task.getException().getLocalizedMessage());
+                        }
+                    }
+                });
+
+
+            }  }).start();
+        }
     }
-}

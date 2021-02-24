@@ -33,6 +33,7 @@
         android:text="@string/done"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
+        android:visibility="gone"
         app:backgroundTint="#FFFFFF"
         app:backgroundTintMode="multiply"
         app:iconPadding="0dp"
