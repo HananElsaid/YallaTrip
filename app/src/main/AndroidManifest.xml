@@ -47,6 +47,15 @@
             android:name=".modules.floatingwidget.FloatWidgetService"
             android:enabled="true"
             android:exported="false" />
+
+        <receiver
+            android:name=".modules.reminder.MyAlarm"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver android:name=".modules.reminder.SnoozeBroadcastReciver"/>
+        <activity android:name=".modules.reminder.ReminderTrip"></activity>
+
+
     </application>
 
 </manifest>

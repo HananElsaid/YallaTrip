@@ -28,6 +28,8 @@ import iti.intake41.myapplication.modules.creatnote.model.Note;
 import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripRepo;
+import iti.intake41.myapplication.modules.reminder.MyAlarm;
+import iti.intake41.myapplication.modules.reminder.MyIntentService;
 
 import static android.app.DatePickerDialog.OnDateSetListener;
 
@@ -40,8 +42,8 @@ public class CreateTrip extends AppCompatActivity {
 
     Trip trip;
 
-    TimePickerDialog tm;
-    DatePickerDialog dp;
+    TimePicker tm;
+    DatePicker dp;
     Calendar calendar;
     //Trip trip=new Trip();
     /////
@@ -95,18 +97,20 @@ public class CreateTrip extends AppCompatActivity {
         createTrip.setOnClickListener(v -> {
 
             createTripDone(v);
-
-//                Calendar calendar = Calendar.getInstance();
-//                if (android.os.Build.VERSION.SDK_INT >= 23) {
-//                    calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-//                            myTimePicker.getHour(), myTimePicker.getMinute(), 0);
-//                } else {
-//                    calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-//                            myTimePicker.getCurrentHour(), myTimePicker.getCurrentMinute(), 0);
-//                }
+//            Calendar calendar = Calendar.getInstance();
+//            if (android.os.Build.VERSION.SDK_INT >= 23) {
+//                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+//                        timePicker.getHour(), timePicker.getMinute(), 0);
 //
-//
-//                setAlarm(calendar.getTimeInMillis());
+//            } else {
+//                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+//                        timePicker.getCurrentHour(), timePicker.getCurrentMinute(), 0);
+//            }
+//             timePicker(v);
+//             datePicker(v);
+            Intent intent1 = new Intent(getApplicationContext(), MyIntentService.class);
+            //MyIntentService.enqueueWork(getApplicationContext(), intent1);
+            setAlarm(calendar.getTimeInMillis());
 
         });
     }
@@ -126,21 +130,10 @@ public class CreateTrip extends AppCompatActivity {
 
                 String hour = new SimpleDateFormat("HH:mm a").format(d);
                 //String hour = calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + " " + ;
-
                 //set on btn
                 //Toast.makeText(getApplicationContext(), hourOfDay + "  " + minute, Toast.LENGTH_SHORT).show();
                 timePicker.setText(hour); // set the current time in text view
 
-                //Initialize
-//                NotifyMe notifyMe=new NotifyMe.Builder(getApplicationContext())
-//                        .title(note.getTripID().toString())
-//                        .content("It's Time For Your Trip")
-//                        .time(calendar)
-//                        .addAction(new Intent(),"Done") //insert the intent
-//                        .addAction(new Intent(), "Snooze",false) //insert intent
-//                        .addAction(new Intent(),"Cancel",false) //insert intent
-//                        .large_icon(R.mipmap.ic_launcher_round)
-//                        .build();
             }
         }, 12, 0, false
         );
@@ -202,6 +195,8 @@ public class CreateTrip extends AppCompatActivity {
         }else {
             Toast.makeText(this, "Please fill all fields first", Toast.LENGTH_LONG).show();
         }
+
+
     }
 
 //    public void openDialog() {
@@ -209,12 +204,16 @@ public class CreateTrip extends AppCompatActivity {
 //        exampleDialog.show(getSupportFragmentManager(), "example dialog");
 //    }
 
+    public void onCheckboxClicked(View view) {
+
+    }
+
     private void setAlarm(long time) {
         //getting the alarm manager
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         //creating a new intent specifying the broadcast receiver
-        Intent i = new Intent(this, AlarmRec.class);
+        Intent i = new Intent(this, MyAlarm.class);
 
         //creating a pending intent using the intent
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
@@ -222,9 +221,6 @@ public class CreateTrip extends AppCompatActivity {
         //setting the repeating alarm that will be fired every day
         am.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pi);
         Toast.makeText(this, "Alarm is set", Toast.LENGTH_SHORT).show();
-    }
-    public void onCheckboxClicked(View view) {
-
     }
 
     public boolean isValid(){
