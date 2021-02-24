@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:weightSum="1"
     android:background="@drawable/background"
-    tools:context=".createtrip.view.CreateTrip">
+    tools:context=".modules.createtrip.view.CreateTrip">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -210,21 +210,6 @@
 
         </LinearLayout>
 
-
-            <Button
-                android:layout_marginTop="10dp"
-                android:id="@+id/addNotes"
-                android:onClick="addNotes"
-                android:text="@string/addNote"
-                app:backgroundTint="@color/white"
-                app:cornerRadius="20dp"
-                app:icon="@drawable/icon_material_note_add"
-                app:iconGravity="start"
-                app:iconTint="@color/greenDark"
-                style="@style/CardButton" />
-
-
-
             <CheckBox
                 android:id="@+id/roundTrip"
                 android:layout_width="match_parent"
@@ -234,7 +219,8 @@
                 android:buttonTint="@color/greenDark"
                 android:onClick="onCheckboxClicked"
                 android:text="@string/roundTrip"
-                tools:targetApi="lollipop" />
+                tools:targetApi="lollipop"
+                android:visibility="invisible"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCreateTrip"

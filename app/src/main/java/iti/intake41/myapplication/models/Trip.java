@@ -124,10 +124,9 @@ public class Trip implements Parcelable {
     {
         Map<String, Object> mapObj = new HashMap<>();
             mapObj.put("date", date);
-            //mapObj.put("endPoint", endPoint.toMap());
+            mapObj.put("endPoint", endPoint.toMap());
             mapObj.put("id", id);
-           // mapObj.put("notes", notes.toJsonObject());
-           // mapObj.put("startPoint", startPoint.toMap());
+            mapObj.put("startPoint", startPoint.toMap());
             mapObj.put("status", status);
             mapObj.put("time", time);
             mapObj.put("title", title);

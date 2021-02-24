@@ -9,6 +9,8 @@ import androidx.annotation.RequiresApi;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +21,27 @@ import iti.intake41.myapplication.models.FirebaseRepo;
 import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 
 public class NoteRepo extends FirebaseRepo implements NoteRepoInterface {
+
+    @Override
+    public void addListener(String tripId, FirebaseRepoDelegate delegate){
+        mDatabase.child("notes").child(tripId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Note> notes = new ArrayList();
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    Note note = postSnapshot.getValue(Note.class);
+                    notes.add(note);
+                }
+                delegate.getListSuccess(notes);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                delegate.failed(error.getMessage());
+            }
+
+        });
+    }
 
     @Override
     public void getNotes(String tripId, FirebaseRepoDelegate delegate) {

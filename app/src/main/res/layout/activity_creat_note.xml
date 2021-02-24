@@ -7,7 +7,7 @@
     android:background="@drawable/ic_back"
     android:hapticFeedbackEnabled="true"
     android:scrollbarAlwaysDrawHorizontalTrack="true"
-    tools:context=".creatnote.view.CreatNoteActivity">
+    tools:context=".modules.creatnote.view.CreatNoteActivity">
 
 
     <TextView
@@ -66,12 +66,13 @@
         android:background="@drawable/btnnote"
         android:clickable="true"
         android:contentDescription="@string/addnote"
-        android:elevation="20dp"
+        android:elevation="24dp"
         app:backgroundTint="#FFBC0A"
         app:elevation="@dimen/cardview_compat_inset_shadow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_note_add_24"
+        app:maxImageSize="30dp"
         app:tint="@color/white"
         tools:ignore="VectorDrawableCompat" />
 
