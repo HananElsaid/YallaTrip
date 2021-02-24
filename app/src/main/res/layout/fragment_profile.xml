@@ -131,7 +131,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1.2"
                         android:gravity="center_vertical|end"
-                        android:text="YasmineGhazy"
+                        android:text=""
                         android:textColor="@color/greyDark"
                         android:textSize="16sp"
                         android:textStyle="normal" />
@@ -150,7 +150,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.8"
+                        android:layout_weight="0.6"
                         android:drawableStart="@drawable/ic_email"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
@@ -163,9 +163,9 @@
                         android:id="@+id/emailTV"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1.4"
                         android:gravity="center_vertical|end"
-                        android:text="yasmine.ghazy@gmail.com"
+                        android:text=""
                         android:textColor="@color/greyDark"
                         android:textSize="16sp"
                         android:textStyle="normal" />
@@ -211,7 +211,7 @@
                 android:divider="?android:dividerVertical"
                 android:orientation="vertical"
                 android:showDividers="middle"
-                android:weightSum="2">
+                android:weightSum="1">
 
                 <LinearLayout
                     android:id="@+id/mapCard"
@@ -254,7 +254,8 @@
                     android:layout_weight="1"
                     android:orientation="horizontal"
                     android:padding="10dp"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dp"
@@ -300,7 +301,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/more"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />

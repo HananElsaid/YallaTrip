@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,11 +34,11 @@ import static android.app.DatePickerDialog.OnDateSetListener;
 public class CreateTrip extends AppCompatActivity {
 
     private static final String TAG = "TAG";
-    Button createTrip, addNotes, timePicker, datePicker;
+    Button createTrip, timePicker, datePicker;
     TextView tripName, startPoint, endPoint;
     CheckBox roundTrip;
 
-    Trip trip= new Trip();
+    Trip trip;
 
     TimePickerDialog tm;
     DatePickerDialog dp;
@@ -61,6 +62,17 @@ public class CreateTrip extends AppCompatActivity {
         startPoint= findViewById(R.id.txtStartPoint);
         endPoint= findViewById(R.id.txtEndPoint);
         roundTrip=findViewById(R.id.roundTrip);
+
+        if(getIntent().hasExtra("trip")){
+            trip = getIntent().getParcelableExtra("trip");
+            tripName.setText( trip.getTitle());
+            timePicker.setText(trip.getTime());
+            datePicker.setText(trip.getDate());
+            startPoint.setText(trip.getStartPoint().getAddress());
+            endPoint.setText(trip.getEndPoint().getAddress());
+        }else{
+            trip= new Trip();
+        }
 
         //git current date and time
         calendar = Calendar.getInstance();
@@ -109,9 +121,6 @@ public class CreateTrip extends AppCompatActivity {
                 // initialize hour and Mins
                 t1Hours = hourOfDay;
                 t1Min = minute;
-
-                //initialize calendar
-                //set hours and minute
                 calendar.set(0, 0, 0, t1Hours, t1Min);
                 Date d = calendar.getTime();
 
@@ -146,35 +155,53 @@ public class CreateTrip extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                        datePicker.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+                        datePicker.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
                     }
                 }, t1year, t1mounth, t1day);
+
         datePickerDialog.updateDate(t1year, t1mounth, t1day);
-        datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
-        datePickerDialog.show();
+        try {
+            Date d;
+            if(trip != null && trip.getDate() != null){
+                d = new SimpleDateFormat("dd/MM/YYYY").parse(trip.getDate());
+            }else{
+                d = new Date();
+            }
+
+            datePickerDialog.getDatePicker().setMinDate(d.getTime());
+            datePickerDialog.show();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void  createTripDone(View view){
-        trip.setTitle( tripName.getText().toString());
-        trip.setStartPoint(new Location("Ismaila", "30.5965", "32.2715"));
-        trip.setEndPoint(new Location("Cairo", "30.0444", "31.2357"));
-        trip.setTime((String) timePicker.getText());
-        trip.setDate((String) datePicker.getText());
-        trip.setStatus("upcoming");
+
+        if(isValid()){
+            trip.setTitle( tripName.getText().toString());
+            trip.setStartPoint(new Location("Ismaila", "30.5965", "32.2715"));
+            trip.setEndPoint(new Location("Cairo", "30.0444", "31.2357"));
+            trip.setTime((String) timePicker.getText());
+            trip.setDate((String) datePicker.getText());
+            trip.setStatus("upcoming");
 
 
-        (new TripRepo()).addTrip(trip, new FirebaseRepoDelegate() {
-            @Override
-            public void success(String message) {
-                Toast.makeText(CreateTrip.this, message, Toast.LENGTH_LONG).show();
-                finish();
-            }
+            (new TripRepo()).addTrip(trip, new FirebaseRepoDelegate() {
+                @Override
+                public void success(String message) {
+                    Toast.makeText(CreateTrip.this, message, Toast.LENGTH_LONG).show();
+                    finish();
+                }
 
-            @Override
-            public void failed(String message) {
-                Toast.makeText(CreateTrip.this, message, Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void failed(String message) {
+                    Toast.makeText(CreateTrip.this, message, Toast.LENGTH_LONG).show();
+                }
+            });
+        }else {
+            Toast.makeText(this, "Please fill all fields first", Toast.LENGTH_LONG).show();
+        }
     }
 
 //    public void openDialog() {
@@ -198,6 +225,12 @@ public class CreateTrip extends AppCompatActivity {
     }
     public void onCheckboxClicked(View view) {
 
+    }
+
+    public boolean isValid(){
+        return !(tripName.getText().toString().isEmpty() ||
+                timePicker.getText().toString().isEmpty() ||
+                datePicker.getText().toString().isEmpty());
     }
 
 }

@@ -11,26 +11,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.NetworkClass;
-import iti.intake41.myapplication.modules.login.view.LoginActivity;
 import iti.intake41.myapplication.models.user.User;
+import iti.intake41.myapplication.modules.login.view.LoginActivity;
 import iti.intake41.myapplication.modules.tripsmap.MapTripsActivity;
+import iti.intake41.myapplication.viewmodel.UserViewModel;
 
 public class ProfileFragment extends Fragment {
     User user= new User();
 
-    private ProfileViewModel profileViewModel;
+    private UserViewModel profileViewModel;
     LinearLayout mapCard ,logout;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
+        //profileViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        profileViewModel = UserViewModel.getInstance(getContext());
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         //map card
         mapCard=root.findViewById(R.id.mapCard);
@@ -39,20 +39,11 @@ public class ProfileFragment extends Fragment {
         final TextView username = root.findViewById(R.id.userNameTV);
         final TextView email = root.findViewById(R.id.emailTV);
 
-//        username.setText(user.getName());
-//        email.setText(user.getEmail());
-
-        profileViewModel.getNameText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        profileViewModel.user.observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                username.setText(s);
-            }
-        });
-
-        profileViewModel.getEmailText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                email.setText(s);
+            public void onChanged(@Nullable User user) {
+                username.setText(user.getName());
+                email.setText(user.getEmail());
             }
         });
         return root;

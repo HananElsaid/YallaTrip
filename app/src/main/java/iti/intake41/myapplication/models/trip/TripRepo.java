@@ -58,8 +58,13 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
 
     @Override //#done
     public void addTrip(Trip trip, FirebaseRepoDelegate delegate) {
-        String tripId = getTripID();
-        trip.setId(tripId);
+        String tripId;
+        if(trip.getId() == null){ //Create
+            tripId = getTripID();
+            trip.setId(tripId);
+        }else { //Update
+            tripId = trip.getId();
+        }
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/trips/" + getUid() + "/" + tripId, trip.toMap());
 

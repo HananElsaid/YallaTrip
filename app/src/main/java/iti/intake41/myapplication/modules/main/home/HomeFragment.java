@@ -1,11 +1,11 @@
 package iti.intake41.myapplication.modules.main.home;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,13 +21,11 @@ import java.util.List;
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.UIHelper;
-import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
-import iti.intake41.myapplication.models.user.User;
-import iti.intake41.myapplication.models.user.UserRepo;
 import iti.intake41.myapplication.models.user.UserRepoInterface;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
+import iti.intake41.myapplication.viewmodel.UserViewModel;
 
 public class HomeFragment extends Fragment{
 
@@ -42,7 +40,8 @@ public class HomeFragment extends Fragment{
     private List<Trip> items;
     private UserRepoInterface userRepo;
     private TripStatus status = TripStatus.upcoming;
-    private TripViewModel viewModel;
+    private TripViewModel tripViewModel;
+    private UserViewModel userViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,12 +59,10 @@ public class HomeFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Setup Recycler
-        userRepo = new UserRepo();
-        setupViewModel();
         initViews(view);
         setupRecycler(view);
         setupTabs();
-        getUser();
+        setupViewModel();
     }
 
 
@@ -89,9 +86,20 @@ public class HomeFragment extends Fragment{
     }
 
     private void setupViewModel(){
-        viewModel = TripViewModel.getInstance(getContext());
-        viewModel.itemsList.observe(getViewLifecycleOwner(), items -> {
+        tripViewModel = TripViewModel.getInstance(getContext());
+
+        ProgressDialog d = new ProgressDialog(getContext());
+        d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        d.setMax(5);
+        d.show();
+        tripViewModel.itemsList.observe(getViewLifecycleOwner(), items -> {
             updateItems(items);
+            d.dismiss();
+        });
+
+        userViewModel = UserViewModel.getInstance(getContext());
+        userViewModel.user.observe(getViewLifecycleOwner(), user -> {
+            userNameTextView.setText(user.getName());
         });
     }
 
@@ -106,7 +114,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void startClicked(Trip trip) {
                 trip.setStatus(TripStatus.done.toString());
-                viewModel.updateTrip(trip);
+                tripViewModel.updateTrip(trip);
                 UIHelper.startTrip(getContext(), trip);
             }
         });
@@ -154,21 +162,4 @@ public class HomeFragment extends Fragment{
         return status;
     }
 
-
-    void getUser(){
-        userRepo.getUser(new FirebaseRepoDelegate() {
-            @Override
-            public <T> void getObjSuccess(T obj) {
-                userNameTextView.setText(((User) obj).getName());
-            }
-            @Override
-            public void failed(String message) {
-                showToast(message);
-            }
-        });
-    }
-
-    public void showToast(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
-    }
 }

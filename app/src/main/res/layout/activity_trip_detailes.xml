@@ -250,6 +250,7 @@
                 app:overlay_orientation="portrait" />
 
             <com.nambimobile.widgets.efab.ExpandableFab
+                android:id="@+id/more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -259,7 +260,6 @@
                 app:efab_orientation="portrait"
                 app:efab_icon="@drawable/icon_feather_menu"
                 app:maxImageSize="30dp"
-                app:label_text="@string/more"
                 android:layout_gravity="end|bottom"/>
 
             <com.nambimobile.widgets.efab.FabOption
@@ -284,7 +284,21 @@
                 app:fab_orientation="portrait"
                 app:label_text="@string/edit"
                 app:fab_icon="@drawable/icon_feather_edit_2"
-                app:maxImageSize="20dp"/>
+                app:maxImageSize="20dp"
+                app:fab_enabled="false"/>
+
+            <com.nambimobile.widgets.efab.FabOption
+                android:id="@+id/cancelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="cancelClicked"
+                app:fab_color="@color/redLight"
+                app:label_backgroundColor="@color/redLight"
+                app:fab_orientation="portrait"
+                app:fab_icon="@drawable/ic_cancel"
+                app:maxImageSize="20dp"
+                app:label_text="@string/cancel"
+                app:fab_enabled="false"/>
 
             <com.nambimobile.widgets.efab.FabOption
                 android:id="@+id/startButton"
@@ -296,7 +310,8 @@
                 app:fab_orientation="portrait"
                 app:fab_icon="@drawable/icon_ionic_md_navigate"
                 app:maxImageSize="20dp"
-                app:label_text="@string/start" />
+                app:label_text="@string/start"
+                app:fab_enabled="false"/>
 
         </com.nambimobile.widgets.efab.ExpandableFabLayout>
 

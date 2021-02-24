@@ -9,8 +9,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.nambimobile.widgets.efab.FabOption;
 
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Constants;
@@ -26,18 +29,17 @@ import iti.intake41.myapplication.modules.floatingwidget.FloatWidgetService;
 public class TripDetailes extends AppCompatActivity {
 
     //MARK: - UIComponents
-    TextView txtStartPoint,txtEndPoint;
+    private TextView txtStartPoint, txtEndPoint, titleTextView,
+            statusTextView, dateTextView, timeTextView;
+    private FabOption editButton, startButton, cancelButton;
 
     //MARK: - Properties
     private Trip trip;
-    private TextView titleTextView;
-    private TextView statusTextView;
-    private TextView dateTextView;
-    private TextView timeTextView;
 
 
     TripRepoInterface repo;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +64,12 @@ public class TripDetailes extends AppCompatActivity {
         txtEndPoint=findViewById(R.id.txtEndPoint);
         dateTextView=findViewById(R.id.dateTextView);
         timeTextView=findViewById(R.id.timeTextView);
+        editButton=findViewById(R.id.editButton);
+        startButton=findViewById(R.id.startButton);
+        cancelButton=findViewById(R.id.cancelButton);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void configureTrip(){
         titleTextView.setText(trip.getTitle());
         statusTextView.setText(trip.getStatus());
@@ -85,6 +91,12 @@ public class TripDetailes extends AppCompatActivity {
         }
         int c = ContextCompat.getColor(this,color);
         statusTextView.setTextColor(c);
+
+        if(status == TripStatus.upcoming){
+            editButton.setFabOptionEnabled(true);
+            startButton.setFabOptionEnabled(true);
+            cancelButton.setFabOptionEnabled(true);
+        }
     }
 
     public void addNotes(View view) {
@@ -108,20 +120,52 @@ public class TripDetailes extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void editClicked(View view) {
         if(trip != null)
-            Navigator.navigateToUpdateTrip(this, trip.getId());
+            Navigator.navigateToUpdateTrip(this, trip);
+            finish();
     }
 
     public void startClicked(View view) {
         if(trip != null){
+            trip.setStatus(TripStatus.done.toString());
+            repo.updateTrip(trip, new FirebaseRepoDelegate() {
+                @Override
+                public void success(String message) {
+                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void failed(String message) {
+                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
+                }
+            });
             UIHelper.startTrip(this, trip);
             checkPermission();
         }
     }
 
+    public void cancelClicked(View view) {
+        if(trip != null){
+            trip.setStatus(TripStatus.cancelled.toString());
+            repo.updateTrip(trip, new FirebaseRepoDelegate() {
+                @Override
+                public void success(String message) {
+                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void failed(String message) {
+                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     public void getTripDetails(String id){
         repo.getTripDetails(id, new FirebaseRepoDelegate() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public <T> void getObjSuccess(T obj) {
                 trip = (Trip) obj;
@@ -158,4 +202,6 @@ public class TripDetailes extends AppCompatActivity {
         startService(new Intent(TripDetailes.this, FloatWidgetService.class));
         finish();
     }
+
+
 }

@@ -24,4 +24,19 @@
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
     </style>
+
+    <style name="BaseAppTheme" parent="android:Theme.Material" tools:targetApi="lollipop">
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions">true</item>
+
+        <!-- specify shared element transitions -->
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/change_image_transform</item>
+    </style>
+
 </resources>
+
+
+

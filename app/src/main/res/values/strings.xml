@@ -103,6 +103,7 @@
     <string name="more">More</string>
     <string name="edit">edit</string>
     <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>
