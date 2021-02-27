@@ -15,8 +15,8 @@ import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.modules.createtrip.view.CreateTrip;
 import iti.intake41.myapplication.helper.Navigator;
+import iti.intake41.myapplication.modules.createtrip.view.CreateTrip;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +47,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createTripClicked(View view) {
-        Navigator.gotoScreen(this, CreateTrip.class);
+        Navigator.gotoScreen(MainActivity.this, CreateTrip.class);
     }
 }

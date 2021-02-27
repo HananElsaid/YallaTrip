@@ -1,8 +1,10 @@
 package iti.intake41.myapplication.modules.main.splash;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -24,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.imageView);
         DrawableImageViewTarget splashScreen = new DrawableImageViewTarget(imageView);
 
-        //String img = "https://media.giphy.com/media/MFCz5th6KXo5kE8XGh/giphy.gif";
+//        String img = "https://media.giphy.com/media/MFCz5th6KXo5kE8XGh/giphy.gif";
         String img = "https://media.giphy.com/media/lMyMOixBA7YDdikqZy/giphy.gif";
         Glide.with(this).load(img).into(splashScreen);
     }
@@ -35,18 +37,17 @@ public class SplashActivity extends AppCompatActivity {
 
         /****** Create Thread that will sleep for 5 seconds****/
         Thread background = new Thread() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             public void run() {
                 try {
                     // Thread will sleep for 5 seconds
 
-                    sleep(3 * 1000);
-                    // After 5 seconds redirect to another screen
+                    sleep(2 * 1000);
+                    // After n seconds redirect to another screen
                     if (NetworkClass.getCurrentUser() != null)
                         Navigator.gotoScreen(SplashActivity.this, MainActivity.class);
-
                     else
                         Navigator.gotoScreen(SplashActivity.this, LoginActivity.class);
-
 
                     //Remove activity
                     finish();

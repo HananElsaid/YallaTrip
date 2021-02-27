@@ -231,7 +231,7 @@
             android:layout_marginEnd="16dp"
             android:text="@string/done_button"
             app:cornerRadius="20dp"
-            android:onClick="createTripDone"/>
+            android:onClick="createTripClicked"/>
 
     </LinearLayout>
 </LinearLayout>

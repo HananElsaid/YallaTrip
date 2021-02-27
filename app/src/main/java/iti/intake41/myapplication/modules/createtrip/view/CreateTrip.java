@@ -23,10 +23,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.models.trip.Location;
-import iti.intake41.myapplication.modules.creatnote.model.Note;
 import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
+import iti.intake41.myapplication.models.trip.Location;
 import iti.intake41.myapplication.models.trip.TripRepo;
 import iti.intake41.myapplication.modules.reminder.MyAlarm;
 import iti.intake41.myapplication.modules.reminder.MyIntentService;
@@ -35,124 +34,86 @@ import static android.app.DatePickerDialog.OnDateSetListener;
 
 public class CreateTrip extends AppCompatActivity {
 
-    private static final String TAG = "TAG";
-    Button createTrip, timePicker, datePicker;
-    TextView tripName, startPoint, endPoint;
-    CheckBox roundTrip;
+    //MARK: - UICompnents
+    Button doneButton, timeButton, dateButton;
+    TextView tripNameTV, startPointTV, endPointTV;
+    CheckBox roundTripCheckBox;
 
-    Trip trip;
-
-    TimePicker tm;
-    DatePicker dp;
+    //MARK: - Attributes
     Calendar calendar;
-    //Trip trip=new Trip();
-    /////
-    int t1Hours, t1Min;
-    int t1year, t1mounth, t1day;
+    Trip trip;
+    int hr, min, year, month, day;
 
-    TimePicker myTimePicker;
-    Note note=new Note();
-
+    //Activity Life cycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trip);
-        createTrip=findViewById(R.id.btnCreateTrip);
-        datePicker=findViewById(R.id.dateTextView);
-        timePicker=findViewById(R.id.timeTextView);
-        tripName= findViewById(R.id.titleTextView);
-        startPoint= findViewById(R.id.txtStartPoint);
-        endPoint= findViewById(R.id.txtEndPoint);
-        roundTrip=findViewById(R.id.roundTrip);
-
-        if(getIntent().hasExtra("trip")){
-            trip = getIntent().getParcelableExtra("trip");
-            tripName.setText( trip.getTitle());
-            timePicker.setText(trip.getTime());
-            datePicker.setText(trip.getDate());
-            startPoint.setText(trip.getStartPoint().getAddress());
-            endPoint.setText(trip.getEndPoint().getAddress());
-        }else{
-            trip= new Trip();
+        initViews();
+        addActions();
+        if(getIntent().hasExtra("trip")){ //Update Trip
+            configureData(getIntent().getParcelableExtra("trip"));
+        }else{ //Create Trip
+            trip = new Trip();
         }
-
-        //git current date and time
         calendar = Calendar.getInstance();
-        int yy = calendar.get(Calendar.YEAR);
-        int mm = calendar.get(Calendar.MONTH);
-        int dd = calendar.get(Calendar.DAY_OF_MONTH);
-        Date today = calendar.getTime();
+    }
 
-        timePicker.setOnClickListener(v -> {
-            timePicker(v);
+    public void initViews(){
+        doneButton = findViewById(R.id.btnCreateTrip);
+        dateButton = findViewById(R.id.dateTextView);
+        timeButton = findViewById(R.id.timeTextView);
+        tripNameTV = findViewById(R.id.titleTextView);
+        startPointTV = findViewById(R.id.txtStartPoint);
+        endPointTV = findViewById(R.id.txtEndPoint);
+        roundTripCheckBox = findViewById(R.id.roundTrip);
+    }
 
-        });
+    public void configureData(Trip trip){
+        this.trip = trip;
+        tripNameTV.setText( trip.getTitle());
+        timeButton.setText(trip.getTime());
+        dateButton.setText(trip.getDate());
+        startPointTV.setText(trip.getStartPoint().getAddress());
+        endPointTV.setText(trip.getEndPoint().getAddress());
+    }
 
-
-        datePicker.setOnClickListener(v -> {
-            datePicker(v);
-
-        });
-
-        createTrip.setOnClickListener(v -> {
-
-            createTripDone(v);
-//            Calendar calendar = Calendar.getInstance();
-//            if (android.os.Build.VERSION.SDK_INT >= 23) {
-//                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-//                        timePicker.getHour(), timePicker.getMinute(), 0);
-//
-//            } else {
-//                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-//                        timePicker.getCurrentHour(), timePicker.getCurrentMinute(), 0);
-//            }
-//             timePicker(v);
-//             datePicker(v);
-            Intent intent1 = new Intent(getApplicationContext(), MyIntentService.class);
-            //MyIntentService.enqueueWork(getApplicationContext(), intent1);
-            setAlarm(calendar.getTimeInMillis());
-
-        });
+    public void addActions(){
+        timeButton.setOnClickListener(v -> { timePickerClicked(); });
+        dateButton.setOnClickListener(date -> { datePickerClicked(); });
+        doneButton.setOnClickListener(v -> { doneClicked(); });
     }
 
 
-
-
-    public void timePicker(View view) {
+    public void timePickerClicked() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 // initialize hour and Mins
-                t1Hours = hourOfDay;
-                t1Min = minute;
-                calendar.set(0, 0, 0, t1Hours, t1Min);
+                hr = hourOfDay;
+                min = minute;
+                calendar.set(0, 0, 0, hr, min);
                 Date d = calendar.getTime();
-
-                String hour = new SimpleDateFormat("HH:mm a").format(d);
-                //String hour = calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + " " + ;
-                //set on btn
-                //Toast.makeText(getApplicationContext(), hourOfDay + "  " + minute, Toast.LENGTH_SHORT).show();
-                timePicker.setText(hour); // set the current time in text view
-
+                String time = new SimpleDateFormat("HH:mm a").format(d);
+                timeButton.setText(time); // set the current time in text view
             }
         }, 12, 0, false
         );
-        timePickerDialog.updateTime(t1Hours, t1Min);
+        timePickerDialog.updateTime(hr, min);
         timePickerDialog.show();
 
     }
 
-    public void datePicker(View view) {
+    public void datePickerClicked() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                        datePicker.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
+                        dateButton.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
                     }
-                }, t1year, t1mounth, t1day);
+                }, year, month, day);
 
-        datePickerDialog.updateDate(t1year, t1mounth, t1day);
+        datePickerDialog.updateDate(year, month, day);
         try {
             Date d;
             if(trip != null && trip.getDate() != null){
@@ -160,7 +121,6 @@ public class CreateTrip extends AppCompatActivity {
             }else{
                 d = new Date();
             }
-
             datePickerDialog.getDatePicker().setMinDate(d.getTime());
             datePickerDialog.show();
         } catch (ParseException e) {
@@ -169,14 +129,13 @@ public class CreateTrip extends AppCompatActivity {
 
     }
 
-    public void  createTripDone(View view){
-
+    public void doneClicked(){
         if(isValid()){
-            trip.setTitle( tripName.getText().toString());
+            trip.setTitle( tripNameTV.getText().toString());
             trip.setStartPoint(new Location("Ismaila", "30.5965", "32.2715"));
             trip.setEndPoint(new Location("Cairo", "30.0444", "31.2357"));
-            trip.setTime((String) timePicker.getText());
-            trip.setDate((String) datePicker.getText());
+            trip.setTime((String) timeButton.getText());
+            trip.setDate((String) dateButton.getText());
             trip.setStatus("upcoming");
 
 
@@ -196,13 +155,22 @@ public class CreateTrip extends AppCompatActivity {
             Toast.makeText(this, "Please fill all fields first", Toast.LENGTH_LONG).show();
         }
 
+        //            Calendar calendar = Calendar.getInstance();
+//            if (android.os.Build.VERSION.SDK_INT >= 23) {
+//                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+//                        timePicker.getHour(), timePicker.getMinute(), 0);
+//
+//            } else {
+//                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+//                        timePicker.getCurrentHour(), timePicker.getCurrentMinute(), 0);
+//            }
+//             timePicker(v);
+//             datePicker(v);
+        Intent intent1 = new Intent(getApplicationContext(), MyIntentService.class);
+        //MyIntentService.enqueueWork(getApplicationContext(), intent1);
+        setAlarm(calendar.getTimeInMillis());
 
     }
-
-//    public void openDialog() {
-//        AlartDialog exampleDialog = new AlartDialog();
-//        exampleDialog.show(getSupportFragmentManager(), "example dialog");
-//    }
 
     public void onCheckboxClicked(View view) {
 
@@ -224,9 +192,11 @@ public class CreateTrip extends AppCompatActivity {
     }
 
     public boolean isValid(){
-        return !(tripName.getText().toString().isEmpty() ||
-                timePicker.getText().toString().isEmpty() ||
-                datePicker.getText().toString().isEmpty());
+        return !(tripNameTV.getText().toString().isEmpty() ||
+                timeButton.getText().toString().isEmpty() ||
+                dateButton.getText().toString().isEmpty()) ||
+                startPointTV.getText().toString().isEmpty() ||
+                endPointTV.getText().toString().isEmpty();
     }
 
 }

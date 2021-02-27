@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import iti.intake41.myapplication.helper.Loader;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripsRepo;
 import iti.intake41.myapplication.models.trip.TripsRepoDelegate;
@@ -16,52 +17,65 @@ public class TripViewModel extends ViewModel implements TripsRepoDelegate {
 
     public MediatorLiveData<List<Trip>> itemsList = new MediatorLiveData();
     public MediatorLiveData<Trip> selectedItem = new MediatorLiveData();
-
+    private Loader loader;
     private TripsRepo repo;
-    private static TripViewModel instance;
+//    private static TripViewModel instance;
     Context context;
 
-    private TripViewModel(){
+    public TripViewModel(){
         this.repo = new TripsRepo(this);
-        getTrips();
     }
 
-    public static TripViewModel getInstance(Context context){
-        if(instance == null){
-            synchronized (TripViewModel.class){
-                if(instance == null){
-                    instance = new TripViewModel();
-                }
-            }
-        }
-
-        instance.context = context;
-        return instance;
+    public void setContext(Context context){
+        this.context = context;
+        this.loader = new Loader(context);
     }
+
+
+//    public static TripViewModel getInstance(Context context){
+//        if(instance == null){
+//            synchronized (TripViewModel.class){
+//                if(instance == null){
+//                    instance = new TripViewModel();
+//                }
+//            }
+//        }
+//
+//        instance.context = context;
+//        return instance;
+//    }
 
     public void getTrips(){
-        repo.getTrips();
+        if(itemsList.getValue() == null){
+            loader.start();
+            repo.getTrips();
+        }
     }
 
     public void addTrip(Trip trip) {
+        loader.start();
         repo.addTrip(trip);
     }
 
     public void deleteTrip(String id) {
+        loader.start();
         repo.deleteTrip(id);
     }
 
     public void updateTrip(Trip trip) {
+        loader.start();
         repo.updateTrip(trip);
     }
 
     @Override
     public void updateTrips(List<Trip> tripList) {
+        loader.stop();
         itemsList.setValue(tripList);
     }
 
     @Override
     public void showMessage(String message) {
+        loader.stop();
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 }

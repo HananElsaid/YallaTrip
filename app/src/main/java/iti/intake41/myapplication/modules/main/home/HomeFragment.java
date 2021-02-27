@@ -1,6 +1,5 @@
 package iti.intake41.myapplication.modules.main.home;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -86,21 +86,20 @@ public class HomeFragment extends Fragment{
     }
 
     private void setupViewModel(){
-        tripViewModel = TripViewModel.getInstance(getContext());
-
-        ProgressDialog d = new ProgressDialog(getContext());
-        d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        d.setMax(5);
-        d.show();
+        //tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
+        tripViewModel = new ViewModelProvider(requireActivity()).get(TripViewModel.class);
+        tripViewModel.setContext(getContext());
         tripViewModel.itemsList.observe(getViewLifecycleOwner(), items -> {
             updateItems(items);
-            d.dismiss();
         });
+        tripViewModel.getTrips();
 
-        userViewModel = UserViewModel.getInstance(getContext());
+        //userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.user.observe(getViewLifecycleOwner(), user -> {
             userNameTextView.setText(user.getName());
         });
+        userViewModel.getUser();
     }
 
     private void configureViews() {

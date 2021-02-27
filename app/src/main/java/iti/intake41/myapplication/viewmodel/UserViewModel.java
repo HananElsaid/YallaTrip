@@ -1,7 +1,5 @@
 package iti.intake41.myapplication.viewmodel;
 
-import android.content.Context;
-
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,32 +13,33 @@ public class UserViewModel extends ViewModel{
 
     private UserRepo repo;
     private static UserViewModel instance;
-    Context context;
+//    Context context;
 
-    private UserViewModel(){
+    public UserViewModel(){
         this.repo = new UserRepo();
-        getUser();
     }
 
-    public static UserViewModel getInstance(Context context){
-        if(instance == null){
-            synchronized (UserViewModel.class){
-                if(instance == null){
-                    instance = new UserViewModel();
-                }
-            }
-        }
-
-        instance.context = context;
-        return instance;
-    }
+//    public static UserViewModel getInstance(Context context){
+//        if(instance == null){
+//            synchronized (UserViewModel.class){
+//                if(instance == null){
+//                    instance = new UserViewModel();
+//                }
+//            }
+//        }
+//
+//        instance.context = context;
+//        return instance;
+//    }
 
     public void getUser(){
-        repo.getUser(new FirebaseRepoDelegate() {
-            @Override
-            public <T> void getObjSuccess(T obj) {
-                user.setValue((User) obj);
-            }
-        });
+        if(user.getValue() == null){
+            repo.getUser(new FirebaseRepoDelegate() {
+                @Override
+                public <T> void getObjSuccess(T obj) {
+                    user.setValue((User) obj);
+                }
+            });
+        }
     }
 }

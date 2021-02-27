@@ -1,7 +1,5 @@
 package iti.intake41.myapplication.helper;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -15,11 +13,10 @@ import iti.intake41.myapplication.modules.main.tripdetails.TripDetailes;
 
 
 public class Navigator {
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void gotoScreen(Context c1, Class<?> c2) {
         Intent n = new Intent(c1, c2);
         c1.startActivity(n);
-        c1.startActivity(n, ActivityOptions.makeSceneTransitionAnimation((Activity) c1).toBundle());
+        //c1.startActivity(n, ActivityOptions.makeSceneTransitionAnimation((Activity) c1).toBundle());
     }
 
     public static void navigateToTripDetails(Context context, String tripId){
