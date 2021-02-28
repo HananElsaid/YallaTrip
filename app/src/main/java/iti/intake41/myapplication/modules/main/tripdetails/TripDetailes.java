@@ -145,6 +145,7 @@ public class TripDetailes extends AppCompatActivity {
             });
             UIHelper.startTrip(this, trip);
             checkPermission();
+
         }
     }
 
@@ -204,6 +205,5 @@ public class TripDetailes extends AppCompatActivity {
         startService(new Intent(TripDetailes.this, FloatWidgetService.class));
         finish();
     }
-
 
 }

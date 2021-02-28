@@ -49,7 +49,7 @@
             android:exported="false" />
 
         <receiver
-            android:name=".modules.reminder.MyAlarm"
+            android:name=".modules.reminder.MyAlarmReceiver"
             android:enabled="true"
             android:exported="true" />
         <receiver android:name=".modules.reminder.SnoozeBroadcastReciver"/>

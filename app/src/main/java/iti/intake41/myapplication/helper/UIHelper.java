@@ -62,12 +62,18 @@ public class UIHelper {
 
     public static void startTrip(Context context, Trip trip) {
         String to = trip.getEndPoint().getAddress();
+
         // Creates an Intent that will load a map of San Francisco
         Uri gmmIntentUri = Uri.parse("google.navigation:q=" +
                 trip.getEndPoint().getLatitude() + "," + trip.getEndPoint().getLongitude());
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         context.startActivity(mapIntent);
+
+//        Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?daddr="+to);
+//        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//        mapIntent.setPackage("com.google.android.apps.maps");
+//        startActivity(mapIntent);
     }
 }
 
