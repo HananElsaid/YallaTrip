@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_more"
-        android:name="iti.intake41.myapplication.modules.main.profile.ProfileFragment"
+        android:name="iti.intake41.myapplication.modules.user.profile.ProfileFragment"
         android:label="@string/title_more"
         tools:layout="@layout/fragment_profile" />
 </navigation>

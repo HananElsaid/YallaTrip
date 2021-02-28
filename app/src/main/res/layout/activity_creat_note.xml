@@ -7,7 +7,7 @@
     android:background="@drawable/ic_back"
     android:hapticFeedbackEnabled="true"
     android:scrollbarAlwaysDrawHorizontalTrack="true"
-    tools:context=".modules.creatnote.view.CreatNoteActivity">
+    tools:context=".modules.trip.creatnote.view.CreatNoteActivity">
 
 
     <TextView

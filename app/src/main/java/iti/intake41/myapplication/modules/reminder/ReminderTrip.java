@@ -18,11 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.helper.UIHelper;
-import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
-import iti.intake41.myapplication.models.trip.TripStatus;
-import iti.intake41.myapplication.modules.main.tripdetails.TripDetailes;
+import iti.intake41.myapplication.modules.trip.tripdetails.TripDetailes;
 
 public class ReminderTrip extends Activity {
 

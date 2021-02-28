@@ -16,7 +16,7 @@ import com.google.android.material.shape.MaterialShapeDrawable;
 
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
-import iti.intake41.myapplication.modules.createtrip.view.CreateTrip;
+import iti.intake41.myapplication.modules.trip.createtrip.view.CreateTrip;
 
 public class MainActivity extends AppCompatActivity {
 

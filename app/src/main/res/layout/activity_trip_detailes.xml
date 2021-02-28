@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".modules.main.tripdetails.TripDetailes">
+    tools:context=".modules.trip.tripdetails.TripDetailes">
 
 
 <LinearLayout
@@ -85,14 +85,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="16dp"
         android:layout_weight="0.5"
         android:orientation="vertical"
-        android:layout_margin="16dp">
+        android:weightSum="1">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="0dp"
             android:layout_margin="5dp"
+            android:layout_weight="0.5"
             app:cardCornerRadius="10dp"
             app:flow_wrapMode="aligned">
 
@@ -149,7 +151,7 @@
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
 
                     <LinearLayout
@@ -186,46 +188,52 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
             android:orientation="horizontal"
             android:weightSum="1">
+
             <Button
-                android:layout_width="0dp"
-                android:layout_weight="0.5"
                 android:id="@+id/dateTextView"
+                style="@style/CardButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
                 android:text="@string/date"
                 app:backgroundTint="@color/white"
                 app:cornerRadius="20dp"
                 app:icon="@drawable/icon_awesome_calendar_alt"
                 app:iconGravity="start"
-                app:iconTint="@color/greenDark"
-                style="@style/CardButton" />
+                app:iconTint="@color/greenDark" />
 
             <Button
-                android:layout_width="0dp"
-                android:layout_weight="0.5"
                 android:id="@+id/timeTextView"
+                style="@style/CardButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
                 android:text="@string/time"
                 app:backgroundTint="@color/white"
                 app:cornerRadius="20dp"
                 app:icon="@drawable/icon_ionic_ios_time"
                 app:iconGravity="start"
-                app:iconTint="@color/greenDark"
-                style="@style/CardButton" />
+                app:iconTint="@color/greenDark" />
 
         </LinearLayout>
 
 
         <Button
             style="@style/CardButton"
+            android:layout_height="0dp"
             android:layout_marginTop="10dp"
+            android:layout_weight="0.25"
             android:onClick="addNotes"
             android:text="@string/addNote"
             app:backgroundTint="@color/white"
             app:cornerRadius="20dp"
             app:icon="@drawable/icon_material_note_add"
             app:iconGravity="start"
-            app:iconTint="@color/greenDark"/>
+            app:iconTint="@color/greenDark" />
 
     </LinearLayout>
 </LinearLayout>

@@ -7,16 +7,15 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import iti.intake41.myapplication.models.Trip;
-import iti.intake41.myapplication.modules.createtrip.view.CreateTrip;
-import iti.intake41.myapplication.modules.creatnote.view.CreatNoteActivity;
-import iti.intake41.myapplication.modules.main.tripdetails.TripDetailes;
+import iti.intake41.myapplication.modules.trip.createtrip.view.CreateTrip;
+import iti.intake41.myapplication.modules.trip.creatnote.view.CreatNoteActivity;
+import iti.intake41.myapplication.modules.trip.tripdetails.TripDetailes;
 
 
 public class Navigator {
     public static void gotoScreen(Context c1, Class<?> c2) {
         Intent n = new Intent(c1, c2);
         c1.startActivity(n);
-        //c1.startActivity(n, ActivityOptions.makeSceneTransitionAnimation((Activity) c1).toBundle());
     }
 
     public static void navigateToTripDetails(Context context, String tripId){

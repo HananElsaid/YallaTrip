@@ -1,13 +1,16 @@
 package iti.intake41.myapplication.modules.main.home;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,7 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import iti.intake41.myapplication.R;
@@ -78,7 +84,8 @@ public class HomeFragment extends Fragment{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 status= getStatus(tab.getPosition());
-                updateItems();
+                if(items != null)
+                    updateItems();
             }
             public void onTabUnselected(TabLayout.Tab tab) {}
             public void onTabReselected(TabLayout.Tab tab) {}
@@ -104,6 +111,7 @@ public class HomeFragment extends Fragment{
 
     private void configureViews() {
         adapter = new HomeAdapter(getContext(), new HomeAdapterDelegate() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void itemClicked(Trip trip) {
                 System.out.println("Item Clicked");
@@ -112,9 +120,26 @@ public class HomeFragment extends Fragment{
 
             @Override
             public void startClicked(Trip trip) {
-                trip.setStatus(TripStatus.done.toString());
-                tripViewModel.updateTrip(trip);
-                UIHelper.startTrip(getContext(), trip);
+                if(trip != null){
+                    try {
+                        Date date = new SimpleDateFormat("dd/MM/YYYY HH:mm a")
+                                .parse(trip.getDate() + " " + trip.getTime());
+                        if(date.after(new Date())){
+                            System.out.println("date.after(new Date()");
+                            trip.setStatus(TripStatus.done.toString());
+                            tripViewModel.updateTrip(trip, () -> {
+                                UIHelper.startTrip(getContext(), trip);
+                                //checkPermission();
+                            });
+                        }else{
+                            Toast.makeText(getActivity(), "Invalid trip date, Please update it!", Toast.LENGTH_LONG);
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
         });
         recyclerView.setAdapter(adapter);

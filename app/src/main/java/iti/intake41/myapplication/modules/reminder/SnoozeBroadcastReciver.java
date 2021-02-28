@@ -10,7 +10,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.modules.createtrip.view.CreateTrip;
+import iti.intake41.myapplication.modules.trip.createtrip.view.CreateTrip;
 
 public class SnoozeBroadcastReciver extends BroadcastReceiver {
     int NOTIFICATION_ID = 234;
