@@ -1,8 +1,13 @@
 package iti.intake41.myapplication.modules.main.splash;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +16,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 
 import iti.intake41.myapplication.R;
+import iti.intake41.myapplication.helper.Constants;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.NetworkClass;
-import iti.intake41.myapplication.modules.user.login.view.LoginActivity;
 import iti.intake41.myapplication.modules.main.MainActivity;
+import iti.intake41.myapplication.modules.user.login.view.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -22,6 +28,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        checkPermission();
 
         ImageView imageView = findViewById(R.id.imageView);
         DrawableImageViewTarget splashScreen = new DrawableImageViewTarget(imageView);
@@ -57,5 +64,38 @@ public class SplashActivity extends AppCompatActivity {
         };
         // start thread
         background.start();
+    }
+
+    public void checkPermission() {
+        int LAYOUT_FLAG;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+                    startActivityForResult(intent, Constants.APP_PERMISSION_REQUEST);
+        } else {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, Constants.APP_PERMISSION_REQUEST);
+        }
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+//            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//                    Uri.parse("package:" + getPackageName()));
+//            startActivityForResult(intent, Constants.APP_PERMISSION_REQUEST);
+//        } else {
+//           return;
+//        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.APP_PERMISSION_REQUEST && resultCode == RESULT_OK) {
+            return ;
+        } else {
+            checkPermission();
+            Toast.makeText(this, "Draw over other app permission not enable.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

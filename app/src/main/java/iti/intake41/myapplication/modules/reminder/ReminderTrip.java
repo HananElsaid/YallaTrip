@@ -1,7 +1,5 @@
 package iti.intake41.myapplication.modules.reminder;
 
-import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,11 +15,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.modules.trip.tripdetails.TripDetailes;
 
-public class ReminderTrip extends Activity {
+public class ReminderTrip extends AppCompatActivity {
 
     Button startbtn, cancelbtn,snoozebtn;
     MediaPlayer mediaPlayer;
@@ -32,8 +33,6 @@ public class ReminderTrip extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        openAlarmRingTone();
-
     }
     private void openAlarmRingTone() {
         mediaPlayer=MediaPlayer.create(this, Settings.System.DEFAULT_RINGTONE_URI);
@@ -42,13 +41,13 @@ public class ReminderTrip extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        openAlarmRingTone();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_trip);
         startbtn=findViewById(R.id.start);
         cancelbtn =findViewById(R.id.cancel);
         snoozebtn=findViewById(R.id.snooze);
         tripTitle=findViewById(R.id.tripTitle);
-        createNotification();
 
         tripTitle.setText(trip.getTitle());
 
@@ -66,16 +65,8 @@ public class ReminderTrip extends Activity {
         snoozebtn.setOnClickListener(v -> {
             mediaPlayer.stop();
             Toast.makeText(this,"Reminder set",Toast.LENGTH_LONG).show();
-
-            Intent intent1= new Intent(this, SnoozeBroadcastReciver.class);
-            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderTrip.this,0, intent1,0);
-            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-
-            long time =System.currentTimeMillis();
-            long tensec =1000*10;
-            alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,time+tensec,pendingIntent);
-            finish();
+            createNotification();
+           finish();
         });
     }
 
@@ -83,7 +74,6 @@ public class ReminderTrip extends Activity {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
-
             String CHANNEL_ID = "notifyme";
             CharSequence name = "YallaTrip";
             String Description = "This is my channel";
@@ -98,11 +88,23 @@ public class ReminderTrip extends Activity {
             mChannel.setShowBadge(false);
             mChannel.setLockscreenVisibility(importance);
             notificationManager.createNotificationChannel(mChannel);
-
             Log.i("TAG", "createNotification: ");
             Toast.makeText(this, "notification created", Toast.LENGTH_LONG).show();
+
+            Intent notificationIntent= new Intent(ReminderTrip.this,ReminderTrip.class);
+            PendingIntent pendingIntent= PendingIntent.getActivity(ReminderTrip.this,0,notificationIntent,0);
+            notificationManager.notify(2,new NotificationCompat.Builder(ReminderTrip.this,CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                    .setOngoing(true) //outocancle ->
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setContentTitle("YallaTrip")
+                    .setContentText("Start your Trip Now")
+                    .build());
         }
 
     }
+
+
 
 }

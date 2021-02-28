@@ -1,5 +1,6 @@
 package iti.intake41.myapplication.modules.main.home;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
 import iti.intake41.myapplication.models.user.UserRepoInterface;
+import iti.intake41.myapplication.modules.map.floatingwidget.FloatWidgetService;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
 import iti.intake41.myapplication.viewmodel.UserViewModel;
 
@@ -44,7 +46,6 @@ public class HomeFragment extends Fragment{
     //Mark :- Properties
     private HomeAdapter adapter;
     private List<Trip> items;
-    private UserRepoInterface userRepo;
     private TripStatus status = TripStatus.upcoming;
     private TripViewModel tripViewModel;
     private UserViewModel userViewModel;
@@ -116,6 +117,7 @@ public class HomeFragment extends Fragment{
             public void itemClicked(Trip trip) {
                 System.out.println("Item Clicked");
                 Navigator.navigateToTripDetails(getContext(), trip);
+
             }
 
             @Override
@@ -124,17 +126,17 @@ public class HomeFragment extends Fragment{
                     try {
                         Date date = new SimpleDateFormat("dd/MM/YYYY HH:mm a")
                                 .parse(trip.getDate() + " " + trip.getTime());
-                        if(date.after(new Date())){
+//                        if(date.after(new Date())){
                             System.out.println("date.after(new Date()");
                             trip.setStatus(TripStatus.done.toString());
                             tripViewModel.updateTrip(trip, () -> {
                                 UIHelper.startTrip(getContext(), trip);
-                                //checkPermission();
+                                viewWidgetButton(trip);
                             });
-                        }else{
-                            System.out.println("Toast Clicked");
-                            Toast.makeText(getActivity().getApplicationContext(), "Invalid trip date, Please update it!", Toast.LENGTH_LONG);
-                        }
+//                        }else{
+//                            System.out.println("Toast Clicked");
+//                            Toast.makeText(getActivity().getApplicationContext(), "Invalid trip date, Please update it!", Toast.LENGTH_LONG);
+//                        }
 
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -185,6 +187,12 @@ public class HomeFragment extends Fragment{
                 status = TripStatus.cancelled;
         }
         return status;
+    }
+    void viewWidgetButton(Trip trip) {
+        Intent intent = new Intent(getActivity(), FloatWidgetService.class);
+        intent.putExtra("tripID", trip.getId());
+        intent.putExtra("tripName", trip.getTitle());
+        getContext().startService(intent);
     }
 
 }

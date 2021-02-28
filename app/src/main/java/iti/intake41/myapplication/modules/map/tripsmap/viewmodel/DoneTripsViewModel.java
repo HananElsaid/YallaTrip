@@ -31,9 +31,25 @@ public class DoneTripsViewModel extends ViewModel {
         tripsList = new MediatorLiveData<>();
         //colorList = new MutableLiveData<>();
         message = new MutableLiveData<>();
-        //repo = new TripRepo();
+        setupRepo();
         //getTrips();
 
+    }
+
+    public void setupRepo(){
+        repo = new TripRepo();
+        repo.setListener(new FirebaseRepoDelegate() {
+            @Override
+            public <T> void getListSuccess(List<T> list) {
+                List<Trip> tripLists = new ArrayList<>();
+                for (Trip t : (List<Trip>)list) {
+                    if (t.getStatus().equals("done")) {
+                        tripLists.add(t);
+                    }
+                }
+                tripsList.setValue(tripLists);
+            }
+        });
     }
 
     public List<Integer> getColorList() {
@@ -45,7 +61,7 @@ public class DoneTripsViewModel extends ViewModel {
         Log.i("getListSuccess", ": ");
         repo.getTrips(new FirebaseRepoDelegate() {
             MutableLiveData<List<Trip>> tripss = new MutableLiveData<>();
-            List<Trip> TripLists = new ArrayList<>();
+            List<Trip> tripLists = new ArrayList<>();
 
             @Override
             public <T> void getListSuccess(List<T> list) {
@@ -56,12 +72,12 @@ public class DoneTripsViewModel extends ViewModel {
                 } else {*/
                     for (Trip t : trips) {
                         if (t.getStatus().equals("done")) {
-                            TripLists.add(t);
+                            tripLists.add(t);
                         }
                  //   }
 
                 }
-                tripss.setValue(TripLists);
+                tripss.setValue(tripLists);
                 tripsList.addSource(tripss, new Observer<List<Trip>>() {
                     @Override
                     public void onChanged(List<Trip> trips1) {

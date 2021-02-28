@@ -4,8 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +19,7 @@ import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.models.note.Note;
 
 
-public class NoteAdapter  extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     private Context context;
     private List<Note> noteList;
     private NoteClickListener noteClickListener;
@@ -28,7 +31,7 @@ public class NoteAdapter  extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     @NonNull
     @Override
     public NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context=parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.note_row, parent, false);
         NoteHolder holderClass = new NoteHolder(view);
@@ -41,15 +44,36 @@ public class NoteAdapter  extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
         Note note = noteList.get(position);
         holder.tvNoteText.setText(note.getTitle());
+        if (note.getDone()) {
+            holder.checkBox2.setChecked(true);
+        } else
+            holder.checkBox2.setChecked(false);
+
         holder.image_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 noteClickListener.onDeletNote(note);
             }
         });
-        //holder.image_Movie.setImageResource(movie.getImageURl());
-    }
+        holder.checkBox2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean checked = holder.checkBox2.isChecked();
+                if (checked) {
+                    holder.checkBox2.setChecked(true);
+                    note.setDone(true);
 
+                } else {
+                    holder.checkBox2.setChecked(false);
+                    note.setDone(false);
+
+                }
+                noteClickListener.onUpdateState(note);
+            }
+        });
+
+
+    }
 
 
     @Override
@@ -67,12 +91,14 @@ public class NoteAdapter  extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         TextView tvNoteText;
         ImageView image_Delete;
         ConstraintLayout item_Contaner;
+        CheckBox checkBox2;
 
         public NoteHolder(@NonNull View itemView) {
             super(itemView);
             tvNoteText = itemView.findViewById(R.id.tvNoteText);
-            image_Delete= itemView.findViewById(R.id.imageDelete);
-            item_Contaner=itemView.findViewById(R.id.item_Contaner);
+            image_Delete = itemView.findViewById(R.id.imageDelete);
+            item_Contaner = itemView.findViewById(R.id.item_Contaner);
+            checkBox2 = itemView.findViewById(R.id.checkBox2);
         }
     }
 }

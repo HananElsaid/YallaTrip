@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW"/>
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YallaTrip"
         tools:ignore="ExtraText">
-        <activity android:name=".modules.map.searchplace.SearchPlaceActivity"></activity>
+        <activity android:name=".modules.creatnote.notedialog.NoteDialogueActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -29,23 +30,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".modules.user.login.view.LoginActivity" />
         <activity android:name=".modules.user.signup.view.SignUpActivity" />
         <activity android:name=".modules.main.MainActivity" />
         <activity android:name=".modules.trip.createtrip.view.CreateTrip" />
         <activity android:name=".modules.trip.tripdetails.TripDetailes" />
+        <activity android:name=".modules.createtrip.view.CreateTrip" />
         <activity
             android:name=".modules.map.tripsmap.MapTripsActivity"
             android:label="@string/title_activity_map_trips" />
         <activity android:name=".modules.trip.creatnote.view.CreatNoteActivity" />
-
         <service
             android:name=".modules.map.floatingwidget.FloatWidgetService"
             android:enabled="true"
             android:exported="false" />
 
         <receiver
-            android:name=".modules.reminder.MyAlarm"
+            android:name=".modules.reminder.MyAlarmReceiver"
             android:enabled="true"
             android:exported="true" />
         <receiver android:name=".modules.reminder.SnoozeBroadcastReciver" />

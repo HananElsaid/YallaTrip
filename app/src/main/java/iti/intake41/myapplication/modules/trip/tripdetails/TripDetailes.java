@@ -2,13 +2,10 @@ package iti.intake41.myapplication.modules.trip.tripdetails;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -23,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.helper.Constants;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.Trip;
@@ -51,30 +47,30 @@ public class TripDetailes extends AppCompatActivity {
         setupViewModel();
 
         Intent i = getIntent();
-        if(i.hasExtra("trip")){
+        if (i.hasExtra("trip")) {
             trip = i.getParcelableExtra("trip");
             configureTrip();
 
-        }else if(i.hasExtra("trip_id")){
+        } else if (i.hasExtra("trip_id")) {
             String id = i.getStringExtra("trip_id");
             tripViewModel.getTripDetails(id);
         }
     }
-    
-    public void initViews(){
-        titleTextView=findViewById(R.id.titleTextView);
-        statusTextView=findViewById(R.id.statusTextView);
-        txtStartPoint=findViewById(R.id.txtStartPoint);
-        txtEndPoint=findViewById(R.id.txtEndPoint);
-        dateTextView=findViewById(R.id.dateTextView);
-        timeTextView=findViewById(R.id.timeTextView);
-        editButton=findViewById(R.id.editButton);
-        startButton=findViewById(R.id.startButton);
-        cancelButton=findViewById(R.id.cancelButton);
+
+    public void initViews() {
+        titleTextView = findViewById(R.id.titleTextView);
+        statusTextView = findViewById(R.id.statusTextView);
+        txtStartPoint = findViewById(R.id.txtStartPoint);
+        txtEndPoint = findViewById(R.id.txtEndPoint);
+        dateTextView = findViewById(R.id.dateTextView);
+        timeTextView = findViewById(R.id.timeTextView);
+        editButton = findViewById(R.id.editButton);
+        startButton = findViewById(R.id.startButton);
+        cancelButton = findViewById(R.id.cancelButton);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void configureTrip(){
+    public void configureTrip() {
         titleTextView.setText(trip.getTitle());
         statusTextView.setText(trip.getStatus());
         txtStartPoint.setText(trip.getStartPoint().getAddress());
@@ -84,19 +80,22 @@ public class TripDetailes extends AppCompatActivity {
 
         TripStatus status = TripStatus.valueOf(trip.getStatus());
         int color;
-        switch (status){
+        switch (status) {
             case upcoming:
-                color = R.color.orangeDark; break;
+                color = R.color.orangeDark;
+                break;
             case done:
-                color = R.color.greenMid; break;
+                color = R.color.greenMid;
+                break;
             default:
-                color = R.color.redMid; break;
+                color = R.color.redMid;
+                break;
 
         }
-        int c = ContextCompat.getColor(this,color);
+        int c = ContextCompat.getColor(this, color);
         statusTextView.setTextColor(c);
 
-        if(status == TripStatus.upcoming){
+        if (status == TripStatus.upcoming) {
             editButton.setFabOptionEnabled(true);
             startButton.setFabOptionEnabled(true);
             cancelButton.setFabOptionEnabled(true);
@@ -146,9 +145,9 @@ public class TripDetailes extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void editClicked(View view) {
-        if(trip != null)
+        if (trip != null)
             Navigator.navigateToUpdateTrip(this, trip);
-            finish();
+        finish();
     }
 
     public void startClicked(View view) {
@@ -160,7 +159,7 @@ public class TripDetailes extends AppCompatActivity {
                     trip.setStatus(TripStatus.done.toString());
                     tripViewModel.updateTrip(trip, () -> {
                         UIHelper.startTrip(this, trip);
-                        checkPermission();
+                        viewWidgetButton();
                     });
                 }else{
                     System.out.println("Toast Clicked");
@@ -176,7 +175,7 @@ public class TripDetailes extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void cancelClicked(View view) {
-        if(trip != null){
+        if (trip != null) {
             trip.setStatus(TripStatus.cancelled.toString());
             tripViewModel.updateTrip(trip, () -> {
                 configureTrip();
@@ -184,7 +183,8 @@ public class TripDetailes extends AppCompatActivity {
         }
     }
 
-
+/*
+>>>>>>> 3d464d6866c9ec6e451ce46ba031603f6c8c4b01:app/src/main/java/iti/intake41/myapplication/modules/main/tripdetails/TripDetailes.java
     public void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -194,6 +194,7 @@ public class TripDetailes extends AppCompatActivity {
             viewWidgetButton();
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -203,10 +204,14 @@ public class TripDetailes extends AppCompatActivity {
             Toast.makeText(this, "Draw over other app permission not enable.", Toast.LENGTH_SHORT).show();
         }
     }
+*/
+
     void viewWidgetButton() {
-        startService(new Intent(TripDetailes.this, FloatWidgetService.class));
+        Intent intent = new Intent(TripDetailes.this, FloatWidgetService.class);
+        intent.putExtra("tripID", trip.getId());
+        intent.putExtra("tripName", trip.getTitle());
+        startService(intent);
         finish();
     }
-
 
 }

@@ -72,7 +72,9 @@ public class ProfileFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                Navigator.gotoScreen(getActivity(), MapTripsActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Navigator.gotoScreen(getActivity(), MapTripsActivity.class);
+                }
             }
         });
 
@@ -82,7 +84,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NetworkClass.firebaseLogout();
-                Navigator.gotoScreen(getActivity(), LoginActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Navigator.gotoScreen(getActivity(), LoginActivity.class);
+                }
                 getActivity().finish();
             }
         });

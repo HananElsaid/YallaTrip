@@ -106,11 +106,12 @@
     <string name="cancel">Cancel</string>
 
     <string name="snooze">Snooze</string>
-    <string name="cancle">cancle</string>
+    <string name="cancle">cancel</string>
     <string name="reminder">Time to Statr your Trip</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="searchPlaceHint">Search for a place</string>
-
+    <string name="areYouSureToDeleteThisNote">Are you sure you want to delete This Note</string>
+    <string name="yes">Yes</string>
+    <string name="noteDeletedSuccessfully">Note Deleted Successfully</string>
 
 </resources>

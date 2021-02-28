@@ -25,7 +25,8 @@ public class TripViewModel extends ViewModel {
     private static final String TAG = "TripViewModel";
 
     public TripViewModel() {
-        this.repo = new TripRepo(new FirebaseRepoDelegate() {
+        this.repo = new TripRepo();
+        this.repo.setListener(new FirebaseRepoDelegate() {
             @Override
             public <T> void getListSuccess(List<T> list) {
                 itemsList.setValue((List<Trip>) list);

@@ -1,10 +1,7 @@
 package iti.intake41.myapplication.modules.trip.createtrip.view;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,8 +27,8 @@ import java.util.Date;
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.Location;
-import iti.intake41.myapplication.modules.map.searchplace.PlaceSearchFragment;
 import iti.intake41.myapplication.modules.reminder.MyAlarm;
+import iti.intake41.myapplication.modules.map.searchplace.PlaceSearchFragment;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
 
 import static android.app.DatePickerDialog.OnDateSetListener;
@@ -136,15 +133,13 @@ public class CreateTrip extends AppCompatActivity {
     public void doneClicked(View view){
         if(isValid()){
             trip.setTitle( tripNameTV.getText().toString());
-//            trip.setStartPoint(new Location("Ismaila", "30.5965", "32.2715"));
-//            trip.setEndPoint(new Location("Cairo", "30.0444", "31.2357"));
             trip.setTime((String) timeButton.getText());
             trip.setDate((String) dateButton.getText());
             trip.setStatus("upcoming");
 
             tripViewModel.addTrip(trip, ()->{
+                startAlarm();
                 finish();
-                setAlarm(calendar.getTimeInMillis());
             });
 
         }else {
@@ -157,19 +152,9 @@ public class CreateTrip extends AppCompatActivity {
 
     }
 
-    private void setAlarm(long time) {
-        //getting the alarm manager
-        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        //creating a new intent specifying the broadcast receiver
-        Intent i = new Intent(this, MyAlarm.class);
-
-        //creating a pending intent using the intent
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
-
-        //setting the repeating alarm that will be fired every day
-        am.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pi);
-        Toast.makeText(this, "Alarm is set", Toast.LENGTH_SHORT).show();
+    private void startAlarm(){
+        MyAlarm myAlarm = new MyAlarm(CreateTrip.this,hr,min,day,month,year);
+        myAlarm.setAlarm();
     }
 
     public boolean isValid(){

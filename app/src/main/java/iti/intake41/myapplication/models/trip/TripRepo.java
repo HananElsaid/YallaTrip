@@ -21,8 +21,11 @@ import iti.intake41.myapplication.models.Trip;
 public class TripRepo extends FirebaseRepo implements TripRepoInterface{
     DatabaseReference tripRef;
 
-    public TripRepo(FirebaseRepoDelegate delegate){
+    public TripRepo(){
         tripRef = mDatabase.child("trips").child(getUid());
+    }
+
+    public void setListener(FirebaseRepoDelegate delegate){
         tripRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -39,7 +42,6 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
                 delegate.failed(error.getMessage());
             }
         });
-
     }
 
     public String getTripID(){

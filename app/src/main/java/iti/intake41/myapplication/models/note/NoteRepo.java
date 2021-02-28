@@ -24,6 +24,9 @@ public class NoteRepo extends FirebaseRepo implements NoteRepoInterface {
 
     @Override
     public void addListener(String tripId, FirebaseRepoDelegate delegate) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
         mDatabase.child("notes").child(tripId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -41,6 +44,8 @@ public class NoteRepo extends FirebaseRepo implements NoteRepoInterface {
             }
 
         });
+            }
+        }).start();
     }
 
     @Override
