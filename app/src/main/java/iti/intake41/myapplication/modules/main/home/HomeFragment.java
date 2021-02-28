@@ -132,7 +132,8 @@ public class HomeFragment extends Fragment{
                                 //checkPermission();
                             });
                         }else{
-                            Toast.makeText(getActivity(), "Invalid trip date, Please update it!", Toast.LENGTH_LONG);
+                            System.out.println("Toast Clicked");
+                            Toast.makeText(getActivity().getApplicationContext(), "Invalid trip date, Please update it!", Toast.LENGTH_LONG);
                         }
 
                     } catch (ParseException e) {

@@ -163,6 +163,7 @@ public class TripDetailes extends AppCompatActivity {
                         checkPermission();
                     });
                 }else{
+                    System.out.println("Toast Clicked");
                   tripViewModel.showMessage("Invalid trip date, Please update it!");
                 }
 
