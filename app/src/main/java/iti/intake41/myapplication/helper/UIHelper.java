@@ -69,5 +69,7 @@ public class UIHelper {
         mapIntent.setPackage("com.google.android.apps.maps");
         context.startActivity(mapIntent);
     }
+
+
 }
 

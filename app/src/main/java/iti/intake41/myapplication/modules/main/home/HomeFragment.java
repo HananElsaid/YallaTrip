@@ -1,6 +1,8 @@
 package iti.intake41.myapplication.modules.main.home;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +27,8 @@ import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
 import iti.intake41.myapplication.models.user.UserRepoInterface;
+import iti.intake41.myapplication.modules.floatingwidget.FloatWidgetService;
+import iti.intake41.myapplication.modules.main.tripdetails.TripDetailes;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
 import iti.intake41.myapplication.viewmodel.UserViewModel;
 
@@ -105,10 +110,12 @@ public class HomeFragment extends Fragment{
 
     private void configureViews() {
         adapter = new HomeAdapter(getContext(), new HomeAdapterDelegate() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void itemClicked(Trip trip) {
                 System.out.println("Item Clicked");
                 Navigator.navigateToTripDetails(getContext(), trip);
+
             }
 
             @Override
@@ -116,6 +123,7 @@ public class HomeFragment extends Fragment{
                 trip.setStatus(TripStatus.done.toString());
                 tripViewModel.updateTrip(trip);
                 UIHelper.startTrip(getContext(), trip);
+                viewWidgetButton(trip);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -160,6 +168,13 @@ public class HomeFragment extends Fragment{
                 status = TripStatus.cancelled;
         }
         return status;
+    }
+    void viewWidgetButton(Trip trip) {
+        Intent intent = new Intent(getActivity(), FloatWidgetService.class);
+        intent.putExtra("tripID", trip.getId());
+        intent.putExtra("tripName", trip.getTitle());
+        getContext().startService(intent);
+
     }
 
 }

@@ -1,6 +1,8 @@
 package iti.intake41.myapplication.modules.creatnote.view;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -89,25 +91,31 @@ public class CreatNoteActivity extends AppCompatActivity implements NoteClickLis
         noteAdapter.setNoteClickListener(this);
         noteRecycler.setAdapter(noteAdapter);
 
+
     }
 
     @Override
     public void onDeletNote(Note note) {
-        noteViewModel.deletNote(note.getId(), tripid);
+        AlertDialog.Builder builder = new AlertDialog.Builder(CreatNoteActivity.this);
+        builder.setMessage(R.string.areYouSureToDeleteThisNote);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                noteViewModel.deletNote(note.getId(), tripid);
+                Toast.makeText(CreatNoteActivity.this, R.string.noteDeletedSuccessfully, Toast.LENGTH_SHORT).show();
+            }
+        })
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
 
     }
 
-/*    private List<Note> creatDumyList(){
-        List<Note> notes = new ArrayList<>();
-        notes.add(new Note("nh","njnj","jd"));
-        notes.add(new Note("nh","njnj","jd"));
-        notes.add(new Note("nh","njnk","jd"));
-        notes.add(new Note("nh","njnj","jd"));
-        notes.add(new Note("nh","njnj","jd"));
-        notes.add(new Note("nh","njnk","jd"));
-        notes.add(new Note("nh","njnj","jd"));
-        notes.add(new Note("nh","njnj","jd"));
-        notes.add(new Note("nh","njnk","jd"));
-        return notes;
-    }*/
+    @Override
+    public void onUpdateState(Note note) {
+        noteViewModel.updateNote(note,tripid);
+    }
+
 }

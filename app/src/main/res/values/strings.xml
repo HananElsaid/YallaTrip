@@ -108,6 +108,9 @@
     <string name="snooze">Snooze</string>
     <string name="cancle">cancle</string>
     <string name="reminder">Time to Statr your Trip</string>
+    <string name="areYouSureToDeleteThisNote">Are you sure you want to delete This Note</string>
+    <string name="yes">Yes</string>
+    <string name="noteDeletedSuccessfully">Note Deleted Successfully</string>
 
 
 </resources>

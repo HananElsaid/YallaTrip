@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import iti.intake41.myapplication.R;
+import iti.intake41.myapplication.modules.creatnote.notedialog.NoteDialogueActivity;
 
 public class FloatWidgetService extends Service {
     private WindowManager mWindowManager;
@@ -95,11 +96,14 @@ public class FloatWidgetService extends Service {
                         int Xdiff = (int) (event.getRawX() - initialTouchX);
                         int Ydiff = (int) (event.getRawY() - initialTouchY);
                         if (Xdiff < 10 && Ydiff < 10) {
-                            /*Intent openNoteDialogue = new Intent(getApplicationContext(), NoteDialogueActivity.class);
+                            Intent openNoteDialogue = new Intent(getApplicationContext(), NoteDialogueActivity.class);
+
                             openNoteDialogue.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             openNoteDialogue.putExtra("tripID", TripID);
                             openNoteDialogue.putExtra("tripName", TripName);
-                            getApplicationContext().startActivity(openNoteDialogue);*/
+                            
+                            getApplicationContext().startActivity(openNoteDialogue);
+
                         }
                         return true;
                     case MotionEvent.ACTION_MOVE:

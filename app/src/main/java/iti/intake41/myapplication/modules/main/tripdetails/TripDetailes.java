@@ -49,30 +49,30 @@ public class TripDetailes extends AppCompatActivity {
         initViews();
         repo = new TripRepo();
         Intent i = getIntent();
-        if(i.hasExtra("trip")){
+        if (i.hasExtra("trip")) {
             trip = i.getParcelableExtra("trip");
             configureTrip();
 
-        }else if(i.hasExtra("trip_id")){
+        } else if (i.hasExtra("trip_id")) {
             String id = i.getStringExtra("trip_id");
             getTripDetails(id);
         }
     }
-    
-    public void initViews(){
-        titleTextView=findViewById(R.id.titleTextView);
-        statusTextView=findViewById(R.id.statusTextView);
-        txtStartPoint=findViewById(R.id.txtStartPoint);
-        txtEndPoint=findViewById(R.id.txtEndPoint);
-        dateTextView=findViewById(R.id.dateTextView);
-        timeTextView=findViewById(R.id.timeTextView);
-        editButton=findViewById(R.id.editButton);
-        startButton=findViewById(R.id.startButton);
-        cancelButton=findViewById(R.id.cancelButton);
+
+    public void initViews() {
+        titleTextView = findViewById(R.id.titleTextView);
+        statusTextView = findViewById(R.id.statusTextView);
+        txtStartPoint = findViewById(R.id.txtStartPoint);
+        txtEndPoint = findViewById(R.id.txtEndPoint);
+        dateTextView = findViewById(R.id.dateTextView);
+        timeTextView = findViewById(R.id.timeTextView);
+        editButton = findViewById(R.id.editButton);
+        startButton = findViewById(R.id.startButton);
+        cancelButton = findViewById(R.id.cancelButton);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void configureTrip(){
+    public void configureTrip() {
         titleTextView.setText(trip.getTitle());
         statusTextView.setText(trip.getStatus());
         txtStartPoint.setText(trip.getStartPoint().getAddress());
@@ -82,19 +82,22 @@ public class TripDetailes extends AppCompatActivity {
 
         TripStatus status = TripStatus.valueOf(trip.getStatus());
         int color;
-        switch (status){
+        switch (status) {
             case upcoming:
-                color = R.color.orangeDark; break;
+                color = R.color.orangeDark;
+                break;
             case done:
-                color = R.color.greenMid; break;
+                color = R.color.greenMid;
+                break;
             default:
-                color = R.color.redMid; break;
+                color = R.color.redMid;
+                break;
 
         }
-        int c = ContextCompat.getColor(this,color);
+        int c = ContextCompat.getColor(this, color);
         statusTextView.setTextColor(c);
 
-        if(status == TripStatus.upcoming){
+        if (status == TripStatus.upcoming) {
             editButton.setFabOptionEnabled(true);
             startButton.setFabOptionEnabled(true);
             cancelButton.setFabOptionEnabled(true);
@@ -108,28 +111,28 @@ public class TripDetailes extends AppCompatActivity {
     }
 
     public void deleteClicked(View view) {
-        if(trip != null)
+        if (trip != null)
 
-        new AlertDialog.Builder(this)
-                .setTitle("Delete entry")
-                .setMessage("Are you sure you want to delete this trip?")
+            new AlertDialog.Builder(this)
+                    .setTitle("Delete entry")
+                    .setMessage("Are you sure you want to delete this trip?")
 
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                        delete();
-                    }
-                })
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Continue with delete operation
+                            delete();
+                        }
+                    })
 
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
     }
 
-    public void delete(){
+    public void delete() {
         repo.deleteTrip(trip.getId(), new FirebaseRepoDelegate() {
 
             @Override
@@ -147,13 +150,13 @@ public class TripDetailes extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void editClicked(View view) {
-        if(trip != null)
+        if (trip != null)
             Navigator.navigateToUpdateTrip(this, trip);
-            finish();
+        finish();
     }
 
     public void startClicked(View view) {
-        if(trip != null){
+        if (trip != null) {
             trip.setStatus(TripStatus.done.toString());
             repo.updateTrip(trip, new FirebaseRepoDelegate() {
                 @Override
@@ -167,12 +170,12 @@ public class TripDetailes extends AppCompatActivity {
                 }
             });
             UIHelper.startTrip(this, trip);
-            checkPermission();
+            viewWidgetButton();
         }
     }
 
     public void cancelClicked(View view) {
-        if(trip != null){
+        if (trip != null) {
             trip.setStatus(TripStatus.cancelled.toString());
             repo.updateTrip(trip, new FirebaseRepoDelegate() {
                 @Override
@@ -188,7 +191,7 @@ public class TripDetailes extends AppCompatActivity {
         }
     }
 
-    public void getTripDetails(String id){
+    public void getTripDetails(String id) {
         repo.getTripDetails(id, new FirebaseRepoDelegate() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -204,7 +207,7 @@ public class TripDetailes extends AppCompatActivity {
         });
     }
 
-
+/*
     public void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -214,6 +217,7 @@ public class TripDetailes extends AppCompatActivity {
             viewWidgetButton();
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -223,8 +227,13 @@ public class TripDetailes extends AppCompatActivity {
             Toast.makeText(this, "Draw over other app permission not enable.", Toast.LENGTH_SHORT).show();
         }
     }
+*/
+
     void viewWidgetButton() {
-        startService(new Intent(TripDetailes.this, FloatWidgetService.class));
+        Intent intent = new Intent(TripDetailes.this, FloatWidgetService.class);
+        intent.putExtra("tripID", trip.getId());
+        intent.putExtra("tripName", trip.getTitle());
+        startService(intent);
         finish();
     }
 
