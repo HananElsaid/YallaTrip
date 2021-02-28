@@ -17,6 +17,7 @@ public class SnoozeBroadcastReciver extends BroadcastReceiver {
     String CHANNEL_ID = "notifyme";
     @Override
     public void onReceive(Context context, Intent intent) {
+
 //        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notifyme")
 //                .setSmallIcon(R.drawable.ic_launcher_background)
 //                .setContentTitle("YallTrip")
@@ -25,11 +26,12 @@ public class SnoozeBroadcastReciver extends BroadcastReceiver {
 //        NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(context);
 //        notificationManagerCompat.notify(200,builder.build());
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
-                .setOngoing(true)
+                .setOngoing(true) //outocancle ->
+                .setAutoCancel(true)
                 .setContentTitle("YallaTrip")
                 .setContentText("Start your Trip Now");
         Intent resultIntent = new Intent(context, ReminderTrip.class);

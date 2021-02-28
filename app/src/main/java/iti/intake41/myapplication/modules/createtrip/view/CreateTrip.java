@@ -28,8 +28,7 @@ import iti.intake41.myapplication.modules.creatnote.model.Note;
 import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripRepo;
-import iti.intake41.myapplication.modules.reminder.MyAlarm;
-import iti.intake41.myapplication.modules.reminder.MyIntentService;
+import iti.intake41.myapplication.modules.reminder.ReminderTrip;
 
 import static android.app.DatePickerDialog.OnDateSetListener;
 
@@ -41,7 +40,7 @@ public class CreateTrip extends AppCompatActivity {
     CheckBox roundTrip;
 
     Trip trip;
-
+    ReminderTrip reminderTrip;
     TimePicker tm;
     DatePicker dp;
     Calendar calendar;
@@ -52,6 +51,7 @@ public class CreateTrip extends AppCompatActivity {
 
     TimePicker myTimePicker;
     Note note=new Note();
+    MyAlarm myAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,10 +108,11 @@ public class CreateTrip extends AppCompatActivity {
 //            }
 //             timePicker(v);
 //             datePicker(v);
-            Intent intent1 = new Intent(getApplicationContext(), MyIntentService.class);
-            //MyIntentService.enqueueWork(getApplicationContext(), intent1);
-            setAlarm(calendar.getTimeInMillis());
 
+            Intent intent1 = new Intent(getApplicationContext(),ReminderTrip.class);
+            //MyIntentService.enqueueWork(getApplicationContext(), intent1);
+            myAlarm = new MyAlarm(CreateTrip.this,t1Hours,t1Min,t1day,t1mounth,t1year);
+            myAlarm.setAlarm();
         });
     }
 
@@ -133,7 +134,6 @@ public class CreateTrip extends AppCompatActivity {
                 //set on btn
                 //Toast.makeText(getApplicationContext(), hourOfDay + "  " + minute, Toast.LENGTH_SHORT).show();
                 timePicker.setText(hour); // set the current time in text view
-
             }
         }, 12, 0, false
         );
@@ -208,20 +208,18 @@ public class CreateTrip extends AppCompatActivity {
 
     }
 
-    private void setAlarm(long time) {
-        //getting the alarm manager
-        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        //creating a new intent specifying the broadcast receiver
-        Intent i = new Intent(this, MyAlarm.class);
-
-        //creating a pending intent using the intent
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
-
-        //setting the repeating alarm that will be fired every day
-        am.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pi);
-        Toast.makeText(this, "Alarm is set", Toast.LENGTH_SHORT).show();
-    }
+//    private void setAlarm(long time) {
+//        //getting the alarm manager
+//        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        //creating a new intent specifying the broadcast receiver
+//        Intent i = new Intent(this, MyAlarm.class);
+//        //creating a pending intent using the intent
+//        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
+//
+//        //setting the repeating alarm that will be fired every day
+//        am.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pi);
+//        Toast.makeText(this, "Alarm is set", Toast.LENGTH_SHORT).show();
+//    }
 
     public boolean isValid(){
         return !(tripName.getText().toString().isEmpty() ||

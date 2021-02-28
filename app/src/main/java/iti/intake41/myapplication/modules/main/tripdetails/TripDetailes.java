@@ -38,7 +38,6 @@ public class TripDetailes extends AppCompatActivity {
     //MARK: - Properties
     private Trip trip;
 
-
     TripRepoInterface repo;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -170,6 +169,7 @@ public class TripDetailes extends AppCompatActivity {
                 }
             });
             UIHelper.startTrip(this, trip);
+
             viewWidgetButton();
         }
     }
@@ -236,6 +236,5 @@ public class TripDetailes extends AppCompatActivity {
         startService(intent);
         finish();
     }
-
 
 }

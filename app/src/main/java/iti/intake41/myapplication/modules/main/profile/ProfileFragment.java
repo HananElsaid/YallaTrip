@@ -1,5 +1,6 @@
 package iti.intake41.myapplication.modules.main.profile;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,9 @@ public class ProfileFragment extends Fragment {
         mapCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigator.gotoScreen(getActivity(), MapTripsActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Navigator.gotoScreen(getActivity(), MapTripsActivity.class);
+                }
             }
         });
 
@@ -65,7 +68,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NetworkClass.firebaseLogout();
-                Navigator.gotoScreen(getActivity(), LoginActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Navigator.gotoScreen(getActivity(), LoginActivity.class);
+                }
                 getActivity().finish();
             }
         });
