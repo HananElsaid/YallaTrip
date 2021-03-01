@@ -6,10 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
+import iti.intake41.myapplication.models.Trip;
+
 //class extending the Broadcast Receiver
 public class MyAlarmReceiver extends BroadcastReceiver {
 
-    //the method will be fired when the alarm is triggerred
+    //the method will be fired when the alarm is fired
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -17,12 +21,21 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         //Here we are actually not doing anything
         //but you can do any task here that you want to be done at a specific time everyday
 
-        Intent intent1 = new Intent();
-        intent1.setClassName(context, ReminderTrip.class.getName());
-        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent1);
+//        Intent intent1 = new Intent("android.intent.action.MAIN");
+//        intent1.setClass(context, ReminderTrip.class);
+//
+//        Intent intent1 = new Intent(context, ReminderTrip.class);
 
-        Log.e("alarm", "Alarm just fired");
+        String trip= intent.getStringExtra("trip");
+
+        Intent start = new Intent();
+
+              // Intent start = new Intent("android.intent.action.MAIN");
+                start.setClass(context, ReminderTrip.class);
+                start.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                start.putExtra("trip",trip);
+                Log.i("TripTitle", "onReceive: Trip "+trip);
+                context.startActivity(start);
+                Log.e("alarm", "Alarm just fired");
     }
-
 }

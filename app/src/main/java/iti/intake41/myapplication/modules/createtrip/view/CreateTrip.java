@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,6 +29,7 @@ import iti.intake41.myapplication.modules.creatnote.model.Note;
 import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripRepo;
+import iti.intake41.myapplication.modules.main.tripdetails.TripDetailes;
 import iti.intake41.myapplication.modules.reminder.ReminderTrip;
 
 import static android.app.DatePickerDialog.OnDateSetListener;
@@ -51,7 +53,7 @@ public class CreateTrip extends AppCompatActivity {
 
     TimePicker myTimePicker;
     Note note=new Note();
-    MyAlarm myAlarm;
+    //MyAlarm myAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,10 +111,12 @@ public class CreateTrip extends AppCompatActivity {
 //             timePicker(v);
 //             datePicker(v);
 
-            Intent intent1 = new Intent(getApplicationContext(),ReminderTrip.class);
-            //MyIntentService.enqueueWork(getApplicationContext(), intent1);
-            myAlarm = new MyAlarm(CreateTrip.this,t1Hours,t1Min,t1day,t1mounth,t1year);
-            myAlarm.setAlarm();
+            //int id= Integer.parseInt(trip.getId());
+            //myAlarm = new MyAlarm(CreateTrip.this,t1Hours,t1Min,t1day,t1mounth,t1year,id);
+//            int time= (int)Calendar.getInstance().getTimeInMillis();
+//
+//            myAlarm = new MyAlarm(CreateTrip.this,t1Hours,t1Min,t1day,t1mounth,t1year,time);
+//            myAlarm.setAlarm();
         });
     }
 
@@ -126,7 +130,10 @@ public class CreateTrip extends AppCompatActivity {
                 // initialize hour and Mins
                 t1Hours = hourOfDay;
                 t1Min = minute;
-                calendar.set(0, 0, 0, t1Hours, t1Min);
+               // calendar.set(0, 0, 0, t1Hours, t1Min);
+                calendar.set(Calendar.HOUR_OF_DAY,t1Hours);
+                calendar.set(Calendar.MINUTE,t1Min);
+
                 Date d = calendar.getTime();
 
                 String hour = new SimpleDateFormat("HH:mm a").format(d);
@@ -147,16 +154,31 @@ public class CreateTrip extends AppCompatActivity {
                 new OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                       // monthOfYear=monthOfYear; //month start 0
+                        t1day = dayOfMonth;
+                        t1mounth = monthOfYear;
+                        t1year=year;
+                       // calendar.set(t1year, t1mounth, t1day,0,0);
+                        calendar.set(Calendar.DAY_OF_MONTH,t1day);
+                        calendar.set(Calendar.MONTH,t1mounth);
+                        calendar.set(Calendar.YEAR,t1year);
 
-                        datePicker.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
+                        Log.i(TAG, "onDateSet: Time"+calendar.getTime().toString());
+
+                        Date d = calendar.getTime();
+                        String date = new SimpleDateFormat("dd/MM/yyyy").format(d);
+
+                        Log.i(TAG, "onDateSet: Time D aaaaaaaaaaaaa"+d.toString());
+//                        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH);
+//                        timePicker.getHour(), timePicker.getMinute(), 0);
+                        datePicker.setText(date);
                     }
                 }, t1year, t1mounth, t1day);
-
         datePickerDialog.updateDate(t1year, t1mounth, t1day);
         try {
             Date d;
             if(trip != null && trip.getDate() != null){
-                d = new SimpleDateFormat("dd/MM/YYYY").parse(trip.getDate());
+                d = new SimpleDateFormat("dd/MM/yyyy").parse(trip.getDate());
             }else{
                 d = new Date();
             }
@@ -171,13 +193,20 @@ public class CreateTrip extends AppCompatActivity {
 
     public void  createTripDone(View view){
 
+        int time= (int)Calendar.getInstance().getTimeInMillis();
+       // myAlarm = new MyAlarm(CreateTrip.this,t1Hours,t1Min,t1day,t1mounth,t1year,time);
+
         if(isValid()){
             trip.setTitle( tripName.getText().toString());
+            Log.i(TAG, "createTripDone: ");
             trip.setStartPoint(new Location("Ismaila", "30.5965", "32.2715"));
             trip.setEndPoint(new Location("Cairo", "30.0444", "31.2357"));
             trip.setTime((String) timePicker.getText());
             trip.setDate((String) datePicker.getText());
             trip.setStatus("upcoming");
+            trip.setId(String.valueOf(time));
+            MyAlarm.setAlarm(CreateTrip.this,trip,t1Hours,t1Min,t1day,t1mounth,t1year,time);
+
 
 
             (new TripRepo()).addTrip(trip, new FirebaseRepoDelegate() {
@@ -199,27 +228,9 @@ public class CreateTrip extends AppCompatActivity {
 
     }
 
-//    public void openDialog() {
-//        AlartDialog exampleDialog = new AlartDialog();
-//        exampleDialog.show(getSupportFragmentManager(), "example dialog");
-//    }
 
     public void onCheckboxClicked(View view) {
-
     }
-
-//    private void setAlarm(long time) {
-//        //getting the alarm manager
-//        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//        //creating a new intent specifying the broadcast receiver
-//        Intent i = new Intent(this, MyAlarm.class);
-//        //creating a pending intent using the intent
-//        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
-//
-//        //setting the repeating alarm that will be fired every day
-//        am.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pi);
-//        Toast.makeText(this, "Alarm is set", Toast.LENGTH_SHORT).show();
-//    }
 
     public boolean isValid(){
         return !(tripName.getText().toString().isEmpty() ||

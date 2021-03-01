@@ -1,9 +1,6 @@
 package iti.intake41.myapplication.models;
 
-//
-//	-MU5ULrYl55jEqCBhnkl.java
-//
-//	Create by Mukesh Yadav on 21/2/2021
+
 
 import android.os.Parcel;
 import android.os.Parcelable;

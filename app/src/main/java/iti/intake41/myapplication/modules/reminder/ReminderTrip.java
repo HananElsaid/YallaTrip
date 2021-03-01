@@ -24,12 +24,17 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.google.gson.Gson;
+
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
+import iti.intake41.myapplication.models.trip.TripRepo;
+import iti.intake41.myapplication.models.trip.TripRepoInterface;
 import iti.intake41.myapplication.models.trip.TripStatus;
 import iti.intake41.myapplication.modules.createtrip.view.CreateTrip;
+import iti.intake41.myapplication.modules.createtrip.view.MyAlarm;
 import iti.intake41.myapplication.modules.main.tripdetails.TripDetailes;
 
 public class ReminderTrip extends AppCompatActivity {
@@ -37,8 +42,13 @@ public class ReminderTrip extends AppCompatActivity {
     Button startbtn, cancelbtn,snoozebtn;
     MediaPlayer mediaPlayer;
     TextView tripTitle;
-    Trip trip=new Trip();;
-    TripDetailes tripDetailes;
+    Trip trip;
+    TripDetailes tripDetailes=new TripDetailes();
+    MyAlarm myAlarm= new MyAlarm();
+    TripRepoInterface repo;
+    public int id;
+
+
 
     @Override
     protected void onStart() {
@@ -51,49 +61,56 @@ public class ReminderTrip extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        openAlarmRingTone();
         super.onCreate(savedInstanceState);
+
+
+        openAlarmRingTone();
+//        myAlarm=new MyAlarm();
+        repo = new TripRepo();
+        Intent x= getIntent();
+        String json  = x.getStringExtra("trip");
+        trip=new Gson().fromJson(json,Trip.class);
+        Log.i("trip", "onCreate: Trip"+ trip.getTitle());
+        tripDetailes =new TripDetailes();
         setContentView(R.layout.activity_reminder_trip);
         startbtn=findViewById(R.id.start);
         cancelbtn =findViewById(R.id.cancel);
         snoozebtn=findViewById(R.id.snooze);
         tripTitle=findViewById(R.id.tripTitle);
-
-        tripTitle.setText(trip.getTitle());
+        //tripTitle.setText(trip.getTitle());
 
         startbtn.setOnClickListener(v -> {
             mediaPlayer.stop();
            tripDetailes.startClicked(v);
-
         });
 
         cancelbtn.setOnClickListener(v -> {
             mediaPlayer.stop();
+             //cancel trip not alarm
+
+            trip.setStatus(TripStatus.cancelled.toString());
+
+            repo.updateTrip(trip, new FirebaseRepoDelegate() {
+                @Override
+                public void success(String message) {
+                    Toast.makeText(ReminderTrip.this, message, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void failed(String message) {
+                    Toast.makeText(ReminderTrip.this, message, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            tripDetailes.cancelClicked(v);
             finish();
         });
 
         snoozebtn.setOnClickListener(v -> {
             mediaPlayer.stop();
             Toast.makeText(this,"Reminder set",Toast.LENGTH_LONG).show();
-//            Intent intent1= new Intent(this, SnoozeBroadcastReciver.class);
-//            PendingIntent pendingIntent= PendingIntent.getBroadcast(ReminderTrip.this,0, intent1,0); //not from user
-//            AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
-//
-//            long time =System.currentTimeMillis();
-//            long tensec =1000*10;
-//
-//
-//            ////importrant
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                alarmManager.setExactAndAllowWhileIdle(
-//                        AlarmManager.RTC_WAKEUP,time+tensec,pendingIntent);
-//            }else {
-//
-//                alarmManager.set(
-//                        AlarmManager.RTC_WAKEUP,time+tensec,pendingIntent);
             createNotification();
-           finish();
+            finish();
         });
     }
 
@@ -109,6 +126,7 @@ public class ReminderTrip extends AppCompatActivity {
             mChannel.setDescription(Description);
             mChannel.enableLights(true);
             mChannel.setLightColor(Color.RED);
+
             mChannel.canShowBadge();
             mChannel.enableVibration(true);
             mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 100, 200, 200, 400});
@@ -129,9 +147,5 @@ public class ReminderTrip extends AppCompatActivity {
                     .setContentText("Start your Trip Now")
                     .build());
         }
-
     }
-
-
-
 }

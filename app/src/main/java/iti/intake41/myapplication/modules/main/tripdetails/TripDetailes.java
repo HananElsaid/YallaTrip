@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,10 +25,12 @@ import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripRepo;
 import iti.intake41.myapplication.models.trip.TripRepoInterface;
 import iti.intake41.myapplication.models.trip.TripStatus;
+import iti.intake41.myapplication.modules.createtrip.view.MyAlarm;
 import iti.intake41.myapplication.modules.floatingwidget.FloatWidgetService;
 
 public class TripDetailes extends AppCompatActivity {
 
+    public static String TAG="TripDET";
     //MARK: - UIComponents
     private TextView txtStartPoint, txtEndPoint, titleTextView,
             statusTextView, dateTextView, timeTextView;
@@ -48,6 +51,7 @@ public class TripDetailes extends AppCompatActivity {
         repo = new TripRepo();
         Intent i = getIntent();
         if(i.hasExtra("trip")){
+
             trip = i.getParcelableExtra("trip");
             configureTrip();
 
@@ -120,6 +124,7 @@ public class TripDetailes extends AppCompatActivity {
                 Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
             }
         });
+        MyAlarm.cancelAlarm(this,Integer.parseInt(trip.getId()));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -130,40 +135,46 @@ public class TripDetailes extends AppCompatActivity {
     }
 
     public void startClicked(View view) {
-        if(trip != null){
-            trip.setStatus(TripStatus.done.toString());
-            repo.updateTrip(trip, new FirebaseRepoDelegate() {
-                @Override
-                public void success(String message) {
-                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
-                }
+//        if(trip != null){
+//            trip.setStatus(TripStatus.done.toString());
+//            repo.updateTrip(trip, new FirebaseRepoDelegate() {
+//                @Override
+//                public void success(String message) {
+//                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void failed(String message) {
+//                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//
+//
+//        }
 
-                @Override
-                public void failed(String message) {
-                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
-                }
-            });
-            UIHelper.startTrip(this, trip);
-            checkPermission();
-
-        }
+        UIHelper.startTrip(this, trip);
+        checkPermission();
+        //cancel alarm
+        //MyAlarm.cancelAlarm(this,Integer.parseInt(trip.getId()));
     }
 
     public void cancelClicked(View view) {
-        if(trip != null){
-            trip.setStatus(TripStatus.cancelled.toString());
-            repo.updateTrip(trip, new FirebaseRepoDelegate() {
-                @Override
-                public void success(String message) {
-                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
-                }
+//        if(trip != null){
+//            trip.setStatus(TripStatus.cancelled.toString());
+//            repo.updateTrip(trip, new FirebaseRepoDelegate() {
+//                @Override
+//                public void success(String message) {
+//                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void failed(String message) {
+//                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
+        MyAlarm.cancelAlarm(this,Integer.parseInt(trip.getId()));
 
-                @Override
-                public void failed(String message) {
-                    Toast.makeText(TripDetailes.this, message, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
     }
 
     public void getTripDetails(String id){

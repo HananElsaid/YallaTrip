@@ -21,6 +21,7 @@ import java.util.List;
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
+import iti.intake41.myapplication.modules.createtrip.view.MyAlarm;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private final Context context;
@@ -33,7 +34,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         this.delegate = delegate;
         this.context = context;
     }
-
     public void setItems(List<Trip> items){
         this.items = items;
     }
@@ -104,6 +104,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
             startButton.setOnClickListener((v)->{
                 delegate.startClicked(item);
+                /////
+                MyAlarm.cancelAlarm(itemView.getContext(),Integer.parseInt(item.getId()));
             });
 
             Log.i(TAG, "***** onBindViewHolder *****");
