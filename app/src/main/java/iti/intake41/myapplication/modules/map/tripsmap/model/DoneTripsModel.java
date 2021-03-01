@@ -36,6 +36,9 @@ public class DoneTripsModel implements DoneTripsModelInterface {
         colorList.add(Color.BLACK);
         colorList.add(Color.DKGRAY);
         colorList.add(Color.LTGRAY);
+        colorList.add(Color.CYAN);
+        colorList.add(Color.MAGENTA);
+
         //colerData.postValue(colorList);
         return colorList;
     }

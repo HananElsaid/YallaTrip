@@ -113,5 +113,8 @@
     <string name="areYouSureToDeleteThisNote">Are you sure you want to delete This Note</string>
     <string name="yes">Yes</string>
     <string name="noteDeletedSuccessfully">Note Deleted Successfully</string>
+    <string name="warning">Warning</string>
+    <string name="errorMsgPermissionRequired">Floating Widget permission required</string>
+    <string name="selectApplication">Select an application</string>
 
 </resources>

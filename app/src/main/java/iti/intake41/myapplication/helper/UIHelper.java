@@ -61,17 +61,26 @@ public class UIHelper {
     }
 
     public static void startTrip(Context context, Trip trip) {
-        String to = trip.getEndPoint().getAddress();
-
-        // Creates an Intent that will load a map of San Francisco
         //Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatitude() + "," + trip.getEndPoint().getLongitude());
         //Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?daddr=" +trip.getEndPoint().getLatitude() + "," + trip.getEndPoint().getLongitude());
 
         Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?daddr=" + trip.getEndPoint().getAddress());
-
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         context.startActivity(mapIntent);
+
+        /*Uri gmmIntentUri = Uri.parse("google.navigation:q=" +
+                trip.getEndPoint().getLatitude() + "," + trip.getEndPoint().getLongitude());
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        context.startActivity(mapIntent);*/
+
+        //open map and select road from current location to the end point
+
+//        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint());
+//        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//        mapIntent.setPackage("com.google.android.apps.maps");
+//        context.startActivity(Intent.createChooser(mapIntent, context.getText(R.string.selectApplication)));
     }
 
 

@@ -8,15 +8,20 @@ import com.google.firebase.database.FirebaseDatabase;
 public class FirebaseRepo {
     //MARK: - Properties
     protected DatabaseReference mDatabase;
-    protected   static FirebaseRepo instance;
+    protected static FirebaseRepo instance;
     protected static final String TAG = "ReadAndWriteSnippets";
 
     public FirebaseRepo() {
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.keepSynced(true);
+
     }
 
     protected String getUid() {
+
         return FirebaseAuth.getInstance().getUid();
+
     }
 }
 

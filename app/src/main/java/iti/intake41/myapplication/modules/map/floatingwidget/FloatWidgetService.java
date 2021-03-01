@@ -3,6 +3,7 @@ package iti.intake41.myapplication.modules.map.floatingwidget;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.IBinder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,13 +13,16 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.modules.creatnote.notedialog.NoteDialogueActivity;
+import iti.intake41.myapplication.modules.trip.creatnote.notedialoge.NoteDialogueActivity;
 
 public class FloatWidgetService extends Service {
     private WindowManager mWindowManager;
     private View mFloatingWidget;
     //trip details
     String TripID, TripName;
+
+    Intent openNoteDialogue = null;
+    boolean flag = false;
 
     public FloatWidgetService() {
     }
@@ -41,13 +45,23 @@ public class FloatWidgetService extends Service {
         super.onCreate();
 
         mFloatingWidget = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
-
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT);
+        final WindowManager.LayoutParams params;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+           params = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    PixelFormat.TRANSLUCENT);
+        }
+        else {
+             params = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.TYPE_PHONE,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    PixelFormat.TRANSLUCENT);
+        }
         params.gravity = Gravity.TOP | Gravity.LEFT;
         params.x = 0;
         params.y = 100;
@@ -96,13 +110,13 @@ public class FloatWidgetService extends Service {
                         int Xdiff = (int) (event.getRawX() - initialTouchX);
                         int Ydiff = (int) (event.getRawY() - initialTouchY);
                         if (Xdiff < 10 && Ydiff < 10) {
-                            Intent openNoteDialogue = new Intent(getApplicationContext(), NoteDialogueActivity.class);
-
-                            openNoteDialogue.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            openNoteDialogue.putExtra("tripID", TripID);
-                            openNoteDialogue.putExtra("tripName", TripName);
-                            
-                            getApplicationContext().startActivity(openNoteDialogue);
+                            if (!flag) {
+                                checkIntent().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                checkIntent().putExtra("tripID", TripID);
+                                checkIntent().putExtra("tripName", TripName);
+                                getApplicationContext().startActivity(checkIntent());
+                                flag=true;
+                            }
 
                         }
                         return true;
@@ -117,10 +131,20 @@ public class FloatWidgetService extends Service {
         });
     }
 
+    private Intent checkIntent() {
+
+        if (openNoteDialogue == null) {
+            openNoteDialogue = new Intent(getApplicationContext(), NoteDialogueActivity.class);
+            return openNoteDialogue;
+        } else {
+            return openNoteDialogue;
+        }
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (mFloatingWidget != null) mWindowManager.removeView(mFloatingWidget);
+
     }
 }

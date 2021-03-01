@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW"/>
+    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YallaTrip"
         tools:ignore="ExtraText">
-        <activity android:name=".modules.creatnote.notedialog.NoteDialogueActivity"></activity>
+        <activity android:name=".modules.trip.creatnote.notedialoge.NoteDialogueActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
