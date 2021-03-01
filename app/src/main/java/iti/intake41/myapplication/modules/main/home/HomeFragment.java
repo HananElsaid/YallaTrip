@@ -3,11 +3,11 @@ package iti.intake41.myapplication.modules.main.home;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,10 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import iti.intake41.myapplication.R;
@@ -30,7 +27,6 @@ import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
-import iti.intake41.myapplication.models.user.UserRepoInterface;
 import iti.intake41.myapplication.modules.map.floatingwidget.FloatWidgetService;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
 import iti.intake41.myapplication.viewmodel.UserViewModel;
@@ -49,9 +45,11 @@ public class HomeFragment extends Fragment{
     private TripStatus status = TripStatus.upcoming;
     private TripViewModel tripViewModel;
     private UserViewModel userViewModel;
+    private static final String TAG = "HomeFragment : ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView: ");
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         return root;
     }
@@ -65,6 +63,8 @@ public class HomeFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "onViewCreated: ");
+
         //Setup Recycler
         initViews(view);
         setupRecycler(view);
@@ -72,6 +72,12 @@ public class HomeFragment extends Fragment{
         setupViewModel();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+        tripViewModel.getTrips();
+    }
 
     private void setupRecycler(View view) {
         recyclerView.setHasFixedSize(true);
@@ -94,13 +100,14 @@ public class HomeFragment extends Fragment{
     }
 
     private void setupViewModel(){
+        Log.i(TAG, "setupViewModel: ");
         //tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
         tripViewModel = new ViewModelProvider(requireActivity()).get(TripViewModel.class);
         tripViewModel.setContext(getContext());
         tripViewModel.itemsList.observe(getViewLifecycleOwner(), items -> {
             updateItems(items);
         });
-        tripViewModel.getTrips();
+
 
         //userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
@@ -123,25 +130,11 @@ public class HomeFragment extends Fragment{
             @Override
             public void startClicked(Trip trip) {
                 if(trip != null){
-                    try {
-                        Date date = new SimpleDateFormat("dd/MM/YYYY HH:mm a")
-                                .parse(trip.getDate() + " " + trip.getTime());
-//                        if(date.after(new Date())){
-                            System.out.println("date.after(new Date()");
                             trip.setStatus(TripStatus.done.toString());
                             tripViewModel.updateTrip(trip, () -> {
                                 UIHelper.startTrip(getContext(), trip);
                                 viewWidgetButton(trip);
                             });
-//                        }else{
-//                            System.out.println("Toast Clicked");
-//                            Toast.makeText(getActivity().getApplicationContext(), "Invalid trip date, Please update it!", Toast.LENGTH_LONG);
-//                        }
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
                 }
             }
         });
@@ -195,4 +188,15 @@ public class HomeFragment extends Fragment{
         getContext().startService(intent);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG, "onDestroyView: ");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
+    }
 }

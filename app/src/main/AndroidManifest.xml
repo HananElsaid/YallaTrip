@@ -36,7 +36,6 @@
         <activity android:name=".modules.main.MainActivity" />
         <activity android:name=".modules.trip.createtrip.view.CreateTrip" />
         <activity android:name=".modules.trip.tripdetails.TripDetailes" />
-        <activity android:name=".modules.createtrip.view.CreateTrip" />
         <activity
             android:name=".modules.map.tripsmap.MapTripsActivity"
             android:label="@string/title_activity_map_trips" />

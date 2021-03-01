@@ -30,6 +30,7 @@ public class TripViewModel extends ViewModel {
             @Override
             public <T> void getListSuccess(List<T> list) {
                 itemsList.setValue((List<Trip>) list);
+                loader.stop();
             }
             @Override
             public void failed(String message) {
@@ -45,10 +46,12 @@ public class TripViewModel extends ViewModel {
 
     public void getTrips() {
         if (itemsList.getValue() == null) {
+            loader.start();
             repo.getTrips(new FirebaseRepoDelegate() {
                 @Override
                 public <T> void getListSuccess(List<T> list) {
                     itemsList.setValue((List<Trip>) list);
+                    loader.stop();
                 }
 
                 @Override
@@ -60,6 +63,7 @@ public class TripViewModel extends ViewModel {
     }
 
     public void addTrip(Trip trip, OnSuccess delegate) {
+        loader.start();
         repo.addTrip(trip, new FirebaseRepoDelegate() {
             @Override
             public void success(String message) {
@@ -75,6 +79,7 @@ public class TripViewModel extends ViewModel {
     }
 
     public void deleteTrip(String id,  OnSuccess delegate) {
+        loader.start();
         repo.deleteTrip(id, new FirebaseRepoDelegate() {
             @Override
             public void success(String message) {
@@ -90,6 +95,7 @@ public class TripViewModel extends ViewModel {
     }
 
     public void updateTrip(Trip trip, OnSuccess delegate) {
+        loader.start();
         repo.updateTrip(trip, new FirebaseRepoDelegate() {
             @Override
             public void success(String message) {
@@ -105,6 +111,7 @@ public class TripViewModel extends ViewModel {
     }
 
     public void getTripDetails(String id) {
+        loader.start();
         repo.getTripDetails(id, new FirebaseRepoDelegate() {
             @Override
             public <T> void getObjSuccess(T obj) {
@@ -125,6 +132,9 @@ public class TripViewModel extends ViewModel {
     }
 
     public void showMessage(String message) {
+        loader.stop();
         Toast.makeText(context, message, Toast.LENGTH_LONG);
     }
+
+
 }

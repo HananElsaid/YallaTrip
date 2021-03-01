@@ -1,6 +1,5 @@
 package iti.intake41.myapplication.helper;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import iti.intake41.myapplication.R;
-import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.FirebaseRepoDelegate;
+import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.note.NoteRepo;
 
 public class UIHelper {
@@ -64,16 +64,14 @@ public class UIHelper {
         String to = trip.getEndPoint().getAddress();
 
         // Creates an Intent that will load a map of San Francisco
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" +
-                trip.getEndPoint().getLatitude() + "," + trip.getEndPoint().getLongitude());
+        //Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatitude() + "," + trip.getEndPoint().getLongitude());
+        //Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?daddr=" +trip.getEndPoint().getLatitude() + "," + trip.getEndPoint().getLongitude());
+
+        Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?daddr=" + trip.getEndPoint().getAddress());
+
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         context.startActivity(mapIntent);
-
-//        Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?daddr="+to);
-//        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//        mapIntent.setPackage("com.google.android.apps.maps");
-//        startActivity(mapIntent);
     }
 
 

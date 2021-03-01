@@ -15,10 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.nambimobile.widgets.efab.FabOption;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.UIHelper;
@@ -152,24 +148,11 @@ public class TripDetailes extends AppCompatActivity {
 
     public void startClicked(View view) {
         if(trip != null){
-            try {
-                Date date = new SimpleDateFormat("dd/MM/YYYY HH:mm a")
-                        .parse(trip.getDate() + " " + trip.getTime());
-                if(date.after(new Date())){
-                    trip.setStatus(TripStatus.done.toString());
-                    tripViewModel.updateTrip(trip, () -> {
-                        UIHelper.startTrip(this, trip);
-                        viewWidgetButton();
-                    });
-                }else{
-                    System.out.println("Toast Clicked");
-                  tripViewModel.showMessage("Invalid trip date, Please update it!");
-                }
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
+            trip.setStatus(TripStatus.done.toString());
+            tripViewModel.updateTrip(trip, () -> {
+                UIHelper.startTrip(this, trip);
+                viewWidgetButton();
+            });
         }
     }
 

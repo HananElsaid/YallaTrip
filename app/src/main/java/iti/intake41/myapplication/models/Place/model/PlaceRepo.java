@@ -24,10 +24,10 @@ public class PlaceRepo implements PlaceRepoInterface {
     @Override
     public Observable<List<Place>> getItemsList(String text){
         return API_Client.getInstance()
-                .api.getItems("30.593821,32.269951",text,API_KEY)
+                .api.getItems("30.06,31.25",text,API_KEY)
                 .map((result) -> result.getResults())
                 .flatMap(places -> { return Observable.fromIterable(places); })
-                .filter(place -> { return place.getResultType().equals("place"); })
+                .filter(place -> { return place.getResultType().equals("place") || place.getResultType().equals("address"); })
                 .toList()
                 .toObservable();
     }

@@ -1,6 +1,7 @@
 package iti.intake41.myapplication.modules.map.searchplace;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import iti.intake41.myapplication.viewmodel.PlaceViewModel;
  */
 public class PlaceSearchFragment extends Fragment implements  PlaceAdapterDelegate{
 
+    public static final String TAG = "PlaceSearchFragment";
+
     //MARK: - UIComponents
     private RecyclerView recyclerView;
     private SearchView searchView;
@@ -52,6 +55,7 @@ public class PlaceSearchFragment extends Fragment implements  PlaceAdapterDelega
         args.putString(SEARCH_TEXT, searchText);
         fragment.setArguments(args);
         fragment.delegate = delegate;
+        Log.i(TAG, "newInstance: ");
         return fragment;
     }
 
@@ -61,12 +65,14 @@ public class PlaceSearchFragment extends Fragment implements  PlaceAdapterDelega
         if (getArguments() != null) {
             searchText = getArguments().getString(SEARCH_TEXT);
         }
+        Log.i(TAG, "onCreate: ");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.i(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_place_search, container, false);
         initViews(view);
         return view;
@@ -75,6 +81,7 @@ public class PlaceSearchFragment extends Fragment implements  PlaceAdapterDelega
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "onViewCreated: ");
         setupRecycler();
         configureViews();
         setupViewModel();
@@ -84,19 +91,20 @@ public class PlaceSearchFragment extends Fragment implements  PlaceAdapterDelega
     public void initViews(View view){
         searchView = view.findViewById(R.id.searchView);
         recyclerView = view.findViewById(R.id.recycler_view);
-
     }
 
     public void setupSearchView(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                Log.i(TAG, "onQueryTextSubmit" + s);
                 viewModel.onQueryTextSubmit(s);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String text) {
+                Log.i(TAG, "onQueryTextChange" + text);
                 viewModel.onQueryTextChange(text);
                 return true;
             }
@@ -110,9 +118,9 @@ public class PlaceSearchFragment extends Fragment implements  PlaceAdapterDelega
             }
         });
 
-        if(!searchText.isEmpty()){
-            searchView.setQuery(searchText, true);
-        }
+//        if(!searchText.isEmpty()){
+//            searchView.setQuery(searchText, true);
+//        }
 
         //Set SearchView Focus
         searchView.setFocusable(true);
@@ -159,6 +167,7 @@ public class PlaceSearchFragment extends Fragment implements  PlaceAdapterDelega
 
     @Override
     public void onDestroyView() {
+        Log.i(TAG, "onDestroyView");
         super.onDestroyView();
         viewModel.dispose();
     }
