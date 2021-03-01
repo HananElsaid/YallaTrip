@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YallaTrip"
         tools:ignore="ExtraText">
-        <activity android:name=".modules.creatnote.notedialog.NoteDialogueActivity"></activity>
+        <activity android:name=".modules.trip.creatnote.notedialoge.NoteDialogueActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

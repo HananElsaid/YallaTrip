@@ -1,4 +1,4 @@
-package iti.intake41.myapplication.modules.creatnote.notedialog;
+package iti.intake41.myapplication.modules.trip.creatnote.notedialoge;
 
 import android.os.Bundle;
 import android.view.ViewGroup;

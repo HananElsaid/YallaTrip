@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -27,23 +28,27 @@ public class NoteRepo extends FirebaseRepo implements NoteRepoInterface {
         new Thread(new Runnable() {
             @Override
             public void run() {
-        mDatabase.child("notes").child(tripId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Note> notes = new ArrayList();
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Note note = postSnapshot.getValue(Note.class);
-                    notes.add(note);
-                }
-                delegate.getListSuccess(notes);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                delegate.failed(error.getMessage());
-            }
+                DatabaseReference notes = mDatabase.child("notes").child(tripId);
+                notes.keepSynced(true);
+                notes.addValueEventListener(new ValueEventListener() {
 
-        });
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        List<Note> notes = new ArrayList();
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                            Note note = postSnapshot.getValue(Note.class);
+                            notes.add(note);
+                        }
+                        delegate.getListSuccess(notes);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        delegate.failed(error.getMessage());
+                    }
+
+                });
             }
         }).start();
     }
@@ -53,6 +58,7 @@ public class NoteRepo extends FirebaseRepo implements NoteRepoInterface {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //mDatabase.keepSynced(true);
                 mDatabase.child("notes").child(tripId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override

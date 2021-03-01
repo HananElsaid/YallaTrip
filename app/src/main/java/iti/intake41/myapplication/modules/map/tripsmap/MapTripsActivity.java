@@ -62,7 +62,7 @@ public class MapTripsActivity extends FragmentActivity implements OnMapReadyCall
         Log.i("Hello", "i= " + 1);
         mMap = googleMap;
         LatLng src1 = new LatLng(31.041455, 31.4178593);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(src1, 4f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(src1, 7f));
 
         doneTripsViewModel.tripsList.observe(this, new Observer<List<Trip>>() {
 
@@ -75,8 +75,8 @@ public class MapTripsActivity extends FragmentActivity implements OnMapReadyCall
                     Trip trip = trips.get(i);
                     double srclong = Double.parseDouble(trip.getStartPoint().getLongitude());
                     double scrlat = Double.parseDouble(trip.getStartPoint().getLatitude());
-                    final LatLng src = new LatLng(scrlat, srclong);
-                    mMap.addMarker(new MarkerOptions().position(src).title(trip.getTitle())).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    final LatLng src = new LatLng(srclong, scrlat);
+                    mMap.addMarker(new MarkerOptions().position(src).title(trip.getTitle())).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
                     double deslong = Double.parseDouble(trip.getEndPoint().getLongitude());
                     double deslat = Double.parseDouble(trip.getEndPoint().getLatitude());
                     final LatLng des = new LatLng(deslong, deslat);
