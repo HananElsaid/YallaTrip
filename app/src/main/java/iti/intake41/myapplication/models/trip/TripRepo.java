@@ -74,7 +74,7 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
     public void updateTrip(Trip trip, FirebaseRepoDelegate delegate) {
         String path = "/trips/" + getUid() + "/" +  trip.getId();
 
-        mDatabase.child(trip.getId()).setValue(trip.toMap())
+        mDatabase.child(path).setValue(trip.toMap())
                 .addOnSuccessListener(dataSnapshot -> delegate.success("Trip Updated Successfully"))
                 .addOnFailureListener(e -> delegate.failed(e.getLocalizedMessage()));
     }
@@ -83,7 +83,7 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
     public void deleteTrip(String id, FirebaseRepoDelegate delegate) {
         String path = "/trips/" + getUid() + "/" + id;
 
-        mDatabase.child(id).removeValue()
+        mDatabase.child(path).removeValue()
                 .addOnSuccessListener(dataSnapshot -> delegate.success("Trip Deleted Successfully"))
                 .addOnFailureListener(e -> delegate.failed(e.getLocalizedMessage()));
     }
