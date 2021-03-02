@@ -86,7 +86,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 app:cardCornerRadius="10dp"
                 app:flow_wrapMode="aligned">
@@ -115,7 +115,7 @@
                         android:layout_weight="0.8"
                         android:orientation="vertical"
                         android:padding="10dp"
-                        android:weightSum="3">
+                        android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -126,55 +126,48 @@
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
                                 android:text="@string/startPoint"
                                 android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/txtStartPoint"
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:inputType="text"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:maxLines="3"
+                                android:onClick="startPointClicked"
+                                android:singleLine="false"
                                 android:text="@string/tapToChoose"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:onClick="startPointClicked"
-                                />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:gravity="bottom"
                             android:orientation="vertical"
                             android:weightSum="2">
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
                                 android:text="@string/endPoint"
                                 android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/txtEndPoint"
+                                android:inputType="textMultiLine"
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:onClick="endPointClicked"
                                 android:text="@string/tapToChoose"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:onClick="endPointClicked"
-                                />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
