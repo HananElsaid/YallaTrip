@@ -19,11 +19,9 @@ import com.nambimobile.widgets.efab.FabOption;
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.UIHelper;
-import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
 import iti.intake41.myapplication.modules.map.floatingwidget.FloatWidgetService;
-import iti.intake41.myapplication.modules.reminder.MyAlarm;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
 
 public class TripDetailes extends AppCompatActivity {
