@@ -78,11 +78,13 @@ public class NoteDialogueActivity extends AppCompatActivity implements NoteClick
         noteAdapter = new NoteAdapter();
          noteAdapter.setNoteClickListener(this);
         noteRecycler.setAdapter(noteAdapter);
+        //noteAdapter.setTripStatus(tripStatus);
 
     }
 
     @Override
     public void onDeletNote(Note note) {
+        noteViewModel.deletNote(note.getId(),tripID);
 
     }
 

@@ -68,12 +68,13 @@
         android:clickable="true"
         android:contentDescription="@string/addnote"
         android:elevation="24dp"
+        android:visibility="gone"
         app:backgroundTint="#FFBC0A"
         app:elevation="@dimen/cardview_compat_inset_shadow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_note_add_24"
         app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_baseline_note_add_24"
         app:tint="@color/white"
         tools:ignore="VectorDrawableCompat" />
 

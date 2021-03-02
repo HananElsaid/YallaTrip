@@ -32,9 +32,10 @@ public class Navigator {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static void navigateToNotes(Context context, String tripId){
+    public static void navigateToNotes(Context context, String tripId,String tripStatus){
         Intent n = new Intent(context, CreatNoteActivity.class);
         n.putExtra("trip_id", tripId);
+        n.putExtra("trip_status",tripStatus);
         context.startActivity(n);
     }
 

@@ -23,6 +23,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     private Context context;
     private List<Note> noteList;
     private NoteClickListener noteClickListener;
+    private String status=null;
 
     public void setNoteClickListener(NoteClickListener noteClickListener) {
         this.noteClickListener = noteClickListener;
@@ -44,10 +45,20 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
         Note note = noteList.get(position);
         holder.tvNoteText.setText(note.getTitle());
+
+        holder.image_Delete.setEnabled(true);
+
         if (note.getDone()) {
             holder.checkBox2.setChecked(true);
         } else
             holder.checkBox2.setChecked(false);
+
+        //
+        if (status!=null&&!status.equals("upcoming")){
+            //holder.image_Delete.setClickable(true);
+            holder.checkBox2.setEnabled(false);
+            holder.image_Delete.setEnabled(false);
+        }
 
         holder.image_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +96,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     public void setData(List<Note> noteList) {
         this.noteList = noteList;
         notifyDataSetChanged();
+    }
+    public  void setTripStatus(String status){
+        this.status=status;
     }
 
     public class NoteHolder extends RecyclerView.ViewHolder {

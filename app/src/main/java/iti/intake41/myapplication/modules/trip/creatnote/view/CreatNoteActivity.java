@@ -34,7 +34,8 @@ public class CreatNoteActivity extends AppCompatActivity implements NoteClickLis
     //view model adapter
     NoteViewModel noteViewModel;
 
-    String tripid;
+    private String tripId;
+    private String tripStatus;
 
 
     @Override
@@ -43,7 +44,9 @@ public class CreatNoteActivity extends AppCompatActivity implements NoteClickLis
         setContentView(R.layout.activity_creat_note);
 
 
-        tripid = getIntent().getStringExtra("trip_id");
+        tripId = getIntent().getStringExtra("trip_id");
+        tripStatus = getIntent().getStringExtra("trip_status");
+
         initViews();
 
         setAdapter();
@@ -66,12 +69,12 @@ public class CreatNoteActivity extends AppCompatActivity implements NoteClickLis
         fABNewNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = UIHelper.creatDialog(CreatNoteActivity.this,tripid);
+                Dialog dialog = UIHelper.creatDialog(CreatNoteActivity.this, tripId);
                 dialog.show();
             }
         });
 
-        noteViewModel.getNotes(tripid);
+        noteViewModel.getNotes(tripId);
     }
 
 
@@ -79,9 +82,13 @@ public class CreatNoteActivity extends AppCompatActivity implements NoteClickLis
         noteRecycler = findViewById(R.id.recyclerView);
         fABNewNote = findViewById(R.id.floatbtnAddNote);
         btnDone = findViewById(R.id.btnDone);
+        //
+        if (tripStatus.equals("upcoming")){
+            fABNewNote.setVisibility(View.VISIBLE);
+        }
         //view model object
         noteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
-        noteViewModel.addListener(tripid);
+        noteViewModel.addListener(tripId);
     }
 
     private void setAdapter() {
@@ -90,6 +97,7 @@ public class CreatNoteActivity extends AppCompatActivity implements NoteClickLis
         noteAdapter = new NoteAdapter();
         noteAdapter.setNoteClickListener(this);
         noteRecycler.setAdapter(noteAdapter);
+        noteAdapter.setTripStatus(tripStatus);
 
 
     }
@@ -101,7 +109,7 @@ public class CreatNoteActivity extends AppCompatActivity implements NoteClickLis
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                noteViewModel.deletNote(note.getId(), tripid);
+                noteViewModel.deletNote(note.getId(), tripId);
                 Toast.makeText(CreatNoteActivity.this, R.string.noteDeletedSuccessfully, Toast.LENGTH_SHORT).show();
             }
         })
@@ -115,7 +123,7 @@ public class CreatNoteActivity extends AppCompatActivity implements NoteClickLis
 
     @Override
     public void onUpdateState(Note note) {
-        noteViewModel.updateNote(note,tripid);
+        noteViewModel.updateNote(note, tripId);
     }
 
 }

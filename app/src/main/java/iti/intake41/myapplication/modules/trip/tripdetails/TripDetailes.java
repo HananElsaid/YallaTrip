@@ -113,7 +113,7 @@ public class TripDetailes extends AppCompatActivity {
 
     public void addNotes(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Navigator.navigateToNotes(this, trip.getId());
+            Navigator.navigateToNotes(this, trip.getId(),trip.getStatus());
         }
     }
 
