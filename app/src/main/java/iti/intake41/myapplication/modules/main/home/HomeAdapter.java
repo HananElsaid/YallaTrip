@@ -33,7 +33,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         this.delegate = delegate;
         this.context = context;
     }
-
     public void setItems(List<Trip> items){
         this.items = items;
     }

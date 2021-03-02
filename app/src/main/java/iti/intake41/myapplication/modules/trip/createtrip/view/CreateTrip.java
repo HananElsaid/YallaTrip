@@ -93,7 +93,9 @@ public class CreateTrip extends AppCompatActivity {
                 // initialize hour and Mins
                 hr = hourOfDay;
                 min = minute;
-                calendar.set(0, 0, 0, hr, min);
+                calendar.set(Calendar.HOUR_OF_DAY,hr);
+                calendar.set(Calendar.MINUTE,min);
+
                 Date d = calendar.getTime();
                 String time = new SimpleDateFormat("HH:mm a").format(d);
                 timeButton.setText(time); // set the current time in text view
@@ -138,7 +140,7 @@ public class CreateTrip extends AppCompatActivity {
             trip.setStatus("upcoming");
 
             tripViewModel.addTrip(trip, ()->{
-                startAlarm();
+                MyAlarm.setAlarm(CreateTrip.this,trip,hr,min,day,month,year);
                 finish();
             });
 
@@ -152,10 +154,6 @@ public class CreateTrip extends AppCompatActivity {
 
     }
 
-    private void startAlarm(){
-        MyAlarm myAlarm = new MyAlarm(CreateTrip.this,hr,min,day,month,year);
-        myAlarm.setAlarm();
-    }
 
     public boolean isValid(){
         return !(tripNameTV.getText().toString().isEmpty() ||

@@ -28,6 +28,7 @@ import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
 import iti.intake41.myapplication.modules.map.floatingwidget.FloatWidgetService;
+import iti.intake41.myapplication.modules.reminder.MyAlarm;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
 import iti.intake41.myapplication.viewmodel.UserViewModel;
 
@@ -133,8 +134,10 @@ public class HomeFragment extends Fragment{
                             trip.setStatus(TripStatus.done.toString());
                             tripViewModel.updateTrip(trip, () -> {
                                 UIHelper.startTrip(getContext(), trip);
+                                MyAlarm.cancelAlarm(getContext(), trip.getId().hashCode());
                                 viewWidgetButton(trip);
                             });
+
                 }
             }
         });

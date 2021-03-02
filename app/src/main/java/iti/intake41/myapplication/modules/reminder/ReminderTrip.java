@@ -15,20 +15,26 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import iti.intake41.myapplication.R;
+import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.Trip;
-import iti.intake41.myapplication.modules.trip.tripdetails.TripDetailes;
+import iti.intake41.myapplication.models.trip.TripStatus;
+import iti.intake41.myapplication.viewmodel.TripViewModel;
 
 public class ReminderTrip extends AppCompatActivity {
 
     Button startbtn, cancelbtn,snoozebtn;
     MediaPlayer mediaPlayer;
     TextView tripTitle;
-    Trip trip=new Trip();;
-    TripDetailes tripDetailes;
+    Trip trip;
+    private TripViewModel tripViewModel;
+    public int id;
+
 
     @Override
     protected void onStart() {
@@ -39,9 +45,9 @@ public class ReminderTrip extends AppCompatActivity {
         mediaPlayer.start();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        openAlarmRingTone();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_trip);
         startbtn=findViewById(R.id.start);
@@ -49,25 +55,55 @@ public class ReminderTrip extends AppCompatActivity {
         snoozebtn=findViewById(R.id.snooze);
         tripTitle=findViewById(R.id.tripTitle);
 
-        tripTitle.setText(trip.getTitle());
+        openAlarmRingTone();
+//        myAlarm=new MyAlarm();
+        setupViewModel();
+        Intent x= getIntent();
+        //String json  = x.getStringExtra("trip");
+        //System.out.println(json);
+        //trip=new Gson().fromJson(json,Trip.class);
+
+        if(x.hasExtra("trip")){
+            trip = x.getParcelableExtra("trip");
+//            if(trip != null)
+            Log.i("trip", "onCreate: Trip"+ trip.getId());
+//            tripTitle.setText(trip.getTitle());
+        }
+
 
         startbtn.setOnClickListener(v -> {
             mediaPlayer.stop();
-           tripDetailes.startClicked(v);
-
+            UIHelper.startTrip(this, trip);
         });
 
         cancelbtn.setOnClickListener(v -> {
             mediaPlayer.stop();
-            finish();
+             //cancel trip not alarm
+            cancel();
         });
 
         snoozebtn.setOnClickListener(v -> {
             mediaPlayer.stop();
             Toast.makeText(this,"Reminder set",Toast.LENGTH_LONG).show();
             createNotification();
-           finish();
+            finish();
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setupViewModel() {
+        tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
+        tripViewModel.setContext(this);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void cancel() {
+        if (trip != null) {
+            trip.setStatus(TripStatus.cancelled.toString());
+            tripViewModel.updateTrip(trip, () -> {
+                finish();
+            });
+        }
     }
 
     private  void createNotification(){
@@ -82,6 +118,7 @@ public class ReminderTrip extends AppCompatActivity {
             mChannel.setDescription(Description);
             mChannel.enableLights(true);
             mChannel.setLightColor(Color.RED);
+
             mChannel.canShowBadge();
             mChannel.enableVibration(true);
             mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 100, 200, 200, 400});
@@ -102,9 +139,5 @@ public class ReminderTrip extends AppCompatActivity {
                     .setContentText("Start your Trip Now")
                     .build());
         }
-
     }
-
-
-
 }

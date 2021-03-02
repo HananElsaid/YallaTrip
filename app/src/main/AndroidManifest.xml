@@ -10,6 +10,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION"/>
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -46,13 +50,17 @@
             android:enabled="true"
             android:exported="false" />
 
+<!--        <receiver android:name=".modules.reminder.SnoozeBroadcastReciver" />&ndash;&gt;-->
         <receiver
             android:name=".modules.reminder.MyAlarmReceiver"
             android:enabled="true"
-            android:exported="true" />
-        <receiver android:name=".modules.reminder.SnoozeBroadcastReciver" />
-
-        <activity android:name=".modules.reminder.ReminderTrip" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="iti.intake41.myapplication"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".modules.reminder.ReminderTrip"/>
     </application>
 
 </manifest>

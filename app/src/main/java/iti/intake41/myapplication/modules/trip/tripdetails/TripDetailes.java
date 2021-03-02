@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -18,13 +19,16 @@ import com.nambimobile.widgets.efab.FabOption;
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.UIHelper;
+import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
 import iti.intake41.myapplication.modules.map.floatingwidget.FloatWidgetService;
+import iti.intake41.myapplication.modules.reminder.MyAlarm;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
 
 public class TripDetailes extends AppCompatActivity {
 
+    public static String TAG="TripDET";
     //MARK: - UIComponents
     private TextView txtStartPoint, txtEndPoint, titleTextView,
             statusTextView, dateTextView, timeTextView;
@@ -43,7 +47,7 @@ public class TripDetailes extends AppCompatActivity {
         setupViewModel();
 
         Intent i = getIntent();
-        if (i.hasExtra("trip")) {
+        if(i.hasExtra("trip")){
             trip = i.getParcelableExtra("trip");
             configureTrip();
 
@@ -136,7 +140,10 @@ public class TripDetailes extends AppCompatActivity {
     }
 
     public void delete(){
-        tripViewModel.deleteTrip(trip.getId(), () -> finish());
+        tripViewModel.deleteTrip(trip.getId(), () -> {
+            MyAlarm.cancelAlarm(this,Integer.parseInt(trip.getId()));
+            finish();
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -164,30 +171,9 @@ public class TripDetailes extends AppCompatActivity {
                 configureTrip();
             });
         }
-    }
+//        MyAlarm.cancelAlarm(this,Integer.parseInt(trip.getId()));
 
-/*
->>>>>>> 3d464d6866c9ec6e451ce46ba031603f6c8c4b01:app/src/main/java/iti/intake41/myapplication/modules/main/tripdetails/TripDetailes.java
-    public void checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getPackageName()));
-            startActivityForResult(intent, Constants.APP_PERMISSION_REQUEST);
-        } else {
-            viewWidgetButton();
-        }
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constants.APP_PERMISSION_REQUEST && resultCode == RESULT_OK) {
-            viewWidgetButton();
-        } else {
-            Toast.makeText(this, "Draw over other app permission not enable.", Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
 
     void viewWidgetButton() {
         Intent intent = new Intent(TripDetailes.this, FloatWidgetService.class);
