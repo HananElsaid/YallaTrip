@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
 
     Button googleSigninBtn;
     private static final String TAG = "UserData";
-    private static final int RC_SIGN_IN =123 ;
+    private static final int RC_SIGN_IN = 123;
     private GoogleSignInClient mGoogleSignInClient;
 
     public LoginActivity() {
@@ -108,7 +108,8 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
 
 
     }
-    private void register () {
+
+    private void register() {
         startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
         this.finish();
     }
@@ -116,7 +117,7 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
     private void init() {
         edLoginEmail = findViewById(R.id.etemail);
         edLoginPassword = findViewById(R.id.etpassword);
-        googleSigninBtn=findViewById(R.id.btnGoogleSignUp);
+        googleSigninBtn = findViewById(R.id.btnGoogleSignUp);
 
         btnLogin = findViewById(R.id.btnLogin);
         mAuth = FirebaseAuth.getInstance();
@@ -142,6 +143,7 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
 
 
     }
+
     void uploadUserData(String username, String email) {
         String userID = mAuth.getCurrentUser().getUid();
         DatabaseReference currentUserDB = dbRef.child(userID);
@@ -176,6 +178,7 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -190,7 +193,7 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 e.printStackTrace();
-                Log.i(TAG, "onActivityResult: "+e.getStatusCode() );
+                Log.i(TAG, "onActivityResult: " + e.getStatusCode());
                 // Google Sign In failed, update UI appropriately
             }
         }
@@ -206,21 +209,20 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent= new Intent(getApplicationContext(), CreateTrip.class);
-                            GoogleSignInAccount SignInAccount=GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
-                            if(SignInAccount != null){
-                                userName =SignInAccount.getDisplayName();
-                                 userEmail =SignInAccount.getEmail();
+                            GoogleSignInAccount SignInAccount = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
+                            if (SignInAccount != null) {
+                                userName = SignInAccount.getDisplayName();
+                                userEmail = SignInAccount.getEmail();
                             }
 
                             uploadUserData(userName, userEmail);
-                            startActivity(intent);
 
+                            openHome();
                             Log.i(TAG, "userName ");
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.i(TAG, "onComplete: "+task.getException().getLocalizedMessage());
+                            Log.i(TAG, "onComplete: " + task.getException().getLocalizedMessage());
                             Toast.makeText(LoginActivity.this, "Sorry, Authentication Failed Try Again", Toast.LENGTH_LONG).show();
                         }
 

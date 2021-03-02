@@ -141,7 +141,7 @@ public class TripDetailes extends AppCompatActivity {
 
     public void delete(){
         tripViewModel.deleteTrip(trip.getId(), () -> {
-            MyAlarm.cancelAlarm(this,Integer.parseInt(trip.getId()));
+            MyAlarm.cancelAlarm(this,trip.getId().hashCode());
             finish();
         });
     }
