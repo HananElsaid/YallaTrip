@@ -26,6 +26,8 @@ import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.TripStatus;
+import iti.intake41.myapplication.modules.map.floatingwidget.FloatWidgetService;
+import iti.intake41.myapplication.viewmodel.OnSuccess;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
 
 public class ReminderTrip extends AppCompatActivity {
@@ -78,6 +80,16 @@ public class ReminderTrip extends AppCompatActivity {
         startbtn.setOnClickListener(v -> {
             mediaPlayer.stop();
             UIHelper.startTrip(this, trip);
+            viewWidgetButton(trip);
+            //change its status to done
+            trip.setStatus("done");
+            tripViewModel.updateTrip(trip, new OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    Log.i("TAG", "onSuccess: ");
+                    //Toast.makeText(ReminderTrip.this, "Trip ", Toast.LENGTH_SHORT).show();
+                }
+            });
             finish();
         });
 
@@ -145,5 +157,18 @@ public class ReminderTrip extends AppCompatActivity {
                     .setContentText("Start your Trip Now")
                     .build());
         }
+    }
+    void viewWidgetButton(Trip trip) {
+        Intent intent = new Intent(ReminderTrip.this, FloatWidgetService.class);
+        intent.putExtra("tripID", trip.getId());
+        intent.putExtra("tripName", trip.getTitle());
+        startService(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mediaPlayer.stop();
+        MyAlarm.cancelAlarm(this,trip.getId().hashCode());
     }
 }
