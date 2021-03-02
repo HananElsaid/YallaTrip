@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import iti.intake41.myapplication.models.Trip;
-
 //class extending the Broadcast Receiver
 public class MyAlarmReceiver extends BroadcastReceiver {
 
@@ -24,8 +22,8 @@ public class MyAlarmReceiver extends BroadcastReceiver {
 //
 //        Intent intent1 = new Intent(context, ReminderTrip.class);
 
-        //String trip= intent.getStringExtra("trip");
-        Trip trip= intent.getParcelableExtra("trip");
+        String trip= intent.getStringExtra("trip");
+        //Trip trip= intent.getParcelableExtra("trip");
 
         Intent start = new Intent();
 

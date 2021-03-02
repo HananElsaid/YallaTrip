@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
-import java.util.Calendar;
 import com.google.gson.Gson;
+
+import java.util.Calendar;
+
 import iti.intake41.myapplication.models.Trip;
 
 public class MyAlarm {
@@ -28,8 +30,8 @@ public class MyAlarm {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent1 = new Intent(context, MyAlarmReceiver.class);
-        //intent1.putExtra("trip", new Gson().toJson(trip));
-        intent1.putExtra("trip", trip);
+        intent1.putExtra("trip", new Gson().toJson(trip));
+        //intent1.putExtra("trip", trip);
          //intent1.setAction("reminder.MyAlarmReceiver");
 
 //        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,id, intent1, 0); //not from user

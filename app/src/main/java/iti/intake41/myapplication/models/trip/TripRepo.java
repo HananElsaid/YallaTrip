@@ -61,7 +61,7 @@ public class TripRepo extends FirebaseRepo implements TripRepoInterface{
         childUpdates.put("/" + tripId, trip.toMap());
 
         tripRef.updateChildren(childUpdates)
-                .addOnSuccessListener(dataSnapshot -> delegate.success("Trip Added Successfully"))
+                .addOnSuccessListener(dataSnapshot -> delegate.success(tripId))
                 .addOnFailureListener(e -> delegate.failed(e.getLocalizedMessage()));
     }
 

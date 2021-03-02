@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,10 +26,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 import iti.intake41.myapplication.R;
+import iti.intake41.myapplication.models.FirebaseRepoDelegate;
 import iti.intake41.myapplication.models.Trip;
 import iti.intake41.myapplication.models.trip.Location;
-import iti.intake41.myapplication.modules.reminder.MyAlarm;
 import iti.intake41.myapplication.modules.map.searchplace.PlaceSearchFragment;
+import iti.intake41.myapplication.modules.reminder.MyAlarm;
 import iti.intake41.myapplication.viewmodel.TripViewModel;
 
 import static android.app.DatePickerDialog.OnDateSetListener;
@@ -44,7 +46,7 @@ public class CreateTrip extends AppCompatActivity {
     //MARK: - Attributes
     Calendar calendar;
     public Trip trip;
-    int hr, min, year, month, day;
+    int hr, min, yr, month, day;
     TripViewModel tripViewModel;
     public static final String TAG = "CreateTrip";
 
@@ -54,12 +56,25 @@ public class CreateTrip extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trip);
         initViews();
+        calendar = Calendar.getInstance();
+
         if(getIntent().hasExtra("trip")){ //Update Trip
+            try {
             configureData(getIntent().getParcelableExtra("trip"));
+            Date date = null;
+
+            String dateStr = trip.getDate()+" "+trip.getTime();
+            System.out.println(dateStr);
+
+            date = new SimpleDateFormat("dd/MM/yyyy HH:mm a").parse(dateStr);
+            calendar.setTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }else{ //Create Trip
             trip = new Trip();
         }
-        calendar = Calendar.getInstance();
+
 
         tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
         tripViewModel.setContext(this);
@@ -103,7 +118,21 @@ public class CreateTrip extends AppCompatActivity {
         }, 12, 0, false
         );
         timePickerDialog.updateTime(hr, min);
-        timePickerDialog.show();
+        try {
+            Date d;
+            if(trip != null && trip.getDate() != null){
+                d = new SimpleDateFormat("HH:mm a").parse(trip.getTime());
+            }else{
+                d = new Date();
+            }
+
+            int hrs = Integer.parseInt(new SimpleDateFormat("hh").format(d));
+            int min = Integer.parseInt(new SimpleDateFormat("mm").format(d));
+            timePickerDialog.updateTime(hrs, min);
+            timePickerDialog.show();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -112,15 +141,31 @@ public class CreateTrip extends AppCompatActivity {
                 new OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        dateButton.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
-                    }
-                }, year, month, day);
+                        // monthOfYear=monthOfYear; //month start 0
+                        day = dayOfMonth;
+                        month = monthOfYear;
+                        yr = year;
+                        // calendar.set(t1year, t1mounth, t1day,0,0);
+                        calendar.set(Calendar.DAY_OF_MONTH,day);
+                        calendar.set(Calendar.MONTH,month);
+                        calendar.set(Calendar.YEAR,yr);
 
-        datePickerDialog.updateDate(year, month, day);
+                        Log.i(TAG, "onDateSet: Time"+calendar.getTime().toString());
+
+                        Date d = calendar.getTime();
+                        String date = new SimpleDateFormat("dd/MM/yyyy").format(d);
+
+                        Log.i(TAG, "onDateSet: Time D aaaaaaaaaaaaa"+d.toString());
+//                        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH);
+                        dateButton.setText(date);
+                    }
+                }, yr, month, day);
+
+        datePickerDialog.updateDate(yr, month, day);
         try {
             Date d;
             if(trip != null && trip.getDate() != null){
-                d = new SimpleDateFormat("dd/MM/YYYY").parse(trip.getDate());
+                d = new SimpleDateFormat("dd/MM/yyyy").parse(trip.getDate());
             }else{
                 d = new Date();
             }
@@ -139,9 +184,13 @@ public class CreateTrip extends AppCompatActivity {
             trip.setDate((String) dateButton.getText());
             trip.setStatus("upcoming");
 
-            tripViewModel.addTrip(trip, ()->{
-                MyAlarm.setAlarm(CreateTrip.this,trip,hr,min,day,month,year);
-                finish();
+            tripViewModel.addTrip(trip, new FirebaseRepoDelegate() {
+                @Override
+                public void success(String id) {
+                    trip.setId(id);
+                    MyAlarm.setAlarm(CreateTrip.this,trip,hr,min,day,month,yr);
+                    finish();
+                }
             });
 
         }else {

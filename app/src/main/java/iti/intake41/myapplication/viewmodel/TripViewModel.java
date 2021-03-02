@@ -62,13 +62,13 @@ public class TripViewModel extends ViewModel {
         }
     }
 
-    public void addTrip(Trip trip, OnSuccess delegate) {
+    public void addTrip(Trip trip, FirebaseRepoDelegate delegate) {
         loader.start();
         repo.addTrip(trip, new FirebaseRepoDelegate() {
             @Override
             public void success(String message) {
-                showMessage(message);
-                delegate.onSuccess();
+                showMessage("Trip added successfully");
+                delegate.success(message);
             }
 
             @Override

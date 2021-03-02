@@ -49,7 +49,6 @@
 //    int t1year, t1mounth, t1day;
 //
 //    TimePicker myTimePicker;
-//    Note note=new Note();
 //    //MyAlarm myAlarm;
 //
 //    @Override

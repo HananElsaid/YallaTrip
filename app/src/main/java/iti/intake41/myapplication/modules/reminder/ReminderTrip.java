@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
+
 import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.UIHelper;
 import iti.intake41.myapplication.models.Trip;
@@ -59,21 +61,22 @@ public class ReminderTrip extends AppCompatActivity {
 //        myAlarm=new MyAlarm();
         setupViewModel();
         Intent x= getIntent();
-        //String json  = x.getStringExtra("trip");
-        //System.out.println(json);
-        //trip=new Gson().fromJson(json,Trip.class);
 
         if(x.hasExtra("trip")){
-            trip = x.getParcelableExtra("trip");
+            String json  = x.getStringExtra("trip");
+            System.out.println(json);
+            trip=new Gson().fromJson(json,Trip.class);
+            //String trip = x.getStringExtra("trip");
 //            if(trip != null)
             Log.i("trip", "onCreate: Trip"+ trip.getId());
-//            tripTitle.setText(trip.getTitle());
+            tripTitle.setText(trip.getTitle());
         }
 
 
         startbtn.setOnClickListener(v -> {
             mediaPlayer.stop();
             UIHelper.startTrip(this, trip);
+            finish();
         });
 
         cancelbtn.setOnClickListener(v -> {
