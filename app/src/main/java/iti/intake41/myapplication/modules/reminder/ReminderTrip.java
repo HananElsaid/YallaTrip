@@ -36,6 +36,8 @@ public class ReminderTrip extends AppCompatActivity {
     Trip trip;
     private TripViewModel tripViewModel;
     public int id;
+    //trip data as string from brevous screen
+    String tripText;
 
 
     @Override
@@ -63,9 +65,9 @@ public class ReminderTrip extends AppCompatActivity {
         Intent x= getIntent();
 
         if(x.hasExtra("trip")){
-            String json  = x.getStringExtra("trip");
-            System.out.println(json);
-            trip=new Gson().fromJson(json,Trip.class);
+             tripText  = x.getStringExtra("trip");
+            System.out.println(tripText);
+            trip=new Gson().fromJson(tripText,Trip.class);
             //String trip = x.getStringExtra("trip");
 //            if(trip != null)
             Log.i("trip", "onCreate: Trip"+ trip.getId());
@@ -132,7 +134,8 @@ public class ReminderTrip extends AppCompatActivity {
             Toast.makeText(this, "notification created", Toast.LENGTH_LONG).show();
 
             Intent notificationIntent= new Intent(ReminderTrip.this,ReminderTrip.class);
-            PendingIntent pendingIntent= PendingIntent.getActivity(ReminderTrip.this,0,notificationIntent,0);
+            notificationIntent.putExtra("trip",tripText);
+            PendingIntent pendingIntent= PendingIntent.getActivity(ReminderTrip.this,trip.getId().hashCode(),notificationIntent,0);
             notificationManager.notify(2,new NotificationCompat.Builder(ReminderTrip.this,CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                     .setOngoing(true) //outocancle ->

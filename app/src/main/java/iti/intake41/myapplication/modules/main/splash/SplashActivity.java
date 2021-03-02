@@ -32,8 +32,9 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         checkPermission();
         //for enable caching
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
+        if (FirebaseDatabase.getInstance() == null) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
         ImageView imageView = findViewById(R.id.imageView);
         DrawableImageViewTarget splashScreen = new DrawableImageViewTarget(imageView);
 

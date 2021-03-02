@@ -90,7 +90,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1.25"
             android:orientation="vertical"
-            android:padding="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
             android:weightSum="1">
 
             <Space
@@ -104,8 +106,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.8"
                 android:text="@string/start"
-                android:visibility="invisible"
                 android:textSize="10sp"
+                android:visibility="invisible"
                 app:cornerRadius="20dp" />
 
             <Space

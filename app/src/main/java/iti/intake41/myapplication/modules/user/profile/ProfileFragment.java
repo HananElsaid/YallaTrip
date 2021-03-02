@@ -19,6 +19,7 @@ import iti.intake41.myapplication.R;
 import iti.intake41.myapplication.helper.Navigator;
 import iti.intake41.myapplication.helper.NetworkClass;
 import iti.intake41.myapplication.models.user.User;
+import iti.intake41.myapplication.modules.reminder.MyAlarm;
 import iti.intake41.myapplication.modules.user.login.view.LoginActivity;
 import iti.intake41.myapplication.modules.map.tripsmap.MapTripsActivity;
 import iti.intake41.myapplication.viewmodel.UserViewModel;
