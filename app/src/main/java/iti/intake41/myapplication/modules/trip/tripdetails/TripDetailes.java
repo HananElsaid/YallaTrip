@@ -156,6 +156,7 @@ public class TripDetailes extends AppCompatActivity {
         if(trip != null){
             trip.setStatus(TripStatus.done.toString());
             tripViewModel.updateTrip(trip, () -> {
+                MyAlarm.cancelAlarm(this,trip.getId().hashCode());
                 UIHelper.startTrip(this, trip);
                 viewWidgetButton();
             });
@@ -170,7 +171,7 @@ public class TripDetailes extends AppCompatActivity {
                 configureTrip();
             });
         }
-//        MyAlarm.cancelAlarm(this,Integer.parseInt(trip.getId()));
+        MyAlarm.cancelAlarm(this,trip.getId().hashCode());
 
     }
 
