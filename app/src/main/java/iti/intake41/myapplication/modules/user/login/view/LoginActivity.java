@@ -110,8 +110,8 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
     }
 
     private void register() {
-        startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-        this.finish();
+        Navigator.gotoScreen(LoginActivity.this, SignUpActivity.class);
+        finish();
     }
 
     private void init() {

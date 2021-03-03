@@ -24,7 +24,7 @@ import iti.intake41.myapplication.modules.user.signup.viewmodel.SignUpViewModel;
 public class SignUpActivity extends AppCompatActivity {
     String email, password, userName;
     //views refrences
-    TextInputEditText etEmail, etPassword,etUserName;
+    TextInputEditText etEmail, etPassword, etUserName;
     Button btnSignUp;
     TextView tvlogin;
 
@@ -44,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 email = etEmail.getText().toString().trim();
                 password = etPassword.getText().toString().trim();
-                userName=etUserName.getText().toString().trim();
+                userName = etUserName.getText().toString().trim();
                 checkInputs();
                 if (NetworkClass.isNetworkConnected(SignUpActivity.this)) {
                     signUp();
@@ -56,9 +56,8 @@ public class SignUpActivity extends AppCompatActivity {
         tvlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent openLoginIntent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(openLoginIntent);
-                SignUpActivity.this.finish();
+                Navigator.gotoScreen(SignUpActivity.this, LoginActivity.class);
+                finish();
             }
         });
 
@@ -68,7 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         etEmail = findViewById(R.id.etemail);
         etPassword = findViewById(R.id.etpassword);
-        etUserName=findViewById(R.id.etUserName);
+        etUserName = findViewById(R.id.etUserName);
         tvlogin = findViewById(R.id.tvopenLogin);
         btnSignUp = findViewById(R.id.btnSignUp);
 
@@ -79,15 +78,16 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signUp() {
-        if (!email.isEmpty() && !password.isEmpty() &&!userName.isEmpty()&&
+        if (!email.isEmpty() && !password.isEmpty() && !userName.isEmpty() &&
                 Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString()).matches()) {
             //viewModelRef.signUp(userName,email, password);
-            viewModelRef.signUp(userName,email, password).observe(this, new Observer<String>() {
+            viewModelRef.signUp(userName, email, password).observe(this, new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
-                    if (s.equals("successful"))
+                    if (s.equals("successful")) {
                         Navigator.gotoScreen(SignUpActivity.this, LoginActivity.class);
-                    //openLoginActivity();
+                        finish();
+                    }
                     display(s);
                 }
             });
@@ -97,11 +97,6 @@ public class SignUpActivity extends AppCompatActivity {
     public void display(String message) {
 
         Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
-    }
-
-    public void openLoginActivity() {
-        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-        this.finish();
     }
 
 
