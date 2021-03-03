@@ -113,12 +113,12 @@
 
                     <TextView
                         android:id="@+id/userName"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.8"
                         android:drawableStart="@drawable/ic_user"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
+                        android:paddingEnd="5dp"
                         android:text="@string/userName"
                         android:textColor="@color/black"
                         android:textSize="16sp"
@@ -126,13 +126,12 @@
 
                     <TextView
                         android:id="@+id/userNameTV"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.2"
                         android:gravity="center_vertical|end"
                         android:text=""
                         android:textColor="@color/greyDark"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="normal" />
 
                 </LinearLayout>
@@ -147,12 +146,12 @@
                     android:weightSum="2">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.6"
                         android:drawableStart="@drawable/ic_email"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
+                        android:paddingEnd="5dp"
                         android:text="@string/email"
                         android:textColor="@color/black"
                         android:textSize="16sp"
@@ -160,13 +159,12 @@
 
                     <TextView
                         android:id="@+id/emailTV"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.4"
                         android:gravity="center_vertical|end"
                         android:text=""
                         android:textColor="@color/greyDark"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="normal" />
 
                 </LinearLayout>
@@ -240,7 +238,7 @@
                         android:drawableEnd="@drawable/ic_forward"
                         android:gravity="center_vertical|end"
                         android:textColor="@color/greyDark"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="normal"
                         app:drawableTint="@color/black" />
 
@@ -341,7 +339,7 @@
                         android:drawableEnd="@drawable/ic_forward"
                         android:gravity="center_vertical|end"
                         android:textColor="@color/greyDark"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="normal"
                         app:drawableTint="@color/redMid" />
 

@@ -1,0 +1,118 @@
+<resources>
+    <string name = "app_name"> YallaTrip </string>
+    <string name = "first_fragment_label">First Fragment</string>
+    <string name = "second_fragment_label">Second Fragment</string>
+    <string name = "next"> التالي </string>
+    <string name = "previous"> السابق </string>
+
+    <string name = "hello_first_fragment">Hello first fragment</string>
+    <string name = "hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name = "add"> اضافة </string>
+    <string name = "submit_button"> إرسال </string>
+    <string name = "confirmPassword"> تأكيد كلمة المرور </string>
+    <string name = "Password"> كلمة المرور </string>
+    <string name = "email"> البريد الإلكتروني </string>
+    <string name = "signin"> تسجيل </string>
+    <string name = "login"> تسجيل الدخول </string>
+    <string name = "title_activity_home"> نشاط المنزل </string>
+    <string name = "title_home"> الصفحة الرئيسية </string>
+    <string name = "title_group"> المجموعات </string>
+    <string name = "title_contacts"> جهات الاتصال </string>
+    <string name = "txtViewDoNotHaveAccount"> أليس لديك حساب؟ </string>
+    <string name = "signinwith"> تسجيل الدخول باستخدام </string>
+    <string name = "txtViewAlreadyRegistered"> هل لديك حساب؟ تسجيل الدخول من هنا </string>
+    <string name = "logout"> تسجيل الخروج </string>
+    <string name = "typemobilenumber"> اكتب رقم الجوال </string>
+    <string name = "messagetext"> اكتب رسالتك </string>
+    <string name = "groupname"> أدخل اسم المجموعة </string>
+    <string name = "members"> الأعضاء: </string>
+    <string name = "time"> الوقت </string>
+    <string name = "send_via"> إرسال عبر </string>
+    <string name = "now"> الآن </string>
+    <string name = "custom"> مخصص </string>
+    <string name = "date"> التاريخ </string>
+    <string name = "time2"> الوقت </string>
+    <string name = "title_activity_choose_reciver">ChooseReciverActivity</string>
+    <string name = "tab_text_1"> المجموعات </string>
+    <string name = "tab_text_2"> جهات الاتصال </string>
+    <string name = "title_pending"> معلق </string>
+    <string name = "title_completed"> مكتمل </string>
+    <string name = "tvinitnumber"> 010 </string>
+    <string name = "choosesendingway"> اختر طريقة الإرسال </string>
+    <string name = "whatsthenSMS"> WhatsApp للجميع ثم الرسائل القصيرة للآخرين </string>
+    <string name = "smstoall"> إرسال الرسائل القصيرة للجميع </string>
+    <string name = "smsthenwhats"> إرسال رسائل قصيرة SMS للجميع بنفس شركة الجوال و WhatsApp للآخرين </string>
+    <string name = "first_name"> اسمك </string>
+    <string name = "last_name"> اسم العائلة </string>
+    <string name = "phone"> الهاتف </string>
+    <string name = "done_button"> تم </string>
+    <string name = "profile"> الملف الشخصي </string>
+    <string name = "save"> حفظ </string>
+    <string name = "title_dashboard"> لوحة التحكم </string>
+    <string name = "title_notifications"> الإخطارات </string>
+
+
+    <string name = "signup"> تسجيل </string>
+    <string name = "notacount"> ليس لديك حساب؟ من فضلك </string>
+    <string name = "sociallogin"> Google SignUp </string>
+    <string name = "or"> OR </string>
+
+    <string name = "haveacount"> هل لديك حساب بالفعل؟ من فضلك </string>
+    <string name = "notes"> ملاحظات </string>
+
+    <string name = "addnote">addnote</string>
+    <string name = "notetext"> أدخل ملاحظتك </string>
+    <string name = "newnote"> ملاحظة جديدة </string>
+
+
+    <string name = "title_activity_main"> النشاط الرئيسي </string>
+    <string name = "start"> ابدأ </string>
+
+    <string name = "content_description_more"> المزيد </string>
+    <string name = "content_description_search"> بحث </string>
+    <string name = "search"> بحث </string>
+    <string name = "welcome"> مرحبًا </string>
+    <string name = "upcoming"> القادمة </string>
+    <string name = "done"> تم </string>
+    <string name = "cancelled"> مُلغى </string>
+    <string name = "myAccount"> حسابي </string>
+    <string name = "userName"> اسم المستخدم </string>
+    <string name = "other"> أخرى </string>
+    <string name = "lang"> اللغة </string>
+    <string name = "showMap"> إظهار الخريطة </string>
+    <string name = "title_more"> المزيد </string>
+    <string name = "title_activity_map_trips"> خريطة </string>
+
+    <string name = "tripTitle"> عنوان الرحلة </string>
+    <string name = "header"> الرأس </string>
+    <string name = "locationIcon"> الموقع </string>
+    <string name = "startPoint"> نقطة البداية </string>
+    <string name = "endPoint"> نقطة النهاية </string>
+    <string name = "createTrip"> إنشاء رحلة </string>
+    <string name = "hintcreateTrip"> الذهاب للتسوق </string>
+    <string name = "roundTrip"> رحلة ذهاب وعودة </string>
+    <string name = "piceddate"> 12 كانون الثاني (يناير) 2021 </string>
+    <string name = "picedtime"> 12:10 </string>
+    <string name = "addNote"> ملاحظات </string>
+    <string name = "tapToChoose"> انقر لاختيار الموقع </string>
+    <string name = "trip_Trip"> الذهاب للتسوق </string>
+    <string name = "status"> القادمة </string>
+    <string name = "more"> المزيد </string>
+    <string name = "edit"> تحرير </string>
+    <string name = "delete"> حذف </string>
+    <string name = "cancel"> إلغاء </string>
+
+    <string name = "snooze"> غفوة </string>
+    <string name = "cancle"> إلغاء </string>
+    <string name = "reminder"> حان وقت بدء رحلتك </string>
+    <string name = "hello_blank_fragment"> مرحبا قطعة فارغة </string>
+    <string name = "searchPlaceHint"> ابحث عن مكان </string>
+    <string name = "areYouSureToDeleteThisNote"> هل أنت متأكد أنك تريد حذف هذه الملاحظة </string>
+    <string name = "yes"> نعم </string>
+    <string name = "noteDeletedSuccessfully"> تم حذف الملاحظة بنجاح </string>
+    <string name = "warning"> تحذير </string>
+    <string name = "errorMsgPermissionRequired"> مطلوب إذن الأداة العائمة </string>
+    <string name = "selectApplication"> حدد تطبيقًا </string>
+    <string name="yourTrips">رحلاتك</string>
+
+</resources>

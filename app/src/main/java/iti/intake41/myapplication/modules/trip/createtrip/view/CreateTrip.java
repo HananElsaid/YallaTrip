@@ -47,9 +47,12 @@ public class CreateTrip extends AppCompatActivity {
     //MARK: - Attributes
     Calendar calendar;
     public Trip trip;
-    int hr, min, yr, month, day;
+    int hr, min, yr, month, day, am;
     TripViewModel tripViewModel;
     public static final String TAG = "CreateTrip";
+
+    TimePickerDialog timePickerDialog;
+    DatePickerDialog datePickerDialog;
 
     //Activity Life cycle
     @SuppressLint("SimpleDateFormat")
@@ -68,15 +71,15 @@ public class CreateTrip extends AppCompatActivity {
             String dateStr = trip.getDate()+" "+trip.getTime();
             System.out.println(dateStr);
 
-            date = new SimpleDateFormat("dd/MM/yyyy HH:mm a").parse(dateStr);
+            date = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(dateStr);
             calendar.setTime(date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }else{ //Create Trip
-            trip = new Trip();
+            this.trip = new Trip();
+            calendar.setTime(new Date());
         }
-
 
         tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
         tripViewModel.setContext(this);
@@ -104,7 +107,7 @@ public class CreateTrip extends AppCompatActivity {
 
 
     public void timePickerClicked(View view) {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 // initialize hour and Mins
@@ -112,25 +115,36 @@ public class CreateTrip extends AppCompatActivity {
                 min = minute;
                 calendar.set(Calendar.HOUR_OF_DAY,hr);
                 calendar.set(Calendar.MINUTE,min);
-
                 Date d = calendar.getTime();
-                String time = new SimpleDateFormat("HH:mm a").format(d);
+
+                //String time = new SimpleDateFormat("HH:mm a").format(d);
+                String time = new SimpleDateFormat("hh:mm a").format(d);
+                trip.setTime(time);
                 timeButton.setText(time); // set the current time in text view
             }
         }, 12, 0, false
         );
-        timePickerDialog.updateTime(hr, min);
+//        timePickerDialog.updateTime(hr, min);
+
+        timePickerDialog.show();
         try {
             Date d;
-            if(trip != null && trip.getDate() != null){
-                d = new SimpleDateFormat("HH:mm a").parse(trip.getTime());
+            if(trip != null && trip.getTime() != null){
+                //d = new SimpleDateFormat("HH:mm a").parse(trip.getTime());
+                d = new SimpleDateFormat("hh:mm a").parse(trip.getTime());
             }else{
                 d = new Date();
             }
 
             int hrs = Integer.parseInt(new SimpleDateFormat("hh").format(d));
             int min = Integer.parseInt(new SimpleDateFormat("mm").format(d));
-            timePickerDialog.updateTime(hrs, min);
+            String a = new SimpleDateFormat(("a")).format(d);
+
+            if(a.equals("AM"))
+                timePickerDialog.updateTime(hrs, min);
+            else
+                timePickerDialog.updateTime(hrs + 12, min);
+
             timePickerDialog.show();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -139,7 +153,7 @@ public class CreateTrip extends AppCompatActivity {
     }
 
     public void datePickerClicked(View view) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+        datePickerDialog = new DatePickerDialog(this,
                 new OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -156,10 +170,12 @@ public class CreateTrip extends AppCompatActivity {
 
                         Date d = calendar.getTime();
                         String date = new SimpleDateFormat("dd/MM/yyyy").format(d);
+                        trip.setDate(date);
 
                         Log.i(TAG, "onDateSet: Time D aaaaaaaaaaaaa"+d.toString());
 //                        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH);
                         dateButton.setText(date);
+
                     }
                 }, yr, month, day);
 
