@@ -1,5 +1,6 @@
 package iti.intake41.myapplication.modules.trip.createtrip.view;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -51,6 +52,7 @@ public class CreateTrip extends AppCompatActivity {
     public static final String TAG = "CreateTrip";
 
     //Activity Life cycle
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
