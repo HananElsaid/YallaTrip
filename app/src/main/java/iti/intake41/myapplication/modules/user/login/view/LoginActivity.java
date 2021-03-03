@@ -189,8 +189,9 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-
-                firebaseAuthWithGoogle(account.getIdToken());
+                if (account != null) {
+                    firebaseAuthWithGoogle(account.getIdToken());
+                }
             } catch (ApiException e) {
                 e.printStackTrace();
                 Log.i(TAG, "onActivityResult: " + e.getStatusCode());
@@ -216,7 +217,6 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
                             }
 
                             uploadUserData(userName, userEmail);
-
                             openHome();
                             Log.i(TAG, "userName ");
 
@@ -226,7 +226,6 @@ public class LoginActivity extends AppCompatActivity implements LoginModelInterf
                             Toast.makeText(LoginActivity.this, "Sorry, Authentication Failed Try Again", Toast.LENGTH_LONG).show();
                         }
 
-                        // ...
                     }
                 });
 
